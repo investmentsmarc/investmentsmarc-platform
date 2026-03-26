@@ -1,0 +1,310 @@
+/* ==========================================================================
+   INVESTMENTS MARC — EFECTOS AVANZADOS
+   Glassmorphism, noise overlay, border-glow, 3D cards, gradients
+   Importar en componentes que lo necesiten — NO en globals.css
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   GLASSMORPHISM
+   -------------------------------------------------------------------------- */
+.mi-glass {
+  background: rgba(17, 17, 17, 0.7);
+  backdrop-filter: blur(20px) saturate(1.5);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  border: 1px solid var(--mi-border);
+}
+
+.mi-glass-strong {
+  background: rgba(17, 17, 17, 0.85);
+  backdrop-filter: blur(30px) saturate(1.8);
+  -webkit-backdrop-filter: blur(30px) saturate(1.8);
+  border: 1px solid var(--mi-border-strong);
+}
+
+/* Header glassmorphic */
+.mi-header-glass {
+  background: rgba(10, 10, 10, 0.8);
+  backdrop-filter: blur(24px) saturate(1.6);
+  -webkit-backdrop-filter: blur(24px) saturate(1.6);
+  border-bottom: 1px solid var(--mi-border);
+}
+
+/* --------------------------------------------------------------------------
+   NOISE OVERLAY — textura de grano sobre fondos
+   -------------------------------------------------------------------------- */
+.mi-noise::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* --------------------------------------------------------------------------
+   GOLD GLOW EFFECTS
+   -------------------------------------------------------------------------- */
+.mi-glow {
+  box-shadow: 0 0 20px var(--mi-glow-gold);
+}
+
+.mi-glow-hover {
+  transition: box-shadow 0.3s var(--mi-ease-out);
+}
+
+.mi-glow-hover:hover {
+  box-shadow: 0 0 30px var(--mi-glow-gold), 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* Gold border glow on focus/active */
+.mi-border-glow {
+  border: 1px solid var(--mi-border);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mi-border-glow:hover,
+.mi-border-glow:focus-within {
+  border-color: rgba(201, 168, 76, 0.4);
+  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.06);
+}
+
+/* --------------------------------------------------------------------------
+   GRADIENT BORDERS — borde con degradado dorado
+   -------------------------------------------------------------------------- */
+.mi-gradient-border {
+  position: relative;
+  border-radius: 16px;
+}
+
+.mi-gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(201, 168, 76, 0.4), rgba(201, 168, 76, 0.05));
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   SECTION BACKGROUNDS — variaciones
+   -------------------------------------------------------------------------- */
+.mi-bg-radial-gold {
+  background:
+    radial-gradient(ellipse 60% 40% at 50% -10%, rgba(201, 168, 76, 0.06) 0%, transparent 70%),
+    var(--mi-bg-primary);
+}
+
+.mi-bg-radial-subtle {
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255, 255, 255, 0.02) 0%, transparent 70%),
+    var(--mi-bg-primary);
+}
+
+/* --------------------------------------------------------------------------
+   CARD ELEVATED — card con efecto de elevacion mejorado
+   -------------------------------------------------------------------------- */
+.mi-card-elevated {
+  background: var(--mi-bg-elevated);
+  border-radius: 20px;
+  border: 1px solid var(--mi-border);
+  box-shadow: var(--mi-shadow-md);
+  transition:
+    transform 0.3s var(--mi-ease-out),
+    box-shadow 0.3s var(--mi-ease-out),
+    border-color 0.3s ease;
+}
+
+.mi-card-elevated:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--mi-shadow-xl);
+  border-color: var(--mi-border-strong);
+}
+
+/* --------------------------------------------------------------------------
+   TESTIMONIAL CARD
+   -------------------------------------------------------------------------- */
+.mi-testimonial-card {
+  background: var(--mi-bg-secondary);
+  border-radius: 20px;
+  border: 1px solid var(--mi-border);
+  padding: 40px;
+  position: relative;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mi-testimonial-card:hover {
+  border-color: rgba(201, 168, 76, 0.2);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+.mi-testimonial-quote {
+  font-size: 3rem;
+  color: var(--mi-gold-light);
+  line-height: 1;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.mi-testimonial-text {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--mi-text-secondary);
+  margin-bottom: 24px;
+  font-style: italic;
+}
+
+.mi-testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.mi-testimonial-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--mi-border-strong);
+}
+
+.mi-testimonial-name {
+  font-weight: 600;
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+.mi-testimonial-role {
+  font-size: 0.8rem;
+  color: var(--mi-gold-light);
+}
+
+/* --------------------------------------------------------------------------
+   STAT CARD — para KPIs / metricas
+   -------------------------------------------------------------------------- */
+.mi-stat-card {
+  text-align: center;
+  padding: 32px 24px;
+  background: var(--mi-bg-secondary);
+  border: 1px solid var(--mi-border);
+  border-radius: 16px;
+}
+
+.mi-stat-number {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  background: var(--mi-gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.mi-stat-label {
+  font-size: 0.85rem;
+  color: var(--mi-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* --------------------------------------------------------------------------
+   FORM INPUTS — estilo consistente con el tema
+   -------------------------------------------------------------------------- */
+.mi-input {
+  width: 100%;
+  padding: 14px 18px;
+  background: var(--mi-bg-tertiary);
+  border: 1px solid var(--mi-border);
+  border-radius: 10px;
+  color: var(--mi-text-primary);
+  font-family: var(--mi-font);
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.mi-input::placeholder {
+  color: var(--mi-text-tertiary);
+}
+
+.mi-input:focus {
+  border-color: rgba(201, 168, 76, 0.4);
+  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.06);
+}
+
+.mi-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--mi-text-secondary);
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+}
+
+/* --------------------------------------------------------------------------
+   SCROLL INDICATORS / DECORATIVE
+   -------------------------------------------------------------------------- */
+.mi-scroll-indicator {
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, var(--mi-gold-light), transparent);
+  margin: 0 auto;
+  opacity: 0.4;
+}
+
+.mi-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--mi-border-strong), transparent);
+  margin: 60px 0;
+}
+
+.mi-divider-gold {
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(201, 168, 76, 0.3), transparent);
+  margin: 60px 0;
+}
+
+/* --------------------------------------------------------------------------
+   ANIMATIONS / KEYFRAMES
+   -------------------------------------------------------------------------- */
+@keyframes mi-fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes mi-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes mi-pulse-gold {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(201, 168, 76, 0.3); }
+  50%       { box-shadow: 0 0 0 8px rgba(201, 168, 76, 0); }
+}
+
+@keyframes mi-slide-in-left {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes mi-ticker-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.mi-animate-fade-up    { animation: mi-fade-up 0.6s var(--mi-ease-out) forwards; }
+.mi-animate-fade-in    { animation: mi-fade-in 0.4s ease forwards; }
+.mi-animate-pulse-gold { animation: mi-pulse-gold 2s ease-in-out infinite; }
+
+/* WhatsApp float pulse */
+.mi-whatsapp-float {
+  animation: mi-pulse-gold 2.5s ease-in-out infinite;
+}

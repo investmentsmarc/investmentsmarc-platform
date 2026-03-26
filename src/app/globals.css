@@ -1,0 +1,602 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   INVESTMENTS MARC — DESIGN SYSTEM
+   Portado desde blocksy-child/style.css v7.0.0
+   Regla: NUNCA inventar colores nuevos — usar siempre variables --mi-*
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   TOKENS
+   -------------------------------------------------------------------------- */
+:root {
+  /* Backgrounds */
+  --mi-bg-primary:    #0a0a0a;
+  --mi-bg-secondary:  #111111;
+  --mi-bg-tertiary:   #171717;
+  --mi-bg-elevated:   #1a1a1a;
+
+  /* Gold — refinado, institucional */
+  --mi-gold:          #C9A84C;
+  --mi-gold-light:    #C9A84C;
+  --mi-gold-dark:     #A68A3E;
+  --mi-gold-gradient: linear-gradient(135deg, #C9A84C 0%, #A68A3E 100%);
+  --mi-glow-gold:     rgba(201, 168, 76, 0.12);
+
+  /* Text hierarchy */
+  --mi-text-primary:    rgba(255, 255, 255, 0.92);
+  --mi-text-secondary:  rgba(255, 255, 255, 0.55);
+  --mi-text-tertiary:   rgba(255, 255, 255, 0.35);
+
+  /* Borders — neutral, sin gold tint */
+  --mi-border:        rgba(255, 255, 255, 0.08);
+  --mi-border-strong: rgba(255, 255, 255, 0.14);
+
+  /* Shadows — neutral, sin gold tint */
+  --mi-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --mi-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --mi-shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.5);
+  --mi-shadow-xl: 0 24px 60px rgba(0, 0, 0, 0.6);
+
+  /* Motion */
+  --mi-ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --mi-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --mi-duration:    0.6s;
+
+  /* Typography */
+  --mi-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* --------------------------------------------------------------------------
+   TAILWIND 4 — @theme mapping → utilities bg-mi-primary, text-mi-gold, etc.
+   -------------------------------------------------------------------------- */
+@theme inline {
+  --color-mi-bg-primary:     var(--mi-bg-primary);
+  --color-mi-bg-secondary:   var(--mi-bg-secondary);
+  --color-mi-bg-tertiary:    var(--mi-bg-tertiary);
+  --color-mi-bg-elevated:    var(--mi-bg-elevated);
+  --color-mi-gold:           var(--mi-gold);
+  --color-mi-gold-light:     var(--mi-gold-light);
+  --color-mi-gold-dark:      var(--mi-gold-dark);
+  --color-mi-text-primary:   var(--mi-text-primary);
+  --color-mi-text-secondary: var(--mi-text-secondary);
+  --color-mi-text-tertiary:  var(--mi-text-tertiary);
+  --color-mi-border:         var(--mi-border);
+  --color-mi-border-strong:  var(--mi-border-strong);
+  --font-sans: var(--mi-font);
+}
+
+/* --------------------------------------------------------------------------
+   BASE
+   -------------------------------------------------------------------------- */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--mi-bg-primary);
+  color: var(--mi-text-primary);
+  font-family: var(--mi-font);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'cv11', 'ss01';
+  letter-spacing: -0.011em;
+  margin: 0;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--mi-gold-light);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: rgba(201, 168, 76, 0.3);
+  color: #fff;
+}
+
+/* --------------------------------------------------------------------------
+   LAYOUT PRIMITIVES
+   -------------------------------------------------------------------------- */
+.mi-section {
+  padding: 120px 6%;
+  position: relative;
+}
+
+.mi-section-secondary {
+  background-color: var(--mi-bg-secondary);
+}
+
+.mi-section + .mi-section {
+  border-top: 1px solid var(--mi-border);
+}
+
+.mi-container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* --------------------------------------------------------------------------
+   TYPOGRAPHY
+   -------------------------------------------------------------------------- */
+.mi-text-gradient {
+  background: var(--mi-gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.mi-section-title {
+  font-size: clamp(2.2rem, 4vw, 3.25rem);
+  font-weight: 600;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.03em;
+}
+
+/* --------------------------------------------------------------------------
+   BADGE
+   -------------------------------------------------------------------------- */
+.mi-badge {
+  display: inline-block;
+  padding: 6px 16px;
+  background: rgba(201, 168, 76, 0.06);
+  border: 1px solid rgba(201, 168, 76, 0.2);
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--mi-gold-light);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   BUTTONS
+   -------------------------------------------------------------------------- */
+.mi-btn-gold,
+.mi-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  background: var(--mi-gold-light);
+  color: #0a0a0a;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.875rem;
+  border-radius: 10px;
+  transition: filter 0.2s ease, transform 0.2s ease;
+  letter-spacing: 0;
+  border: none;
+  cursor: pointer;
+}
+
+.mi-btn-gold:hover,
+.mi-cta-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+  color: #0a0a0a;
+}
+
+.mi-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 30px;
+  background: transparent;
+  color: var(--mi-text-primary);
+  border: 1px solid var(--mi-border-strong);
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+  text-decoration: none;
+}
+
+.mi-btn-outline:hover {
+  border-color: var(--mi-gold-light);
+  color: var(--mi-gold-light);
+}
+
+/* --------------------------------------------------------------------------
+   VALUE CARDS
+   -------------------------------------------------------------------------- */
+.mi-values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  margin-top: 50px;
+}
+
+.mi-value-card {
+  background: var(--mi-bg-secondary);
+  padding: 40px;
+  border-radius: 16px;
+  border: 1px solid var(--mi-border);
+  box-shadow: var(--mi-shadow-sm);
+  transition:
+    transform 0.3s var(--mi-ease-out),
+    box-shadow 0.3s var(--mi-ease-out),
+    border-color 0.3s ease;
+}
+
+.mi-value-card:hover {
+  border-color: var(--mi-border-strong);
+  transform: translateY(-3px);
+  box-shadow: var(--mi-shadow-lg);
+}
+
+.mi-value-icon {
+  font-size: 2.5rem;
+  color: var(--mi-gold-light);
+  margin-bottom: 20px;
+}
+
+.mi-value-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #fff;
+}
+
+/* --------------------------------------------------------------------------
+   ABOUT SECTION
+   -------------------------------------------------------------------------- */
+.mi-about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.mi-about-image-wrapper {
+  position: relative;
+}
+
+.mi-about-image-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 15px -15px -15px 15px;
+  border: 1px solid var(--mi-gold-dark);
+  border-radius: 20px;
+  opacity: 0.3;
+  z-index: 0;
+}
+
+.mi-about-image {
+  position: relative;
+  width: 100%;
+  height: 550px;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 20px;
+  box-shadow: var(--mi-shadow-xl);
+  border: 1px solid var(--mi-border);
+  z-index: 1;
+}
+
+.mi-about-content p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--mi-text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.mi-about-quote {
+  padding: 28px 30px;
+  background: rgba(201, 168, 76, 0.04);
+  border-left: 3px solid var(--mi-gold-light);
+  border-radius: 0 12px 12px 0;
+  margin: 30px 0;
+}
+
+.mi-about-quote p {
+  color: #fff;
+  font-style: italic;
+  margin-bottom: 0;
+}
+
+/* --------------------------------------------------------------------------
+   FLOWTITAN 3D CARD STACK
+   -------------------------------------------------------------------------- */
+.mi-ft-section {
+  background: var(--mi-bg-primary);
+  position: relative;
+  border-top: 1px solid var(--mi-border);
+  border-bottom: 1px solid var(--mi-border);
+}
+
+.mi-ft-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.mi-ft-feature-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 30px;
+}
+
+.mi-ft-feature-item {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.mi-ft-feature-item strong {
+  display: block;
+  color: #fff;
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+}
+
+.mi-ft-card-container {
+  position: relative;
+  width: 100%;
+  height: 450px;
+  perspective: 1500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 40px;
+  overflow: visible;
+}
+
+.mi-ft-card-stack {
+  position: relative;
+  width: 700px;
+  height: 380px;
+  transform-style: preserve-3d;
+}
+
+.mi-ft-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 550px;
+  height: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--mi-border-strong);
+  background: var(--mi-bg-secondary);
+  transition:
+    transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.4s ease;
+  box-shadow: var(--mi-shadow-lg);
+}
+
+.mi-ft-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background-color: #000;
+}
+
+.mi-ft-card-1 { z-index: 3; transform: translate3d(0px, 0px, 0px) scale(1); box-shadow: 0 20px 50px rgba(0,0,0,0.6); }
+.mi-ft-card-2 { z-index: 2; transform: translate3d(70px, -10px, -80px) scale(0.92) rotateY(-3deg); opacity: 0.9; box-shadow: 0 15px 40px rgba(0,0,0,0.5); }
+.mi-ft-card-3 { z-index: 1; transform: translate3d(140px, -20px, -160px) scale(0.84) rotateY(-6deg); opacity: 0.8; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+.mi-ft-card-4 { z-index: 0; transform: translate3d(210px, -30px, -240px) scale(0.76) rotateY(-9deg); opacity: 0.7; box-shadow: 0 8px 25px rgba(0,0,0,0.35); }
+.mi-ft-card-5,
+.mi-ft-card-6 { z-index: -1; transform: translate3d(280px, -40px, -320px) scale(0.68) rotateY(-12deg); opacity: 0; pointer-events: none; }
+
+.mi-ft-card-badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: rgba(201, 168, 76, 0.9);
+  color: #000;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* --------------------------------------------------------------------------
+   BLOG CARDS
+   -------------------------------------------------------------------------- */
+.mi-blog-section { background: var(--mi-bg-primary); }
+.mi-blog-header  { margin-bottom: 50px; }
+
+.mi-blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 30px;
+}
+
+.mi-blog-card {
+  background: var(--mi-bg-secondary);
+  border-radius: 16px;
+  border: 1px solid var(--mi-border);
+  overflow: hidden;
+  transition:
+    transform 0.3s var(--mi-ease-out),
+    box-shadow 0.3s var(--mi-ease-out),
+    border-color 0.3s ease;
+}
+
+.mi-blog-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--mi-shadow-lg);
+  border-color: var(--mi-border-strong);
+}
+
+.mi-blog-card-link   { display: block; text-decoration: none; color: inherit; }
+.mi-blog-card-image  { width: 100%; height: 220px; overflow: hidden; background: var(--mi-bg-tertiary); }
+.mi-blog-card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s var(--mi-ease-out); }
+.mi-blog-card:hover .mi-blog-card-image img { transform: scale(1.05); }
+
+.mi-blog-card-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--mi-bg-tertiary);
+  color: var(--mi-text-tertiary);
+  font-size: 2rem;
+}
+
+.mi-blog-card-body    { padding: 24px; }
+.mi-blog-card-cat     { display: inline-block; font-size: 0.65rem; font-weight: 600; color: var(--mi-gold-light); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
+.mi-blog-card-date    { font-size: 0.75rem; color: var(--mi-text-tertiary); margin-bottom: 8px; }
+.mi-blog-card-title   { font-size: 1.15rem; font-weight: 600; color: var(--mi-text-primary); line-height: 1.4; margin-bottom: 10px; letter-spacing: -0.02em; }
+.mi-blog-card-excerpt { font-size: 0.9rem; color: var(--mi-text-secondary); line-height: 1.6; margin-bottom: 16px; }
+.mi-blog-card-read    { font-size: 0.8rem; color: var(--mi-gold-light); font-weight: 500; display: inline-flex; align-items: center; gap: 6px; transition: gap 0.2s ease; }
+.mi-blog-card:hover .mi-blog-card-read { gap: 10px; }
+
+/* --------------------------------------------------------------------------
+   FAQ ACCORDION
+   -------------------------------------------------------------------------- */
+.mi-faq-list { display: flex; flex-direction: column; gap: 12px; }
+
+.mi-faq-item {
+  background: var(--mi-bg-secondary);
+  border: 1px solid var(--mi-border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+}
+
+.mi-faq-item:hover { border-color: var(--mi-border-strong); }
+
+.mi-faq-question {
+  padding: 20px 24px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.mi-faq-question span { font-size: 1rem; font-weight: 500; color: var(--mi-text-primary); }
+
+.mi-faq-icon {
+  color: var(--mi-gold-light);
+  font-size: 1rem;
+  transition: transform 0.3s var(--mi-ease-out);
+  flex-shrink: 0;
+}
+
+.mi-faq-open .mi-faq-icon { transform: rotate(45deg); }
+
+.mi-faq-answer {
+  padding: 0 24px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s var(--mi-ease-out), padding 0.35s ease;
+  color: var(--mi-text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.mi-faq-open .mi-faq-answer { max-height: 400px; padding: 0 24px 20px; }
+
+/* --------------------------------------------------------------------------
+   HERO SECTION
+   -------------------------------------------------------------------------- */
+.hero-section-custom {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background-image:
+    linear-gradient(to bottom, rgba(13, 13, 13, 1) 0%, rgba(13, 13, 13, 0) 25%),
+    linear-gradient(to left, rgba(13, 13, 13, 1) 0%, rgba(13, 13, 13, 0.7) 35%, rgba(13, 13, 13, 0) 100%),
+    url('/images/FrontImage.jpg');
+  background-size: cover;
+  background-position: 100% 98%;
+  background-repeat: no-repeat;
+  padding: 80px 10%;
+  overflow: hidden;
+}
+
+.hero-content-wrapper {
+  max-width: 600px;
+  z-index: 2;
+  margin-top: -30px;
+  margin-left: auto;
+  margin-right: 0;
+  text-align: right;
+}
+
+.hero-phrase {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 600;
+  line-height: 1.08;
+  margin-bottom: 25px;
+  color: #fff;
+  letter-spacing: -0.03em;
+  text-shadow: 2px 2px 40px rgba(10, 10, 10, 1);
+  text-align: right;
+}
+
+.hero-phrase .gold { color: var(--mi-gold-light); }
+
+.hero-signature {
+  max-width: 320px;
+  height: auto;
+  margin: 20px 0 20px auto;
+  filter: brightness(0) invert(1);
+  display: block;
+}
+
+/* --------------------------------------------------------------------------
+   SCROLL REVEAL
+   -------------------------------------------------------------------------- */
+.mi-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity var(--mi-duration) var(--mi-ease-out),
+    transform var(--mi-duration) var(--mi-ease-out);
+}
+
+.mi-reveal.mi-visible   { opacity: 1; transform: translateY(0); }
+.mi-reveal-delay-1      { transition-delay: 0.1s; }
+.mi-reveal-delay-2      { transition-delay: 0.2s; }
+.mi-reveal-delay-3      { transition-delay: 0.3s; }
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE — Breakpoints 1024px / 768px (definidos en el design system)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .mi-about-grid,
+  .mi-ft-grid     { grid-template-columns: 1fr; gap: 50px; }
+  .mi-section-title { font-size: 2.2rem; }
+  .mi-ft-card-container { height: 320px; }
+  .mi-ft-card-stack { width: 100%; max-width: 400px; height: 260px; }
+  .mi-ft-card { width: 100%; }
+  .mi-ft-card-2 { transform: translate3d(30px, -8px, -50px) scale(0.94); }
+  .mi-ft-card-3 { transform: translate3d(60px, -16px, -100px) scale(0.88); }
+}
+
+@media (max-width: 768px) {
+  .hero-section-custom {
+    background-position: 25% 50%;
+    min-height: 90vh;
+    padding: 40px 6%;
+    background-image:
+      linear-gradient(to bottom, rgba(13,13,13,1) 0%, rgba(13,13,13,0) 25%),
+      linear-gradient(rgba(13,13,13,0.8), rgba(13,13,13,0.4), rgba(13,13,13,0.8)),
+      url('/images/FrontImage.jpg');
+  }
+  .hero-content-wrapper { text-align: center; margin-right: auto; margin-left: auto; }
+  .hero-phrase          { font-size: 1.8rem; text-align: center; }
+  .hero-signature       { margin: 15px auto; max-width: 180px; }
+  .mi-section           { padding: 60px 6%; }
+  .mi-section-title     { font-size: 2rem; }
+  .mi-about-image       { height: 350px; }
+  .mi-values-grid       { grid-template-columns: 1fr; }
+  .mi-blog-grid         { grid-template-columns: 1fr; }
+}
