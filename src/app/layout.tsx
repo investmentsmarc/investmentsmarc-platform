@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+
+import { CookieBanner } from "@/components/global/CookieBanner";
+import { Footer } from "@/components/global/Footer";
+import { Header } from "@/components/global/Header";
+import { TradingViewTicker } from "@/components/global/TradingViewTicker";
+import { WhatsAppFloat } from "@/components/global/WhatsAppFloat";
+
 import "./globals.css";
 
 const inter = Inter({
@@ -48,6 +55,7 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true },
   },
+  applicationName: "Investments Marc",
 };
 
 export default function RootLayout({
@@ -57,15 +65,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={`${inter.variable} h-full`}>
-      <head>
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-          crossOrigin="anonymous"
-        />
-      </head>
       <body className="min-h-full flex flex-col bg-mi-bg-primary text-mi-text-primary">
-        {children}
+        <div className="mi-site-shell">
+          <TradingViewTicker />
+          <Header />
+          <main className="mi-main">{children}</main>
+          <Footer />
+          <WhatsAppFloat />
+          <CookieBanner />
+        </div>
       </body>
     </html>
   );
