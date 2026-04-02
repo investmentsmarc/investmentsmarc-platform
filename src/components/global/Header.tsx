@@ -38,10 +38,10 @@ export function Header() {
   return (
     <header className={`mi-header ${isScrolled ? "mi-header-scrolled" : ""}`}>
       <div className="mi-header-inner">
-        <Link href="/" className="mi-header-brand" aria-label="Investments Marc">
+        <Link href="/" className="mi-header-brand" aria-label="Investments Marc - Trading Profesional">
           <Image
             src="/images/logo-processed.png"
-            alt="Investments Marc"
+            alt="Investments Marc - Volvemos a producción ✅"
             width={246}
             height={56}
             priority
