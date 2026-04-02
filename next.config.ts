@@ -1,12 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: "export",
+
   turbopack: {
     root: __dirname,
   },
 
-  // Imágenes remotas (añadir dominios según se necesiten)
+  // Imágenes remotas (optimizadas en build time)
   images: {
+    unoptimized: true,
     remotePatterns: [
       { protocol: "https", hostname: "investmentsmarc.com" },
       { protocol: "https", hostname: "cdn.sanity.io" },
