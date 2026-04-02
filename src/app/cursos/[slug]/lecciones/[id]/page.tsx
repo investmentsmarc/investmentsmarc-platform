@@ -1,10 +1,20 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { COURSE_SEEDS } from "@/lib/content";
+
 type Params = {
   slug: string;
   id: string;
 };
+
+export async function generateStaticParams(): Promise<Params[]> {
+  return COURSE_SEEDS.flatMap((course) => [
+    { slug: course.slug, id: "1" },
+    { slug: course.slug, id: "2" },
+    { slug: course.slug, id: "3" },
+  ]);
+}
 
 export async function generateMetadata({
   params,
