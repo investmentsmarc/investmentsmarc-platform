@@ -5,13 +5,13 @@ const nextConfig: NextConfig = {
     root: __dirname,
   },
 
-  // Imágenes remotas (añadir dominios según se necesiten)
+  // Imágenes: deshabilitar optimization para evitar Cloud Functions
   images: {
+    unoptimized: true,
     remotePatterns: [
       { protocol: "https", hostname: "investmentsmarc.com" },
       { protocol: "https", hostname: "cdn.sanity.io" },
     ],
-    formats: ["image/avif", "image/webp"],
   },
 
   // 301 Redirects desde URLs de WordPress
