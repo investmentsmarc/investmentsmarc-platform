@@ -11,8 +11,10 @@
       "*.md",
       ".env*"
     ],
-    "frameworksBackend": {
-      "region": "us-central1"
+    "appHosting": {
+      "runtimeConfig": {
+        "runtime": "nodejs20"
+      }
     },
     "cleanUrls": true,
     "trailingSlashBehavior": "REMOVE"
