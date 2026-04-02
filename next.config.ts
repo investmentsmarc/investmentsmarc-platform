@@ -17,15 +17,15 @@ const nextConfig: NextConfig = {
   // 301 Redirects desde URLs de WordPress
   async redirects() {
     return [
-      // Calculadora antigua → nuevo hub de herramientas
+      // Calculadora antigua → calculadora de inversión compuesta
       {
         source: "/calculadora",
-        destination: "/herramientas",
+        destination: "/herramientas/investment-calculator",
         permanent: true,
       },
       {
         source: "/calculadora/",
-        destination: "/herramientas",
+        destination: "/herramientas/investment-calculator",
         permanent: true,
       },
       {
