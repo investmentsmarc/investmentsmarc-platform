@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -7,11 +8,13 @@ import { useEffect, useState } from "react";
 import { NAV_ITEMS } from "@/lib/site";
 
 function isActivePath(pathname: string, href: string) {
+  const normalizedHref = href.split("#")[0] || "/";
+
   if (href === "/") {
     return pathname === "/";
   }
 
-  return pathname === href || pathname.startsWith(`${href}/`);
+  return pathname === normalizedHref || pathname.startsWith(`${normalizedHref}/`);
 }
 
 export function Header() {
@@ -36,12 +39,14 @@ export function Header() {
     <header className={`mi-header ${isScrolled ? "mi-header-scrolled" : ""}`}>
       <div className="mi-header-inner">
         <Link href="/" className="mi-header-brand" aria-label="Investments Marc">
-          <span className="mi-header-brand-mark" aria-hidden="true">
-            IM
-          </span>
-          <span>
-            Investments <span className="mi-text-gradient">Marc</span>
-          </span>
+          <Image
+            src="/images/logo-processed.png"
+            alt="Investments Marc"
+            width={246}
+            height={56}
+            priority
+            className="mi-header-brand-image"
+          />
         </Link>
 
         <nav className="mi-nav-desktop" aria-label="Navegacion principal">
@@ -94,12 +99,16 @@ export function Header() {
       <div className={`mi-mobile-nav ${isOpen ? "is-open" : ""}`} id="mobile-nav">
         <div className="mi-mobile-nav-panel">
           {NAV_ITEMS.map((item) => {
+            const className = item.isExternal
+              ? "mi-mobile-link"
+              : `mi-mobile-link ${isActivePath(pathname, item.href) ? "is-active" : ""}`;
+
             if (item.isExternal) {
               return (
                 <a
                   key={item.label}
                   href={item.href}
-                  className="mi-mobile-link"
+                  className={className}
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => setIsOpen(false)}
@@ -113,7 +122,7 @@ export function Header() {
               <Link
                 key={item.label}
                 href={item.href}
-                className="mi-mobile-link"
+                className={className}
                 onClick={() => setIsOpen(false)}
               >
                 {item.label}
