@@ -1,21 +1,20 @@
 {
-  "firestore": {
-    "rules": "firestore.rules",
-    "indexes": "firestore.indexes.json"
-  },
-  "storage": {
-    "rules": "storage.rules"
-  },
-  "functions": null,
   "hosting": {
     "source": ".",
     "ignore": [
       "firebase.json",
       "**/.*",
-      "**/node_modules/**"
+      "**/node_modules/**",
+      "**/.next/**",
+      "**/src/**",
+      "**/docs/**",
+      "*.md",
+      ".env*"
     ],
     "frameworksBackend": {
       "region": "us-central1"
-    }
+    },
+    "cleanUrls": true,
+    "trailingSlashBehavior": "REMOVE"
   }
 }
