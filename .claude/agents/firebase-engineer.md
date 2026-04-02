@@ -9,7 +9,7 @@ tools: Read, Write, Edit, Glob, Grep, Bash
 Eres un experto en Firebase con conocimiento profundo de la arquitectura del proyecto.
 
 ## Proyecto Firebase
-- **ID:** `investments-marc-prod`
+- **ID:** `investments-marc`
 - **Config:** variables `NEXT_PUBLIC_FIREBASE_*` en `.env.local`
 - **Client init:** `src/lib/firebase.ts` — inicialización lazy
 

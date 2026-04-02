@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 
-import { PagePlaceholder } from "@/components/ui/PagePlaceholder";
+import { AboutBio } from "@/components/about/AboutBio";
+import { FlowTitanCards } from "@/components/about/FlowTitanCards";
+import { ValuesGrid } from "@/components/about/ValuesGrid";
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -9,12 +11,10 @@ export const metadata: Metadata = {
 
 export default function AboutUsPage() {
   return (
-    <PagePlaceholder
-      badge="About Us"
-      title="Estamos construyendo la experiencia completa de About Us."
-      description="La siguiente entrega de Fase 1 incorporara la bio de Marc, el bloque FlowTitan y la grilla de valores con la misma identidad visual del sitio principal."
-      ctaHref="/curso-gratis"
-      ctaLabel="Ver Curso Gratis"
-    />
+    <>
+      <AboutBio />
+      <FlowTitanCards />
+      <ValuesGrid />
+    </>
   );
 }

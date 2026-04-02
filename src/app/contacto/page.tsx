@@ -1,20 +1,18 @@
 import type { Metadata } from "next";
 
-import { PagePlaceholder } from "@/components/ui/PagePlaceholder";
+import { ContactForm } from "@/components/forms/ContactForm";
 
 export const metadata: Metadata = {
   title: "Contacto",
-  description: "Canal principal de contacto y acompañamiento.",
+  description: "Escribenos y registra tu interes para cursos, herramientas y mentoring.",
 };
 
 export default function ContactoPage() {
   return (
-    <PagePlaceholder
-      badge="Contacto"
-      title="Contacto multicanal en preparacion."
-      description="La fase siguiente migrara el flujo actual de WhatsApp a Firestore + notificacion, manteniendo WhatsApp como canal principal de cierre y atencion."
-      ctaHref="/curso-gratis"
-      ctaLabel="Empezar Gratis"
-    />
+    <section className="mi-section">
+      <div className="mi-container">
+        <ContactForm />
+      </div>
+    </section>
   );
 }

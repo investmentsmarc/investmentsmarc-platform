@@ -1,17 +1,16 @@
+import Link from "next/link";
+
 import { HOME_TESTIMONIALS } from "@/lib/site";
 
 export function Testimonials() {
   return (
-    <section className="mi-section mi-section-secondary">
+    <section className="mi-section mi-section-secondary mi-home-band" id="testimonios">
       <div className="mi-container">
-        <div className="mi-home-section-head mi-home-section-head-stack">
-          <div>
+        <div className="mi-home-section-head mi-home-section-head-centered">
+          <div className="mi-home-section-copy">
             <span className="mi-badge">Testimonios</span>
             <h2 className="mi-section-title">Lo que dicen nuestros estudiantes</h2>
           </div>
-          <p className="mi-section-subtitle">
-            Una primera seleccion estatica mientras conectamos el contenido editorial en la siguiente fase.
-          </p>
         </div>
 
         <div className="mi-testimonials-grid">
@@ -27,6 +26,12 @@ export function Testimonials() {
               </div>
             </article>
           ))}
+        </div>
+
+        <div className="mi-home-section-footer">
+          <Link href="/curso-gratis" className="mi-btn-gold mi-home-section-cta">
+            Comienza tu transformacion
+          </Link>
         </div>
       </div>
     </section>

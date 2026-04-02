@@ -1,25 +1,16 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { PagePlaceholder } from "@/components/ui/PagePlaceholder";
+import { LEGAL_CONTENT } from "@/lib/content";
 
-const legalPages = {
-  privacidad: {
-    title: "Politica de Privacidad",
-    description:
-      "Version placeholder de la politica mientras migramos el contenido legal definitivo.",
-  },
-  terminos: {
-    title: "Terminos de Uso",
-    description:
-      "Version placeholder de los terminos mientras migramos el contenido legal definitivo.",
-  },
-} as const;
-
-type LegalSlug = keyof typeof legalPages;
+type LegalSlug = keyof typeof LEGAL_CONTENT;
 
 function isLegalSlug(value: string): value is LegalSlug {
-  return value in legalPages;
+  return value in LEGAL_CONTENT;
+}
+
+export async function generateStaticParams(): Promise<Array<{ slug: LegalSlug }>> {
+  return Object.keys(LEGAL_CONTENT).map((slug) => ({ slug: slug as LegalSlug }));
 }
 
 export async function generateMetadata({
@@ -34,8 +25,8 @@ export async function generateMetadata({
   }
 
   return {
-    title: legalPages[slug].title,
-    description: legalPages[slug].description,
+    title: LEGAL_CONTENT[slug].title,
+    description: LEGAL_CONTENT[slug].intro,
   };
 }
 
@@ -50,13 +41,26 @@ export default async function LegalPage({
     notFound();
   }
 
-  const page = legalPages[slug];
+  const page = LEGAL_CONTENT[slug];
 
   return (
-    <PagePlaceholder
-      badge="Legal"
-      title={page.title}
-      description={`${page.description} El siguiente bloque de trabajo incorporara el texto completo y estructurado desde la documentacion del proyecto.`}
-    />
+    <section className="mi-section">
+      <div className="mi-container mi-post-layout">
+        <span className="mi-badge">Legal</span>
+        <h1 className="mi-section-title">{page.title}</h1>
+        <p className="mi-page-copy">{page.intro}</p>
+
+        <div className="mi-legal-stack">
+          {page.sections.map((section) => (
+            <section key={section.heading} className="mi-legal-card">
+              <h2>{section.heading}</h2>
+              {section.paragraphs.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </section>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }

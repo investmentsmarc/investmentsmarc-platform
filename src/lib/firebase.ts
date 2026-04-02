@@ -2,6 +2,7 @@
 // Configurar variables de entorno en .env.local antes de usar
 
 import { initializeApp, getApps, type FirebaseApp } from "firebase/app";
+import { getFirestore, type Firestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey:            process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -14,10 +15,18 @@ const firebaseConfig = {
 };
 
 let app: FirebaseApp;
+let db: Firestore;
 
 export function getFirebaseApp(): FirebaseApp {
   if (!app) {
     app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
   }
   return app;
+}
+
+export function getFirestoreDb(): Firestore {
+  if (!db) {
+    db = getFirestore(getFirebaseApp());
+  }
+  return db;
 }

@@ -1,0 +1,46 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidEmail(value) {
+      return value is string && value.size() > 4 && value.matches('.*@.*\\..*');
+    }
+
+    function isValidLeadSource(value) {
+      return value in ['contacto', 'curso-gratis', 'webinar'];
+    }
+
+    match /leads/{leadId} {
+      allow create: if
+        request.resource.data.keys().hasAll(['name', 'email', 'source', 'createdAt']) &&
+        request.resource.data.name is string &&
+        request.resource.data.name.size() >= 2 &&
+        isValidEmail(request.resource.data.email) &&
+        isValidLeadSource(request.resource.data.source);
+
+      allow read, update, delete: if isSignedIn();
+    }
+
+    match /courses/{courseId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    match /lessons/{lessonId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    match /enrollments/{enrollmentId} {
+      allow read: if isSignedIn();
+      allow create, update: if isSignedIn();
+    }
+
+    match /progress/{progressId} {
+      allow read, write: if isSignedIn();
+    }
+  }
+}

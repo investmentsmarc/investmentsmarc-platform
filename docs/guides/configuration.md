@@ -86,7 +86,7 @@ git push -u origin main
 ### 2.1 Crear el Proyecto Firebase
 
 1. Ir a https://console.firebase.google.com/
-2. **Add project** → nombre: `investments-marc-prod`
+2. **Add project** → nombre: `investments-marc`
 3. Enable Google Analytics: **Sí** → seleccionar cuenta Google Analytics existente o crear una
 4. Esperar a que se cree (~30 segundos)
 
@@ -102,9 +102,9 @@ git push -u origin main
 // Esto lo verás en la consola — copiar cada valor a .env.local
 const firebaseConfig = {
   apiKey: "AIza...",                    // → NEXT_PUBLIC_FIREBASE_API_KEY
-  authDomain: "investments-marc-prod.firebaseapp.com",  // → NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
-  projectId: "investments-marc-prod",   // → NEXT_PUBLIC_FIREBASE_PROJECT_ID
-  storageBucket: "investments-marc-prod.firebasestorage.app",  // → NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+  authDomain: "investments-marc.firebaseapp.com",  // → NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+  projectId: "investments-marc",   // → NEXT_PUBLIC_FIREBASE_PROJECT_ID
+  storageBucket: "investments-marc.firebasestorage.app",  // → NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
   messagingSenderId: "123456789",       // → NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
   appId: "1:123456789:web:abc123",      // → NEXT_PUBLIC_FIREBASE_APP_ID
   measurementId: "G-XXXXXXXXXX"         // → NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
@@ -192,7 +192,7 @@ firebase init functions
 
 ```bash
 firebase login                        # Autenticarse
-firebase use investments-marc-prod    # Seleccionar proyecto
+firebase use investments-marc    # Seleccionar proyecto
 firebase serve                        # Servidor local
 firebase emulators:start              # Emuladores (Firestore, Auth, Functions)
 firebase deploy --only hosting        # Deploy solo Hosting
@@ -225,9 +225,9 @@ Expuestas al browser — no deben contener secretos.
 | Variable | Dev (`.env.local`) | Prod (GitHub Secret) | Descripción |
 |----------|-------------------|---------------------|-------------|
 | `NEXT_PUBLIC_FIREBASE_API_KEY` | Valor de Firebase Console | Mismo valor | API key del proyecto Firebase |
-| `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN` | `investments-marc-prod.firebaseapp.com` | Mismo | Auth domain |
-| `NEXT_PUBLIC_FIREBASE_PROJECT_ID` | `investments-marc-prod` | Mismo | Project ID |
-| `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET` | `investments-marc-prod.firebasestorage.app` | Mismo | Storage bucket |
+| `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN` | `investments-marc.firebaseapp.com` | Mismo | Auth domain |
+| `NEXT_PUBLIC_FIREBASE_PROJECT_ID` | `investments-marc` | Mismo | Project ID |
+| `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET` | `investments-marc.firebasestorage.app` | Mismo | Storage bucket |
 | `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID` | Valor de consola | Mismo | Sender ID |
 | `NEXT_PUBLIC_FIREBASE_APP_ID` | Valor de consola | Mismo | App ID |
 | `NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID` | `G-XXXXXXXXXX` | Mismo | Google Analytics |
@@ -517,7 +517,7 @@ jobs:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           channelId: live
-          projectId: investments-marc-prod
+          projectId: investments-marc
 ```
 
 ### 7.2 Workflow de Preview (PRs)
@@ -561,7 +561,7 @@ jobs:
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-          projectId: investments-marc-prod
+          projectId: investments-marc
           # Sin channelId → crea canal preview automáticamente
 ```
 

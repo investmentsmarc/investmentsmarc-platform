@@ -1,6 +1,6 @@
 # Firebase Schema — Investments Marc
 
-**Proyecto:** `investments-marc-prod`
+**Proyecto:** `investments-marc`
 
 ## Firestore Collections
 

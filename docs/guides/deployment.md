@@ -11,7 +11,7 @@
 
 1. Firebase CLI instalado: `npm install -g firebase-tools`
 2. Autenticado: `firebase login`
-3. Proyecto seleccionado: `firebase use investments-marc-prod`
+3. Proyecto seleccionado: `firebase use investments-marc`
 
 ## Deploy Manual (emergencia)
 
@@ -25,7 +25,7 @@ firebase deploy --only hosting
 El workflow `.github/workflows/deploy-firebase.yml` se activa automáticamente con push a `main`.
 
 **Secrets requeridos en GitHub:**
-- `FIREBASE_SERVICE_ACCOUNT` — Service account JSON (no commitear)
+- `FIREBASE_SERVICE_ACCOUNT_INVESTMENTS_MARC` — Service account JSON (no commitear)
 - Variables de entorno de producción (ver `.env.local.example`)
 
 ## DNS Cutover (migración desde Hostinger)

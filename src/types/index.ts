@@ -84,6 +84,37 @@ export interface Testimonial {
   rating?: 1 | 2 | 3 | 4 | 5;
 }
 
+export interface ValueItem {
+  id: string;
+  icon: string;
+  title: string;
+  description: string;
+}
+
+export interface FaqItem {
+  id: string;
+  question: string;
+  answer: string;
+}
+
+export interface LegalSection {
+  heading: string;
+  paragraphs: string[];
+}
+
+export interface LinkCardItem {
+  label: string;
+  href: string;
+  description: string;
+  highlighted?: boolean;
+}
+
+export interface WhatsAppOption {
+  title: string;
+  description: string;
+  message: string;
+}
+
 // --- Navigation -------------------------------------------------------------
 
 export interface NavItem {

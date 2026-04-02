@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  turbopack: {
+    root: __dirname,
+  },
+
   // Imágenes remotas (añadir dominios según se necesiten)
   images: {
     remotePatterns: [
@@ -24,6 +28,21 @@ const nextConfig: NextConfig = {
         destination: "/herramientas",
         permanent: true,
       },
+      {
+        source: "/nosotros",
+        destination: "/about-us",
+        permanent: true,
+      },
+      {
+        source: "/herramientas/risk-reward-calculator/",
+        destination: "/herramientas/risk-reward-calculator",
+        permanent: true,
+      },
+      {
+        source: "/herramientas/investment-calculator/",
+        destination: "/herramientas/investment-calculator",
+        permanent: true,
+      },
       // Políticas legales (slugs WordPress)
       {
         source: "/politica-de-privacidad",
@@ -35,13 +54,16 @@ const nextConfig: NextConfig = {
         destination: "/legal/terminos",
         permanent: true,
       },
-      // Cursos (temporal, apunta a subdominio hasta Fase 4)
-      // En Fase 4 se elimina este redirect cuando la plataforma esté lista
-      // {
-      //   source: "/cursos/:path*",
-      //   destination: "https://cursos.investmentsmarc.com/:path*",
-      //   permanent: false,
-      // },
+      {
+        source: "/curso",
+        destination: "/curso-gratis",
+        permanent: true,
+      },
+      {
+        source: "/preguntas-frecuentes",
+        destination: "/faqs",
+        permanent: true,
+      },
     ];
   },
 };

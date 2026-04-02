@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Manrope, Sora } from "next/font/google";
 
 import { CookieBanner } from "@/components/global/CookieBanner";
 import { Footer } from "@/components/global/Footer";
@@ -9,11 +9,18 @@ import { WhatsAppFloat } from "@/components/global/WhatsAppFloat";
 
 import "./globals.css";
 
-const inter = Inter({
+const manrope = Manrope({
   subsets: ["latin"],
-  variable: "--mi-font",
+  variable: "--font-mi-body",
   display: "swap",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800"],
+});
+
+const sora = Sora({
+  subsets: ["latin"],
+  variable: "--font-mi-display",
+  display: "swap",
+  weight: ["500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -37,7 +44,7 @@ export const metadata: Metadata = {
       "Aprende trading institucional, gestión de riesgo y análisis de mercados con Marc.",
     images: [
       {
-        url: "/images/og-image.jpg",
+        url: "/images/og-image.png",
         width: 1200,
         height: 630,
         alt: "Investments Marc",
@@ -48,7 +55,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Investments Marc — Trading e Inversiones Profesionales",
     description: "Aprende trading institucional, gestión de riesgo y análisis de mercados.",
-    images: ["/images/og-image.jpg"],
+    images: ["/images/og-image.png"],
   },
   robots: {
     index: true,
@@ -64,7 +71,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={`${inter.variable} h-full`}>
+    <html lang="es" className={`${manrope.variable} ${sora.variable} h-full`}>
       <body className="min-h-full flex flex-col bg-mi-bg-primary text-mi-text-primary">
         <div className="mi-site-shell">
           <TradingViewTicker />

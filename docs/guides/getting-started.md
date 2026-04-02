@@ -6,7 +6,7 @@ Guía de onboarding para nuevos colaboradores del equipo.
 - Node.js v20+ (el proyecto usa v24)
 - Git
 - Acceso al repositorio `investmentsmarc/investmentsmarc-platform`
-- Acceso a Firebase Console (`investments-marc-prod`)
+- Acceso a Firebase Console (`investments-marc`)
 - Acceso a Sanity Studio (pedir al team lead)
 
 ## Instalación

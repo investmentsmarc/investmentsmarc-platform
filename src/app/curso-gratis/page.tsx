@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { PagePlaceholder } from "@/components/ui/PagePlaceholder";
+import { LeadForm } from "@/components/forms/LeadForm";
 
 export const metadata: Metadata = {
   title: "Curso Gratis",
@@ -9,12 +9,36 @@ export const metadata: Metadata = {
 
 export default function CursoGratisPage() {
   return (
-    <PagePlaceholder
-      badge="Curso Gratis"
-      title="Landing de captacion en construccion."
-      description="Esta ruta ya queda activa para el CTA principal. En la siguiente iteracion construire el formulario real y la escritura en Firestore segun la Fase 3 del plan."
-      ctaHref="/contacto"
-      ctaLabel="Pedir informacion"
-    />
+    <section className="mi-section">
+      <div className="mi-container mi-contact-grid">
+        <div className="mi-contact-intro">
+          <span className="mi-badge">Curso 100% Gratuito</span>
+          <h1 className="mi-section-title">
+            Aprende a invertir como las <span className="mi-text-gradient">instituciones</span>
+          </h1>
+          <p className="mi-page-copy">
+            Entra a Smart Money Basics y construye una base clara de estructura,
+            liquidez, sesgo y gestión de riesgo para operar con más criterio.
+          </p>
+          <div className="mi-contact-points">
+            <div className="mi-contact-point">
+              <strong>Incluye</strong>
+              <span>Lecciones introductorias, framework base y siguientes pasos sugeridos.</span>
+            </div>
+            <div className="mi-contact-point">
+              <strong>Ideal para</strong>
+              <span>Traders en transición que quieren dejar atrás entradas impulsivas.</span>
+            </div>
+            <div className="mi-contact-point">
+              <strong>Meta</strong>
+              <span>Dar estructura a tu aprendizaje antes de pasar a herramientas avanzadas.</span>
+            </div>
+          </div>
+        </div>
+        <div className="mi-contact-card">
+          <LeadForm />
+        </div>
+      </div>
+    </section>
   );
 }
