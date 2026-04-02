@@ -31,12 +31,12 @@ jobs:
           NEXT_PUBLIC_FIREBASE_APP_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID }}
           NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID }}
 
-      - name: Setup Firebase CLI
+      - name: Setup Firebase CLI and Deploy
         run: |
           npm install -g firebase-tools
           firebase experiments:enable webframeworks
-
-      - name: Deploy to Firebase
-        run: firebase deploy --project investments-marc
+          echo "$FIREBASE_SERVICE_ACCOUNT" > /tmp/firebase-key.json
+          firebase deploy --project investments-marc --non-interactive
         env:
-          FIREBASE_SERVICE_ACCOUNT_INVESTMENTS_MARC: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_INVESTMENTS_MARC }}
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_INVESTMENTS_MARC }}
+          GOOGLE_APPLICATION_CREDENTIALS: /tmp/firebase-key.json
