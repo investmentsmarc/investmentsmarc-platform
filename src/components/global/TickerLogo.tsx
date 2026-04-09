@@ -1,3 +1,5 @@
+import type { JSX, ReactNode } from "react";
+
 // Logos circulares para el ticker — replica el estilo TradingView
 
 interface LogoProps {
@@ -13,7 +15,7 @@ function Circle({
 }: {
   size: number;
   fill: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 18 18" fill="none" aria-hidden="true">
