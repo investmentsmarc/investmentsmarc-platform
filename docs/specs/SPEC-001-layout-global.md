@@ -17,13 +17,32 @@ Componentes globales que se renderizan en todas las páginas del sitio via `src/
 - **Ubicación:** `src/components/global/TradingViewTicker.tsx`
 - **Tipo:** Client Component (`'use client'`)
 - **Referencia WP:** `functions.php` L15-45
+- **Implementación:** Widget embebido oficial de TradingView — Ticker Tape
+  - Script externo: `https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js`
+  - Inyectado en cliente vía `useEffect` + `useRef` (evita errores de hidratación SSR)
+  - Renderiza un `iframe` interno gestionado por TradingView
 - **Comportamiento:**
-  - Widget de TradingView fijo en el top de la página
-  - Muestra tickers: SPY, QQQ, ES, NQ, DXY, BTC, EUR/USD
-  - Scroll horizontal automático
-  - Tema oscuro que coincide con `--mi-bg-primary`
-  - `position: fixed; top: 0; z-index: 9999`
-- **Props:** Ninguna (configuración hardcodeada)
+  - Ticker fijo en el top de la página con precios, variación y colores rojo/verde en tiempo real
+  - `position: fixed; top: 0; z-index: 70; height: 46px`
+  - Fondo transparente (`isTransparent: true`) integrado con `--mi-bg-primary`
+  - Tema oscuro (`colorTheme: "dark"`), idioma español (`locale: "es"`)
+- **Símbolos configurados:**
+
+  | Símbolo TradingView | Etiqueta |
+  |---------------------|----------|
+  | `FOREXCOM:NSXUSD` | Nasdaq 100 |
+  | `BITSTAMP:BTCUSD` | Bitcoin |
+  | `BITSTAMP:ETHUSD` | Ethereum |
+  | `NASDAQ:NVDA` | NVDA |
+  | `NASDAQ:TSLA` | TSLA |
+  | `NASDAQ:AAPL` | AAPL |
+  | `FOREXCOM:SPXUSD` | S&P 500 |
+
+- **Tipo de datos:**
+  - Acciones e índices: ~15 min de retraso (estándar widgets gratuitos de TradingView)
+  - Criptomonedas (BTC/ETH vía Bitstamp): near-realtime
+- **Dependencia externa:** Widget gratuito de TradingView — sin API key, sin suscripción de pago
+- **Props:** Ninguna (configuración hardcodeada en `WIDGET_CONFIG`)
 
 ### 2.2 `<Header />`
 
@@ -123,7 +142,7 @@ Componentes globales que se renderizan en todas las páginas del sitio via `src/
 
 ## 5. Criterios de Aceptación
 
-- [ ] Ticker visible y funcional con datos en tiempo real
+- [ ] Ticker visible y funcional con widget embebido de TradingView (precios, variación, colores rojo/verde)
 - [ ] Header glassmorphic con transición on-scroll
 - [ ] Navegación mobile funcional en <768px
 - [ ] Footer con todos los links correctos

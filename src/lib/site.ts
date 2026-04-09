@@ -36,16 +36,6 @@ export const SOCIAL_LINKS: NavItem[] = [
   { label: "WhatsApp", href: `${WHATSAPP_URL}?text=Hola%20Marc%2C%20quiero%20mas%20informacion`, isExternal: true },
 ];
 
-export const MARKET_TICKERS = [
-  "SPX 500",
-  "Nasdaq 100",
-  "BTC/USD",
-  "ETH/USD",
-  "NVDA",
-  "TSLA",
-  "AAPL",
-];
-
 export const HOME_PREVIEW_POSTS = BLOG_POSTS.slice(0, 3);
 
 export const HOME_TESTIMONIALS = TESTIMONIALS;

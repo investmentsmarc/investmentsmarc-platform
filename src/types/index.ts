@@ -115,6 +115,17 @@ export interface WhatsAppOption {
   message: string;
 }
 
+// --- Market Ticker ----------------------------------------------------------
+
+export interface TickerItem {
+  symbol:        string;
+  label:         string;
+  type:          "index" | "stock" | "crypto";
+  price:         number;
+  change:        number;
+  changePercent: number;
+}
+
 // --- Navigation -------------------------------------------------------------
 
 export interface NavItem {
