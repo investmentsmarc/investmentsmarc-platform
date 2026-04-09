@@ -38,10 +38,10 @@ export function Footer() {
         <div className="mi-footer-brand-block">
           <div className="mi-footer-logo-shell">
             <Image
-              src="/images/logo-processed.png"
+              src="/images/logo.png"
               alt="Investments Marc"
-              width={246}
-              height={56}
+              width={936}
+              height={252}
               className="mi-footer-logo"
             />
           </div>

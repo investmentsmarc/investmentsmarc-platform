@@ -1,100 +1,128 @@
 import { NextResponse } from "next/server";
+import YahooFinance from "yahoo-finance2";
 
-// Símbolos de índices principales — se ordenan por volatilidad (mayor % cambio absoluto primero)
-const INDICES: TickerSymbolConfig[] = [
-  { symbol: "OANDA:SPX500USD", label: "S&P 500",    type: "index" },
-  { symbol: "OANDA:NAS100USD", label: "Nasdaq 100",  type: "index" },
-  { symbol: "OANDA:US30USD",   label: "Dow Jones",   type: "index" },
-  { symbol: "OANDA:UK100GBP",  label: "FTSE 100",    type: "index" },
+const yf = new YahooFinance({ suppressNotices: ["yahooSurvey"] });
+
+// Índices fijos — siempre presentes, ordenados por volatilidad
+const INDICES = [
+  { symbol: "^GSPC",  label: "S&P 500",      type: "index" as const },
+  { symbol: "^NDX",   label: "Nasdaq 100",    type: "index" as const },
+  { symbol: "^DJI",   label: "Dow Jones",     type: "index" as const },
+  { symbol: "^RUT",   label: "Russell 2000",  type: "index" as const },
 ];
 
-// Símbolos fijos — siempre al final, en este orden
-const FIXED: TickerSymbolConfig[] = [
-  { symbol: "COIN",             label: "Coinbase", type: "stock"  },
-  { symbol: "BINANCE:BNBUSDT",  label: "BNB",      type: "crypto" },
+// Crypto fija — expandida, ordenada por volatilidad
+const CRYPTO = [
+  { symbol: "BTC-USD", label: "Bitcoin",  type: "crypto" as const },
+  { symbol: "ETH-USD", label: "Ethereum", type: "crypto" as const },
+  { symbol: "SOL-USD", label: "Solana",   type: "crypto" as const },
+  { symbol: "BNB-USD", label: "BNB",      type: "crypto" as const },
 ];
 
-interface TickerSymbolConfig {
-  symbol: string;
-  label:  string;
-  type:   "index" | "stock" | "crypto";
-}
-
-export interface TickerItem extends TickerSymbolConfig {
+export interface TickerItem {
+  symbol:        string;
+  label:         string;
+  type:          "index" | "stock" | "crypto";
   price:         number;
   change:        number;
   changePercent: number;
 }
 
-interface FinnhubQuote {
-  c:  number; // current price
-  d:  number; // change
-  dp: number; // change percent
-  h:  number; // high
-  l:  number; // low
-  o:  number; // open
-  pc: number; // prev close
-}
-
-async function fetchQuote(symbol: string): Promise<FinnhubQuote | null> {
-  const key = process.env.FINNHUB_API_KEY;
-  if (!key) return null;
-
-  try {
-    const res = await fetch(
-      `https://finnhub.io/api/v1/quote?symbol=${encodeURIComponent(symbol)}&token=${key}`,
-      { next: { revalidate: 60 } }
-    );
-    if (!res.ok) return null;
-
-    const data: FinnhubQuote = await res.json();
-    // Finnhub devuelve c=0 para símbolos no disponibles
-    if (!data || data.c === 0) return null;
-
-    return data;
-  } catch {
-    return null;
-  }
+/** Limpia el nombre de la empresa: quita sufijos legales y trunca */
+function cleanName(raw: string | undefined | null, symbol: string): string {
+  if (!raw) return symbol;
+  return raw
+    .replace(/,?\s*(Inc\.|Corp\.|Ltd\.|LLC\.?|Holdings?|Group|PLC\.?|Co\.).*$/i, "")
+    .trim()
+    .slice(0, 14);
 }
 
 export async function GET() {
-  if (!process.env.FINNHUB_API_KEY) {
-    return NextResponse.json(
-      { error: "FINNHUB_API_KEY no configurada" },
-      { status: 500 }
-    );
+  const [indicesResult, gainersResult, losersResult, cryptoResult] =
+    await Promise.allSettled([
+      // 1. Cotizaciones de índices
+      Promise.all(
+        INDICES.map((idx) =>
+          yf
+            .quote(idx.symbol)
+            .then((q): TickerItem | null =>
+              q?.regularMarketPrice != null
+                ? {
+                    ...idx,
+                    price:         q.regularMarketPrice,
+                    change:        q.regularMarketChange        ?? 0,
+                    changePercent: q.regularMarketChangePercent ?? 0,
+                  }
+                : null
+            )
+            .catch(() => null)
+        )
+      ),
+      // 2. Top gainers del día (dinámico)
+      yf.screener({ scrIds: "day_gainers", count: 6 }),
+      // 3. Top losers del día (dinámico)
+      yf.screener({ scrIds: "day_losers",  count: 6 }),
+      // 4. Cotizaciones de crypto
+      Promise.all(
+        CRYPTO.map((c) =>
+          yf
+            .quote(c.symbol)
+            .then((q): TickerItem | null =>
+              q?.regularMarketPrice != null
+                ? {
+                    ...c,
+                    price:         q.regularMarketPrice,
+                    change:        q.regularMarketChange        ?? 0,
+                    changePercent: q.regularMarketChangePercent ?? 0,
+                  }
+                : null
+            )
+            .catch(() => null)
+        )
+      ),
+    ]);
+
+  // --- Índices ---
+  const indices = (
+    indicesResult.status === "fulfilled"
+      ? (indicesResult.value.filter(Boolean) as TickerItem[])
+      : []
+  ).sort((a, b) => Math.abs(b.changePercent) - Math.abs(a.changePercent));
+
+  // --- Stocks dinámicos: merge gainers + losers, deduplicar, top 5 por volatilidad ---
+  const gainers =
+    gainersResult.status === "fulfilled" ? gainersResult.value.quotes ?? [] : [];
+  const losers =
+    losersResult.status === "fulfilled" ? losersResult.value.quotes ?? [] : [];
+
+  const seen = new Set<string>();
+  const stockItems: TickerItem[] = [];
+
+  for (const q of [...gainers, ...losers]) {
+    if (!q.symbol || seen.has(q.symbol) || q.regularMarketPrice == null) continue;
+    seen.add(q.symbol);
+    stockItems.push({
+      symbol:        q.symbol,
+      label:         cleanName((q as { shortName?: string }).shortName, q.symbol),
+      type:          "stock",
+      price:         q.regularMarketPrice,
+      change:        (q as { regularMarketChange?: number }).regularMarketChange ?? 0,
+      changePercent: (q as { regularMarketChangePercent?: number }).regularMarketChangePercent ?? 0,
+    });
   }
 
-  const allSymbols = [...INDICES, ...FIXED];
+  const topStocks = stockItems
+    .sort((a, b) => Math.abs(b.changePercent) - Math.abs(a.changePercent))
+    .slice(0, 5);
 
-  const settled = await Promise.allSettled(
-    allSymbols.map(async (item): Promise<TickerItem | null> => {
-      const quote = await fetchQuote(item.symbol);
-      if (!quote) return null;
-      return {
-        ...item,
-        price:         quote.c,
-        change:        quote.d,
-        changePercent: quote.dp,
-      };
-    })
-  );
+  // --- Crypto ---
+  const crypto = (
+    cryptoResult.status === "fulfilled"
+      ? (cryptoResult.value.filter(Boolean) as TickerItem[])
+      : []
+  ).sort((a, b) => Math.abs(b.changePercent) - Math.abs(a.changePercent));
 
-  const data: TickerItem[] = settled
-    .filter(
-      (r): r is PromiseFulfilledResult<TickerItem> =>
-        r.status === "fulfilled" && r.value !== null
-    )
-    .map((r) => r.value);
-
-  // Índices: ordenar por % cambio absoluto (más volátil primero)
-  const indices = data
-    .filter((d) => d.type === "index")
-    .sort((a, b) => Math.abs(b.changePercent) - Math.abs(a.changePercent));
-
-  const fixed = data.filter((d) => d.type !== "index");
-
-  return NextResponse.json([...indices, ...fixed], {
+  return NextResponse.json([...indices, ...topStocks, ...crypto], {
     headers: { "Cache-Control": "s-maxage=60, stale-while-revalidate=30" },
   });
 }

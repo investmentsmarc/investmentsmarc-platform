@@ -63,6 +63,13 @@ export const metadata: Metadata = {
     googleBot: { index: true, follow: true },
   },
   applicationName: "Investments Marc",
+  icons: {
+    icon: [
+      { url: "/favicon.ico",  sizes: "any" },
+      { url: "/icon.png",     type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 export default function RootLayout({

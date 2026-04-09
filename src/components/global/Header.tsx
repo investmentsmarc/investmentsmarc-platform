@@ -40,10 +40,10 @@ export function Header() {
       <div className="mi-header-inner">
         <Link href="/" className="mi-header-brand" aria-label="Investments Marc - Trading Profesional">
           <Image
-            src="/images/logo-processed.png"
-            alt="Investments Marc - Volvemos a producción ✅"
-            width={246}
-            height={56}
+            src="/images/logo.png"
+            alt="Marc Investments — Trading e Inversiones Profesionales"
+            width={936}
+            height={252}
             priority
             className="mi-header-brand-image"
           />

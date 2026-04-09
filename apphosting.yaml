@@ -3,7 +3,3 @@ runConfig:
   memoryMiB: 512
   maxInstances: 3
   minInstances: 0
-
-env:
-  - variable: FINNHUB_API_KEY
-    secret: FINNHUB_API_KEY
