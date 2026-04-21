@@ -38,9 +38,14 @@ export function HeroSection() {
               <Link href="/curso-gratis" className="mi-btn-gold mi-hero-trading-primary">
                 Ver curso gratuito →
               </Link>
-              <Link href="/about-us" className="mi-btn-ghost mi-hero-trading-secondary">
+              <a
+                href="https://flowtitan.investmentsmarc.com"
+                target="_blank"
+                rel="noreferrer noopener"
+                className="mi-btn-ghost mi-hero-trading-secondary"
+              >
                 FlowTitan PRO
-              </Link>
+              </a>
             </div>
           </div>
 

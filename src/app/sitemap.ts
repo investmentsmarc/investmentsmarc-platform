@@ -10,7 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = [
     "",
     "/about-us",
-    "/blog",
+    // "/blog", // oculto por ahora
     "/contacto",
     "/curso-gratis",
     "/webinar",
@@ -26,18 +26,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/dashboard",
   ];
 
+  // Blog hidden for now — `BLOG_POSTS` is intentionally unused here.
+  void BLOG_POSTS;
+
   return [
     ...staticRoutes.map((path) => ({
       url: `${BASE_URL}${path}`,
       lastModified: new Date(),
       changeFrequency: "weekly" as const,
       priority: path === "" ? 1 : 0.7,
-    })),
-    ...BLOG_POSTS.map((post) => ({
-      url: `${BASE_URL}/blog/${post.slug}`,
-      lastModified: new Date(post.publishedAt),
-      changeFrequency: "monthly" as const,
-      priority: 0.8,
     })),
     ...Object.keys(LEGAL_CONTENT).map((slug) => ({
       url: `${BASE_URL}/legal/${slug}`,

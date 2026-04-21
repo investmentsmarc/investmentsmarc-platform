@@ -11,13 +11,13 @@ export const NAV_ITEMS: NavItem[] = [
   { label: "Cursos", href: "/cursos" },
   { label: "Testimonios", href: "/#testimonios" },
   { label: "FAQs", href: "/faqs" },
-  { label: "Blog", href: "/blog" },
+  // { label: "Blog", href: "/blog" }, // oculto por ahora — se reactivará cuando el blog esté listo
   { label: "Contacto", href: "/contacto" },
 ];
 
 export const FOOTER_NAV: NavItem[] = [
   { label: "Curso Gratis", href: "/curso-gratis" },
-  { label: "Blog", href: "/blog" },
+  // { label: "Blog", href: "/blog" }, // oculto por ahora
   { label: "Herramientas", href: "/herramientas" },
   { label: "FAQs", href: "/faqs" },
   { label: "About Us", href: "/about-us" },

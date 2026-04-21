@@ -122,29 +122,50 @@ export const ABOUT_QUOTE =
 
 export const FLOWTITAN_FEATURES = [
   {
-    title: "Dark Pools & Whales Tracking",
+    title: "Whales & Dark Pool Tracking",
+    kicker: "Institucional · $150K+ tier",
     description:
-      "Visualiza actividad relevante y concentración de flujo para entender dónde se posiciona el dinero grande.",
+      "Detecta posiciones institucionales de $150K+ en tiempo real, rastrea entry price, ROI y rolls. Ve dónde se posiciona el smart money antes de que el mercado lo descuente.",
   },
   {
-    title: "Detección de GEX y presión gamma",
+    title: "GEX Engine & Gamma Pressure",
+    kicker: "Gamma · Vanna · Charm",
     description:
-      "Añade contexto de opciones y sensibilidad del mercado para no operar estructuras a ciegas.",
+      "Calcula gamma, vanna y charm con Black-Scholes vectorizado. Identifica flip points, muros de liquidez y zonas de imán gamma para operar con contexto, no adivinanzas.",
   },
   {
-    title: "Contexto operativo en tiempo real",
+    title: "Confluence Engine de 15 Capas",
+    kicker: "15 capas · ~35s por análisis",
     description:
-      "Unifica lectura de mercado, watchlists y capas de confirmación en una misma interfaz.",
+      "Análisis forense multi-capa: flujo, GEX, rolling, sector, macro, sentiment, técnico, IV regime y más. Score de confluencia en ~35 segundos — decide con evidencia, no con fe.",
+  },
+  {
+    title: "TITAN AI — Director de Inteligencia",
+    kicker: "Agente IA · 16 herramientas propietarias",
+    description:
+      "Agente IA con acceso a 16 herramientas propietarias: forensic reports, IV crush, option chain snapshots, whale ledger y visualización on-demand.",
+  },
+  {
+    title: "Tape Scanner Institucional",
+    kicker: "SWEEP · BLOCK · MULTI-LEG",
+    description:
+      "Filtros premium por tier ($150K–$1M+) que eliminan ruido retail. Clasificación ML (SWEEP, BLOCK, MULTI-LEG) con dirección (BULLISH/BEARISH) inline.",
+  },
+  {
+    title: "Contexto Operativo en Tiempo Real",
+    kicker: "WebSocket · Watchlists · Alerts",
+    description:
+      "Watchlists, alertas, dashboard y capas de confirmación sincronizadas vía WebSocket. Una sola pantalla para leer, validar y ejecutar.",
   },
 ];
 
 export const FLOWTITAN_SCREENS = [
-  "Contract Detail",
-  "DashBoard",
-  "GEX",
-  "Live Flow",
-  "Whale Alerts",
-  "WatchList",
+  "Whale Ledger",
+  "GEX Engine",
+  "Confluence",
+  "TITAN AI",
+  "Tape Scanner",
+  "Command Center",
 ];
 
 export const CORE_VALUES: ValueItem[] = [
@@ -386,32 +407,90 @@ export const WEBINAR_BENEFITS = [
   "Bonus con siguiente paso recomendado según tu perfil actual.",
 ];
 
+// Ruta del Inversor — Academia Marc Investments, progresión 1 → 5
 export const COURSE_SEEDS = [
   {
-    id: "flowtitan-pro",
-    slug: "flowtitan-pro",
-    title: "FlowTitan PRO",
+    id: "genesis",
+    slug: "genesis",
+    order: 1,
+    codename: "GÉNESIS",
+    title: "De Cero a Inversor",
+    kicker: "Fundamentos del Stock Market · Mentalidad del Capital",
     description:
-      "Programa premium para traders que quieren más contexto institucional, gestión de riesgo y marco operativo avanzado.",
-    price: 497,
+      "Forja la mentalidad que separa al especulador del inversor. Aprende cómo funciona realmente la bolsa, por qué el 90% pierde y cómo posicionarte en el 10% que construye riqueza.",
+    price: 0,
     currency: "USD" as const,
     coverImage: "",
-    tags: ["smart-money", "flujo", "opciones", "risk"],
-    publishedAt: "2026-03-22",
+    tags: ["fundamentos", "mentalidad", "beginner"],
+    publishedAt: "2026-04-01",
     isActive: true,
     stripePriceId: "",
   },
   {
-    id: "smart-money-basics",
-    slug: "smart-money-basics",
-    title: "Smart Money Basics",
+    id: "cartografia",
+    slug: "cartografia",
+    order: 2,
+    codename: "CARTOGRAFÍA",
+    title: "El Lenguaje del Precio",
+    kicker: "Análisis Técnico · Lectura de Charts",
     description:
-      "Ruta de entrada para dominar estructura, liquidez y fundamentos del enfoque institucional.",
-    price: 0,
+      "Domina el mapa del mercado. Estructura, soportes, resistencias, volumen, patrones y timing — para que cada gráfico te hable antes de que hagas click.",
+    price: 297,
     currency: "USD" as const,
     coverImage: "",
-    tags: ["intro", "smart-money", "basics"],
-    publishedAt: "2026-03-18",
+    tags: ["tecnico", "charts", "price-action"],
+    publishedAt: "2026-04-02",
+    isActive: true,
+    stripePriceId: "",
+  },
+  {
+    id: "rayos-x",
+    slug: "rayos-x",
+    order: 3,
+    codename: "RAYOS X",
+    title: "La Anatomía de una Empresa",
+    kicker: "Análisis Fundamental · Valuación de Compañías",
+    description:
+      "Disecciona balances, márgenes y valuaciones como un analista de Wall Street. Identifica compañías de alta salud financiera antes de que el mercado las descubra.",
+    price: 397,
+    currency: "USD" as const,
+    coverImage: "",
+    tags: ["fundamental", "valuacion", "balance"],
+    publishedAt: "2026-04-03",
+    isActive: true,
+    stripePriceId: "",
+  },
+  {
+    id: "arsenal",
+    slug: "arsenal",
+    order: 4,
+    codename: "ARSENAL",
+    title: "Maestría en Opciones",
+    kicker: "Master de Opciones · Estrategias de Alto Apalancamiento",
+    description:
+      "Desbloquea el instrumento financiero más poderoso del mercado. Calls, puts, spreads, covered calls, wheels e iron condors — con Greeks, IV y gestión de riesgo profesional.",
+    price: 597,
+    currency: "USD" as const,
+    coverImage: "",
+    tags: ["opciones", "spreads", "greeks"],
+    publishedAt: "2026-04-04",
+    isActive: true,
+    stripePriceId: "",
+  },
+  {
+    id: "oraculo",
+    slug: "oraculo",
+    order: 5,
+    codename: "ORÁCULO",
+    title: "Tape Reading Institucional",
+    kicker: "Flujo Institucional · GEX · Dark Pools",
+    description:
+      "El curso más avanzado del ecosistema. Aprende a leer el tape como los market makers, detectar whales en tiempo real, interpretar gamma exposure y operar al lado del smart money — no en su contra.",
+    price: 997,
+    currency: "USD" as const,
+    coverImage: "",
+    tags: ["smart-money", "gex", "dark-pools", "tape"],
+    publishedAt: "2026-04-05",
     isActive: true,
     stripePriceId: "",
   },

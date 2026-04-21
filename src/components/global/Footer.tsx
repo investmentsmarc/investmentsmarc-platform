@@ -11,14 +11,14 @@ export function Footer() {
   const navigationLinks = [
     { label: "Inicio", href: "/" },
     { label: "Nosotros", href: "/about-us" },
-    { label: "Blog", href: "/blog" },
+    // { label: "Blog", href: "/blog" }, // oculto por ahora
     { label: "Herramientas", href: "/herramientas" },
     { label: "FAQs", href: "/faqs" },
   ];
-  const educationLinks = [
+  const educationLinks: Array<{ label: string; href: string; isExternal?: boolean }> = [
     { label: "Curso Gratis", href: "/curso-gratis" },
     { label: "Plataforma de Cursos", href: "/cursos" },
-    { label: "FlowTitan PRO", href: "/about-us" },
+    { label: "FlowTitan PRO", href: "https://flowtitan.investmentsmarc.com", isExternal: true },
     { label: "Webinar", href: "/webinar" },
   ];
   const contactLinks = [
@@ -82,9 +82,20 @@ export function Footer() {
           <ul className="mi-footer-list">
             {educationLinks.map((item) => (
               <li key={item.label}>
-                <Link href={item.href} className="mi-footer-link">
-                  {item.label}
-                </Link>
+                {item.isExternal ? (
+                  <a
+                    href={item.href}
+                    className="mi-footer-link"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <Link href={item.href} className="mi-footer-link">
+                    {item.label}
+                  </Link>
+                )}
               </li>
             ))}
           </ul>

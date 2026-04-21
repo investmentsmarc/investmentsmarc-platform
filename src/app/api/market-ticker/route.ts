@@ -3,20 +3,29 @@ import YahooFinance from "yahoo-finance2";
 
 const yf = new YahooFinance({ suppressNotices: ["yahooSurvey"] });
 
-// Índices fijos — siempre presentes, ordenados por volatilidad
-const INDICES = [
-  { symbol: "^GSPC",  label: "S&P 500",      type: "index" as const },
-  { symbol: "^NDX",   label: "Nasdaq 100",    type: "index" as const },
-  { symbol: "^DJI",   label: "Dow Jones",     type: "index" as const },
-  { symbol: "^RUT",   label: "Russell 2000",  type: "index" as const },
+// Curated watchlist — Mag 7 + ETFs + crypto + key high-beta tickers
+const STOCKS = [
+  // Magnificent 7
+  { symbol: "AAPL",  label: "Apple",     type: "stock" as const },
+  { symbol: "MSFT",  label: "Microsoft", type: "stock" as const },
+  { symbol: "NVDA",  label: "NVIDIA",    type: "stock" as const },
+  { symbol: "GOOGL", label: "Alphabet",  type: "stock" as const },
+  { symbol: "AMZN",  label: "Amazon",    type: "stock" as const },
+  { symbol: "META",  label: "Meta",      type: "stock" as const },
+  { symbol: "TSLA",  label: "Tesla",     type: "stock" as const },
+  // ETFs & index proxies
+  { symbol: "SPY",   label: "S&P 500",   type: "stock" as const },
+  { symbol: "QQQ",   label: "Nasdaq 100", type: "stock" as const },
+  { symbol: "^VIX",  label: "VIX",       type: "index" as const },
+  // High-signal individual stocks
+  { symbol: "PLTR",  label: "Palantir",  type: "stock" as const },
+  { symbol: "UNH",   label: "UnitedHealth", type: "stock" as const },
+  { symbol: "ASML",  label: "ASML",      type: "stock" as const },
 ];
 
-// Crypto fija — expandida, ordenada por volatilidad
 const CRYPTO = [
   { symbol: "BTC-USD", label: "Bitcoin",  type: "crypto" as const },
   { symbol: "ETH-USD", label: "Ethereum", type: "crypto" as const },
-  { symbol: "SOL-USD", label: "Solana",   type: "crypto" as const },
-  { symbol: "BNB-USD", label: "BNB",      type: "crypto" as const },
 ];
 
 export interface TickerItem {
@@ -28,101 +37,40 @@ export interface TickerItem {
   changePercent: number;
 }
 
-/** Limpia el nombre de la empresa: quita sufijos legales y trunca */
-function cleanName(raw: string | undefined | null, symbol: string): string {
-  if (!raw) return symbol;
-  return raw
-    .replace(/,?\s*(Inc\.|Corp\.|Ltd\.|LLC\.?|Holdings?|Group|PLC\.?|Co\.).*$/i, "")
-    .trim()
-    .slice(0, 14);
+async function quoteOne(
+  meta: { symbol: string; label: string; type: "index" | "stock" | "crypto" },
+): Promise<TickerItem | null> {
+  try {
+    const q = await yf.quote(meta.symbol);
+    if (!q?.regularMarketPrice) return null;
+    return {
+      ...meta,
+      price:         q.regularMarketPrice,
+      change:        q.regularMarketChange        ?? 0,
+      changePercent: q.regularMarketChangePercent ?? 0,
+    };
+  } catch {
+    return null;
+  }
 }
 
 export async function GET() {
-  const [indicesResult, gainersResult, losersResult, cryptoResult] =
-    await Promise.allSettled([
-      // 1. Cotizaciones de índices
-      Promise.all(
-        INDICES.map((idx) =>
-          yf
-            .quote(idx.symbol)
-            .then((q): TickerItem | null =>
-              q?.regularMarketPrice != null
-                ? {
-                    ...idx,
-                    price:         q.regularMarketPrice,
-                    change:        q.regularMarketChange        ?? 0,
-                    changePercent: q.regularMarketChangePercent ?? 0,
-                  }
-                : null
-            )
-            .catch(() => null)
-        )
-      ),
-      // 2. Top gainers del día (dinámico)
-      yf.screener({ scrIds: "day_gainers", count: 6 }),
-      // 3. Top losers del día (dinámico)
-      yf.screener({ scrIds: "day_losers",  count: 6 }),
-      // 4. Cotizaciones de crypto
-      Promise.all(
-        CRYPTO.map((c) =>
-          yf
-            .quote(c.symbol)
-            .then((q): TickerItem | null =>
-              q?.regularMarketPrice != null
-                ? {
-                    ...c,
-                    price:         q.regularMarketPrice,
-                    change:        q.regularMarketChange        ?? 0,
-                    changePercent: q.regularMarketChangePercent ?? 0,
-                  }
-                : null
-            )
-            .catch(() => null)
-        )
-      ),
-    ]);
+  const [stocksResult, cryptoResult] = await Promise.allSettled([
+    Promise.all(STOCKS.map(quoteOne)),
+    Promise.all(CRYPTO.map(quoteOne)),
+  ]);
 
-  // --- Índices ---
-  const indices = (
-    indicesResult.status === "fulfilled"
-      ? (indicesResult.value.filter(Boolean) as TickerItem[])
-      : []
-  ).sort((a, b) => Math.abs(b.changePercent) - Math.abs(a.changePercent));
-
-  // --- Stocks dinámicos: merge gainers + losers, deduplicar, top 5 por volatilidad ---
-  const gainers =
-    gainersResult.status === "fulfilled" ? gainersResult.value.quotes ?? [] : [];
-  const losers =
-    losersResult.status === "fulfilled" ? losersResult.value.quotes ?? [] : [];
-
-  const seen = new Set<string>();
-  const stockItems: TickerItem[] = [];
-
-  for (const q of [...gainers, ...losers]) {
-    if (!q.symbol || seen.has(q.symbol) || q.regularMarketPrice == null) continue;
-    seen.add(q.symbol);
-    stockItems.push({
-      symbol:        q.symbol,
-      label:         cleanName((q as { shortName?: string }).shortName, q.symbol),
-      type:          "stock",
-      price:         q.regularMarketPrice,
-      change:        (q as { regularMarketChange?: number }).regularMarketChange ?? 0,
-      changePercent: (q as { regularMarketChangePercent?: number }).regularMarketChangePercent ?? 0,
-    });
-  }
-
-  const topStocks = stockItems
-    .sort((a, b) => Math.abs(b.changePercent) - Math.abs(a.changePercent))
-    .slice(0, 5);
-
-  // --- Crypto ---
-  const crypto = (
+  const stocks =
+    stocksResult.status === "fulfilled"
+      ? (stocksResult.value.filter(Boolean) as TickerItem[])
+      : [];
+  const crypto =
     cryptoResult.status === "fulfilled"
       ? (cryptoResult.value.filter(Boolean) as TickerItem[])
-      : []
-  ).sort((a, b) => Math.abs(b.changePercent) - Math.abs(a.changePercent));
+      : [];
 
-  return NextResponse.json([...indices, ...topStocks, ...crypto], {
+  return NextResponse.json([...stocks, ...crypto], {
     headers: { "Cache-Control": "s-maxage=60, stale-while-revalidate=30" },
   });
 }
+
