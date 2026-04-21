@@ -5,6 +5,7 @@ import { CookieBanner } from "@/components/global/CookieBanner";
 import { Footer } from "@/components/global/Footer";
 import { Header } from "@/components/global/Header";
 import { TradingViewTicker } from "@/components/global/TradingViewTicker";
+import { TelegramFloat } from "@/components/global/TelegramFloat";
 import { WhatsAppFloat } from "@/components/global/WhatsAppFloat";
 import { TradingShader } from "@/components/home/TradingShader";
 import { RevealController } from "@/components/ui/RevealController";
@@ -88,6 +89,7 @@ export default function RootLayout({
           <Header />
           <main className="mi-main">{children}</main>
           <Footer />
+          <TelegramFloat />
           <WhatsAppFloat />
           <CookieBanner />
         </div>

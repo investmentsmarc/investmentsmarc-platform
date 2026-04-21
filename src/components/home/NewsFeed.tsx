@@ -221,6 +221,7 @@ export function NewsFeed({ articles }: { articles: MarketNewsArticle[] }) {
               <img
                 src={hero.imageUrl ?? placeholderFor(hero.category)}
                 alt=""
+                referrerPolicy="no-referrer"
                 onError={(e) => {
                   (e.currentTarget as HTMLImageElement).src = placeholderFor(hero.category);
                 }}
@@ -300,6 +301,7 @@ export function NewsFeed({ articles }: { articles: MarketNewsArticle[] }) {
                         src={a.imageUrl ?? placeholderFor(a.category)}
                         alt=""
                         loading="lazy"
+                        referrerPolicy="no-referrer"
                         onError={(e) => {
                           (e.currentTarget as HTMLImageElement).src = placeholderFor(a.category);
                         }}
@@ -358,8 +360,15 @@ export function NewsFeed({ articles }: { articles: MarketNewsArticle[] }) {
                     : active.imageUrl ?? placeholderFor(active.category)
                 }
                 alt=""
+                referrerPolicy="no-referrer"
                 onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).src = placeholderFor(active.category);
+                  // Si falla la imagen extraída → cae a la del feed → placeholder
+                  const el = e.currentTarget as HTMLImageElement;
+                  if (active.imageUrl && el.src !== active.imageUrl) {
+                    el.src = active.imageUrl;
+                  } else {
+                    el.src = placeholderFor(active.category);
+                  }
                 }}
               />
               <span className={`mi-news-card-cat mi-news-cat-${active.category}`}>
@@ -418,18 +427,6 @@ export function NewsFeed({ articles }: { articles: MarketNewsArticle[] }) {
               ) : null}
 
               <div className="mi-news-modal-actions">
-                <a
-                  href={
-                    articleState.status === "ready" && articleState.data.sourceUrl
-                      ? articleState.data.sourceUrl
-                      : active.url
-                  }
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mi-btn-gold mi-news-modal-primary"
-                >
-                  Abrir en la fuente →
-                </a>
                 <button
                   type="button"
                   className="mi-btn-ghost mi-news-modal-secondary"

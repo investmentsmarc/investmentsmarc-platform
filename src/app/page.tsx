@@ -5,6 +5,7 @@ import { JsonLd } from "@/components/global/JsonLd";
 import { HeroSection } from "@/components/home/HeroSection";
 import { LatestArticles } from "@/components/home/LatestArticles";
 import { NewsSkeleton } from "@/components/home/NewsSkeleton";
+import { TelegramCommunity } from "@/components/home/TelegramCommunity";
 import { Testimonials } from "@/components/home/Testimonials";
 
 export const metadata: Metadata = {
@@ -37,6 +38,7 @@ export default function HomePage() {
     <>
       <JsonLd data={homeSchema} />
       <HeroSection />
+      <TelegramCommunity />
       <Suspense fallback={<NewsSkeleton />}>
         <LatestArticles />
       </Suspense>

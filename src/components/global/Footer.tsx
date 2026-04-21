@@ -2,9 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { SocialIcon } from "@/components/global/SocialIcon";
-import { LEGAL_NAV, SOCIAL_LINKS, WHATSAPP_URL } from "@/lib/site";
+import { LEGAL_NAV, SOCIAL_LINKS, TELEGRAM_URL, WHATSAPP_URL } from "@/lib/site";
 
-type SocialName = "Instagram" | "YouTube" | "WhatsApp" | "TikTok";
+type SocialName = "Instagram" | "YouTube" | "WhatsApp" | "TikTok" | "Telegram";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -24,10 +24,11 @@ export function Footer() {
   const contactLinks = [
     { label: "Formulario", href: "/contacto", isExternal: false },
     { label: "WhatsApp", href: `${WHATSAPP_URL}?text=Hola%20Marc%2C%20quiero%20mas%20informacion`, isExternal: true },
+    { label: "Telegram", href: TELEGRAM_URL, isExternal: true },
     { label: "info@investmentsmarc.com", href: "mailto:info@investmentsmarc.com", isExternal: true },
   ];
   const socialIcons = SOCIAL_LINKS.filter((item) =>
-    ["Instagram", "YouTube", "WhatsApp"].includes(item.label),
+    ["Instagram", "YouTube", "Telegram", "WhatsApp"].includes(item.label),
   );
 
   return (

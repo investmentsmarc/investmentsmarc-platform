@@ -1,4 +1,4 @@
-type IconName = "Instagram" | "YouTube" | "WhatsApp" | "TikTok";
+type IconName = "Instagram" | "YouTube" | "WhatsApp" | "TikTok" | "Telegram";
 
 export function SocialIcon({ name, size = 18 }: { name: IconName; size?: number }) {
   switch (name) {
@@ -57,6 +57,19 @@ export function SocialIcon({ name, size = 18 }: { name: IconName; size?: number 
           aria-hidden="true"
         >
           <path d="M19.3 7.35a5.66 5.66 0 0 1-3.43-1.13 5.68 5.68 0 0 1-2.3-3.72h-3.04v12.2a2.75 2.75 0 1 1-1.93-2.63V9.02a5.82 5.82 0 0 0-.82-.06 5.82 5.82 0 1 0 5.82 5.82V9.37a8.69 8.69 0 0 0 5.7 2.1V8.43l-.1-.08Z" />
+        </svg>
+      );
+
+    case "Telegram":
+      return (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.67 6.88-1.57 7.4c-.12.53-.44.66-.89.41l-2.46-1.81-1.19 1.14c-.13.13-.24.24-.49.24l.17-2.5 4.58-4.14c.2-.18-.04-.28-.31-.1l-5.67 3.57-2.44-.76c-.53-.17-.54-.53.11-.78l9.53-3.67c.44-.16.83.11.67.7Z" />
         </svg>
       );
 
