@@ -8,13 +8,10 @@ import { useEffect, useState } from "react";
 import { NAV_ITEMS } from "@/lib/site";
 
 function isActivePath(pathname: string, href: string) {
-  const normalizedHref = href.split("#")[0] || "/";
-
-  if (href === "/") {
-    return pathname === "/";
-  }
-
-  return pathname === normalizedHref || pathname.startsWith(`${normalizedHref}/`);
+  // Hash links like "/#testimonios" are in-page anchors, never a route match
+  if (href.includes("#")) return false;
+  if (href === "/") return pathname === "/";
+  return pathname === href || pathname.startsWith(`${href}/`);
 }
 
 export function Header() {

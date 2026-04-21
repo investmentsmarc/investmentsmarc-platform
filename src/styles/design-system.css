@@ -570,6 +570,28 @@
   margin-left: 20px;
 }
 
+/* Active nav item: oro brillante + subrayado existente (globals.css maneja el ::after).
+   Hover queda blanco neutro; active es el que se destaca en oro. */
+.mi-nav-link:hover {
+  color: var(--mi-text-primary) !important;
+  text-shadow: 0 0 18px rgba(216, 182, 90, 0.18);
+}
+.mi-nav-link.is-active {
+  color: var(--mi-gold-light) !important;
+  text-shadow: 0 0 22px rgba(216, 182, 90, 0.38);
+}
+
+/* Sticky header scrolled: velo oscuro ligero + blur fuerte.
+   Predominan la nebulosa detrás y el contenido; el bar solo se "insinúa". */
+.mi-header-scrolled {
+  background:
+    linear-gradient(180deg, rgba(6, 6, 6, 0.42), rgba(10, 10, 10, 0.32)) !important;
+  backdrop-filter: blur(22px) saturate(1.3) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(1.3) !important;
+  border-bottom: 1px solid var(--mi-border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
 /* --- TRANSLUCENT TILES ON LIVE SHADER: same light scrim recipe across pages.
        Used by: calculator result cards, contact points, contact form shell.
        Keeps the nebula visible but restores text contrast. --- */
@@ -591,6 +613,32 @@
 .mi-footer-bottom,
 .mi-footer-disclaimer p {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
+}
+
+/* Footer type scale — subir de tamaños muy pequeños a algo legible */
+.mi-footer-heading {
+  font-size: 0.82rem !important;
+  letter-spacing: 0.14em;
+}
+.mi-footer-copy {
+  font-size: 1.02rem !important;
+  line-height: 1.6;
+}
+.mi-footer-link {
+  font-size: 0.95rem !important;
+  line-height: 1.7;
+}
+.mi-footer-disclaimer p {
+  font-size: 0.88rem !important;
+  line-height: 1.7;
+}
+.mi-footer-bottom {
+  font-size: 0.88rem !important;
+}
+.mi-footer-social {
+  width: 38px !important;
+  height: 38px !important;
+  font-size: 0.72rem !important;
 }
 
 
