@@ -93,7 +93,7 @@ export function FlowTitanTerminal() {
       window.setTimeout(() => {
         setActiveIdx((i) => (i + 1) % TICKERS.length);
       }, 360);
-    }, 9000);
+    }, 10000);
     return () => window.clearInterval(id);
   }, []);
 

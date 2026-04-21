@@ -1,6 +1,12 @@
 import "server-only";
 
-export type NewsCategory = "markets" | "earnings" | "tech" | "crypto" | "macro";
+export type NewsCategory =
+  | "markets"
+  | "earnings"
+  | "tech"
+  | "crypto"
+  | "macro"
+  | "trump";
 
 export type MarketNewsArticle = {
   id: string;
@@ -72,10 +78,20 @@ const RSS_QUERIES: Array<{ category: NewsCategory; url: string }> = [
       ) +
       "&hl=en-US&gl=US&ceid=US:en",
   },
+  {
+    category: "trump",
+    url:
+      "https://news.google.com/rss/search?" +
+      "q=" +
+      encodeURIComponent(
+        'Trump (stocks OR markets OR tariff OR economy OR Fed OR inflation OR trade OR "Truth Social") when:1d',
+      ) +
+      "&hl=en-US&gl=US&ceid=US:en",
+  },
 ];
 
-// Exclude politically-charged content to keep the feed about markets
-const EXCLUDE_KEYWORDS = /\b(trump|truth social|maga|biden|harris|gop|democrat|republican)\b/i;
+// No filtro político — Trump es parte del feed.
+const EXCLUDE_KEYWORDS: RegExp | null = null;
 
 function extractTag(block: string, tag: string): string {
   const re = new RegExp(`<${tag}[^>]*>([\\s\\S]*?)<\\/${tag}>`, "i");
@@ -392,13 +408,16 @@ async function getMarketNewsUnsafe(limit: number): Promise<MarketNewsArticle[]> 
     tech: [],
     crypto: [],
     macro: [],
+    trump: [],
   };
   RSS_QUERIES.forEach((q, i) => {
-    buckets[q.category].push(
-      ...perCategory[i].filter(
-        (a) => !EXCLUDE_KEYWORDS.test(a.title) && !EXCLUDE_KEYWORDS.test(a.description),
-      ),
-    );
+    const items = EXCLUDE_KEYWORDS
+      ? perCategory[i].filter(
+          (a) =>
+            !EXCLUDE_KEYWORDS.test(a.title) && !EXCLUDE_KEYWORDS.test(a.description),
+        )
+      : perCategory[i];
+    buckets[q.category].push(...items);
   });
   (Object.keys(buckets) as NewsCategory[]).forEach((k) => {
     buckets[k].sort(
@@ -411,14 +430,17 @@ async function getMarketNewsUnsafe(limit: number): Promise<MarketNewsArticle[]> 
   const candidateCount = limit * 3;
   const categoryOrder: NewsCategory[] = [
     "markets",
+    "trump",
     "earnings",
     "tech",
     "markets",
     "macro",
+    "trump",
     "earnings",
     "crypto",
     "tech",
     "markets",
+    "trump",
     "earnings",
     "tech",
     "markets",
@@ -435,6 +457,7 @@ async function getMarketNewsUnsafe(limit: number): Promise<MarketNewsArticle[]> 
     tech: 0,
     crypto: 0,
     macro: 0,
+    trump: 0,
   };
 
   const normalizeTitle = (t: string) =>

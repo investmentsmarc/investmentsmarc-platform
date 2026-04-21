@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 import type { MarketNewsArticle, NewsCategory } from "@/lib/marketNews";
 
@@ -25,6 +26,7 @@ const CATEGORY_LABEL: Record<NewsCategory, string> = {
   tech: "Tech",
   crypto: "Crypto",
   macro: "Macro",
+  trump: "Trump",
 };
 
 function timeAgo(iso: string): string {
@@ -65,6 +67,10 @@ const PLACEHOLDERS: Record<NewsCategory, string> = {
   macro: placeholderSvg(
     "MACRO",
     "M40 240 L120 260 L200 210 L290 230 L380 190 L470 210 L560 180",
+  ),
+  trump: placeholderSvg(
+    "TRUMP",
+    "M40 200 L120 240 L200 180 L290 260 L380 160 L470 250 L560 170",
   ),
 };
 
@@ -120,7 +126,7 @@ export function NewsFeed({ articles }: { articles: MarketNewsArticle[] }) {
         setHeroIdx((i) => (i + 1) % spotlight.length);
         setHeroSwapping(false);
       }, 520); // duración del fade-out — matchea @keyframes mi-news-hero-out
-    }, 8000);
+    }, 10000);
     return () => window.clearInterval(id);
   }, [paused, spotlight.length]);
 
@@ -321,17 +327,18 @@ export function NewsFeed({ articles }: { articles: MarketNewsArticle[] }) {
         ) : null}
       </div>
 
-      {/* === MODAL === */}
-      {active ? (
-        <div
-          className="mi-news-overlay"
-          role="dialog"
-          aria-modal="true"
-          aria-label={active.title}
-          onClick={(e) => {
-            if (e.target === e.currentTarget) close();
-          }}
-        >
+      {/* === MODAL === via portal a document.body para escapar stacking contexts */}
+      {active && typeof document !== "undefined"
+        ? createPortal(
+            <div
+              className="mi-news-overlay"
+              role="dialog"
+              aria-modal="true"
+              aria-label={active.title}
+              onClick={(e) => {
+                if (e.target === e.currentTarget) close();
+              }}
+            >
           <article className="mi-news-modal">
             <button
               type="button"
@@ -433,8 +440,10 @@ export function NewsFeed({ articles }: { articles: MarketNewsArticle[] }) {
               </div>
             </div>
           </article>
-        </div>
-      ) : null}
+            </div>,
+            document.body,
+          )
+        : null}
     </>
   );
 }

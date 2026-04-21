@@ -1988,9 +1988,12 @@
   color: var(--mi-text-primary);
   backdrop-filter: blur(8px);
 }
-.mi-news-cat-markets       { color: var(--mi-gold-light); border-color: rgba(216,182,90,0.45); }
-.mi-news-cat-trump         { color: #f4d97a; border-color: rgba(244,217,122,0.55); background: rgba(20,10,2,0.82); }
-.mi-news-cat-truth-social  { color: #e8c870; border-color: rgba(216,182,90,0.35); }
+.mi-news-cat-markets  { color: var(--mi-gold-light); border-color: rgba(216,182,90,0.45); }
+.mi-news-cat-earnings { color: var(--mi-gold-light); border-color: rgba(216,182,90,0.45); }
+.mi-news-cat-tech     { color: var(--mi-gold-light); border-color: rgba(216,182,90,0.45); }
+.mi-news-cat-crypto   { color: var(--mi-gold-light); border-color: rgba(216,182,90,0.45); }
+.mi-news-cat-macro    { color: var(--mi-gold-light); border-color: rgba(216,182,90,0.45); }
+.mi-news-cat-trump    { color: #f4d97a; border-color: rgba(244,217,122,0.55); background: rgba(20,10,2,0.82); }
 
 .mi-news-card-body {
   padding: 16px 18px 20px;
@@ -2038,21 +2041,29 @@
   overflow: hidden;
 }
 
-/* --- MODAL OVERLAY (the card "opens" inline — never leaves the page) --- */
+/* --- MODAL OVERLAY (the card "opens" inline — never leaves the page) ---
+   Fondo NEGRO SÓLIDO para todos los navegadores. Primero un background opaco
+   de fallback, luego el backdrop-filter como enhancement en los que lo soportan.
+   z-index muy alto para ganar contra ticker (70), header (60) y WhatsApp float. */
 .mi-news-overlay {
   position: fixed;
   inset: 0;
-  z-index: 90;
+  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 24px;
-  background: rgba(4, 4, 4, 0.78);
+  background: #000;                         /* fallback sólido */
+  background: rgba(0, 0, 0, 0.96);          /* casi-opaco en navegadores con rgba */
   backdrop-filter: blur(12px) saturate(1.2);
   -webkit-backdrop-filter: blur(12px) saturate(1.2);
   animation: mi-news-overlay-in 0.25s ease-out;
   overflow-y: auto;
 }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .mi-news-overlay { background: #000 !important; }
+}
+
 @keyframes mi-news-overlay-in {
   from { opacity: 0; }
   to   { opacity: 1; }
@@ -2063,10 +2074,11 @@
   width: 100%;
   max-height: calc(100vh - 48px);
   overflow-y: auto;
-  background: linear-gradient(180deg, rgba(20, 20, 20, 0.95), rgba(10, 10, 10, 0.96));
+  /* card totalmente opaca — sin transparencia que deje ver el shader detrás */
+  background: #0d0d0d;
   border: 1px solid var(--mi-border-strong);
   border-radius: 14px;
-  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.9);
   animation: mi-news-modal-in 0.35s var(--mi-ease-out);
 }
 @keyframes mi-news-modal-in {
@@ -2468,31 +2480,30 @@
   display: block;
 }
 
-/* Layout más compacto + ancho alineado al container del contenido (1180px)
-   para que logo y nav no "floten" más afuera que el contenido debajo. */
+/* Header alineado al container del contenido, pero con más aire para el menú.
+   El nav es el protagonista central — con gap 22 y font 0.92 respira mejor. */
 .mi-header-inner {
-  gap: 18px !important;
+  gap: 24px !important;
   padding: 13px 28px !important;
   max-width: 1180px !important;
 }
-@media (min-width: 1280px) {
-  .mi-header-inner {
-    padding: 13px 28px !important;
-  }
-}
 .mi-nav-desktop {
-  gap: 14px !important;
+  gap: 22px !important;
   margin-left: 0 !important;
+  flex: 1 1 auto; /* toma el sitio que quede entre logo y CTA */
+  justify-content: center; /* nav centrado */
 }
 .mi-header-brand {
-  padding-right: 14px;
-  margin-right: 4px;
+  padding-right: 16px;
+  margin-right: 6px;
+  flex-shrink: 0;
 }
 .mi-nav-link {
-  font-size: 0.9rem;
+  font-size: 0.92rem;
 }
 .mi-header-actions {
   gap: 8px !important;
+  flex-shrink: 0;
 }
 
 /* Active nav item: oro brillante + subrayado existente (globals.css maneja el ::after).
@@ -2645,7 +2656,7 @@
   display: flex;
   align-items: center;
   width: 100%;
-  padding: 40px 40px 28px;
+  padding: 16px 40px 14px; /* márgenes verticales reducidos — hero más compacto */
 }
 .mi-hero-trading-grid {
   width: 100%;
@@ -3110,23 +3121,38 @@
   animation: mi-dot-pulse 1.6s infinite;
 }
 
-/* Status bar pegada al pie de la tarjeta FlowTitan — bleed hacia los bordes del card */
+/* Terminal FlowTitan — altura fija + status bar flush al pie del card.
+   El log ocupa el espacio restante para que el card no crezca/encoja
+   entre swaps de ticker aunque las líneas del log varíen. */
+.mi-flowtitan {
+  display: flex;
+  flex-direction: column;
+  height: 620px;   /* altura estable — todos los swaps Mag-7 respetan este marco */
+}
+.mi-flowtitan .mi-ft-log {
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: none; /* el flex manda; quitamos el cap anterior */
+}
+/* Status bar pegada al borde inferior del card — sin gap, flush con el borde */
 .mi-flowtitan .mi-trading-status {
-  margin: 18px -26px -24px;
+  margin: 0 -26px -24px;           /* anula el padding del card hacia los bordes */
   padding: 11px 20px;
-  border-radius: 0 0 10px 10px;
+  border: 0;
   border-top: 1px solid var(--mi-border-strong);
+  border-radius: 0 0 10px 10px;    /* matchea el radius inferior del card */
   background: linear-gradient(
     180deg,
-    rgba(6, 6, 6, 0.55),
-    rgba(6, 6, 6, 0.88)
+    rgba(6, 6, 6, 0.62),
+    rgba(4, 4, 4, 0.9)
   );
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px) saturate(1.1);
+  -webkit-backdrop-filter: blur(14px) saturate(1.1);
   font-size: 9.5px;
   letter-spacing: 0.16em;
   flex-wrap: wrap;
   gap: 10px 18px;
+  flex-shrink: 0;
 }
 .mi-flowtitan .mi-trading-status-group {
   gap: 14px !important;
@@ -3272,33 +3298,39 @@ html:not(.js-ready) .mi-reveal {
 }
 
 /* ==========================================================================
-   TIGHTER VERTICAL RHYTHM — las secciones estaban con 120px top/bottom,
-   demasiado espacio entre bloques. Bajamos a un ritmo más compacto.
+   TIGHTER VERTICAL RHYTHM — secciones muy compactas entre sí.
+   Originalmente 120px top/bottom; iteramos hacia 36px.
    ========================================================================== */
 .mi-section {
-  padding: 68px 6% !important;
+  padding: 36px 6% !important;
 }
 @media (min-width: 1280px) {
   .mi-section {
-    padding: 76px 6% !important;
+    padding: 44px 6% !important;
   }
 }
 @media (max-width: 768px) {
   .mi-section {
-    padding: 48px 5% !important;
+    padding: 28px 5% !important;
   }
 }
 
-/* headers de sección menos distantes de la grid */
-.mi-home-section-head { margin-bottom: 28px !important; }
-.mi-home-section-head-centered { margin-bottom: 24px !important; }
-.mi-faq-head { margin: 0 auto 34px !important; }
-.mi-courses-head { margin: 0 auto 38px !important; }
-.mi-ftx-head { margin: 0 auto 30px !important; }
+/* headers de sección pegados a la grid */
+.mi-home-section-head { margin-bottom: 22px !important; }
+.mi-home-section-head-centered { margin-bottom: 18px !important; }
+.mi-faq-head { margin: 0 auto 26px !important; }
+.mi-courses-head { margin: 0 auto 30px !important; }
+.mi-ftx-head { margin: 0 auto 24px !important; }
 
-/* home: quitar margin-bottom de la última section para que pegue con el footer */
+/* entre bands consecutivas casi sin aire extra */
 .mi-home-band + .mi-home-band {
-  padding-top: 52px !important;
+  padding-top: 24px !important;
+}
+
+/* Hero ligeramente más corto para que no deje un hueco grande antes de la
+   siguiente sección — el contenido ya no queda nadando en el viewport. */
+.mi-hero-trading {
+  min-height: calc(92vh - var(--mi-ticker-height, 46px) - var(--mi-header-height, 74px)) !important;
 }
 
 /* Centrado horizontal: limitar un poco más el container y añadir aire lateral */
