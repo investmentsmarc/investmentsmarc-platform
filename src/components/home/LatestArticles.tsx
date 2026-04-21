@@ -1,10 +1,22 @@
 import { NewsFeed } from "@/components/home/NewsFeed";
 import { getMarketNews } from "@/lib/marketNews";
+import type { MarketNewsArticle } from "@/lib/marketNews";
 
-export const revalidate = 1800; // 30-min ISR
+/**
+ * Request-time render. En Firebase App Hosting el build puede fallar silently
+ * al prerender la home si la red tiene un hiccup — mejor re-rendear en cada
+ * request y dejar que el `Cache-Control` downstream mitigue el costo.
+ */
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
 export async function LatestArticles() {
-  const articles = await getMarketNews(9);
+  let articles: MarketNewsArticle[] = [];
+  try {
+    articles = await getMarketNews(9);
+  } catch (err) {
+    console.error("[LatestArticles] getMarketNews failed:", err);
+  }
 
   return (
     <section className="mi-section mi-blog-section mi-home-band">

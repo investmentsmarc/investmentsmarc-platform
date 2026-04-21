@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { FlowTitanTerminal } from "@/components/home/FlowTitanTerminal";
-import { TradingStatusBar } from "@/components/home/TradingStatusBar";
 
 export function HeroSection() {
   return (
@@ -52,8 +51,6 @@ export function HeroSection() {
           <FlowTitanTerminal />
         </div>
       </div>
-
-      <TradingStatusBar />
     </section>
   );
 }

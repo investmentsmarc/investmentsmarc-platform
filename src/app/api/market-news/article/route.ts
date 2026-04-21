@@ -1,5 +1,10 @@
 import { NextResponse } from "next/server";
 
+/** Force Node runtime — usamos URLSearchParams complejos + regex pesado. */
+export const runtime = "nodejs";
+/** Always request-time — nunca build-time. */
+export const dynamic = "force-dynamic";
+
 type ExtractedArticle = {
   title: string | null;
   html: string;

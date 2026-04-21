@@ -90,9 +90,10 @@ void main(){
   col += gold * pow(n, 2.1) * 0.38;
   col += goldHot * pow(n, 4.2) * 0.20;
 
+  // Mouse halo — luminosidad reducida para que no encandile al mover el cursor
   float md = length(p - m);
-  col += goldHot * 0.42 * exp(-md * 3.1);
-  col += gold    * 0.25 * exp(-md * 1.3);
+  col += goldHot * 0.18 * exp(-md * 3.4);
+  col += gold    * 0.10 * exp(-md * 1.5);
 
   float gy = abs(fract(p.y * 14.0 + uTime * 0.12) - 0.5);
   float gx = abs(fract(p.x * 22.0 - uMouse.x * 0.1) - 0.5);

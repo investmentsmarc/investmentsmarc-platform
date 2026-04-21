@@ -367,8 +367,22 @@ async function enrichArticle(
 // --------------------------------------------------------------------
 
 export async function getMarketNews(limit = 9): Promise<MarketNewsArticle[]> {
+  try {
+    return await getMarketNewsUnsafe(limit);
+  } catch (err) {
+    console.error("[marketNews] getMarketNews crashed:", err);
+    return [];
+  }
+}
+
+async function getMarketNewsUnsafe(limit: number): Promise<MarketNewsArticle[]> {
   const perCategory = await Promise.all(
-    RSS_QUERIES.map((q) => fetchQuery(q.category, q.url)),
+    RSS_QUERIES.map((q) =>
+      fetchQuery(q.category, q.url).catch((e) => {
+        console.error(`[marketNews] RSS ${q.category} failed:`, e);
+        return [] as MarketNewsArticle[];
+      }),
+    ),
   );
 
   // Bucket per category, sort by date desc, filter out politics

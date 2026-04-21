@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import { TradingStatusBar } from "@/components/home/TradingStatusBar";
+
 type LogRow = { id: number; t: string; sym: string; msg: string; val: string };
 
 type Ticker = {
@@ -344,6 +346,8 @@ export function FlowTitanTerminal() {
           </div>
         ))}
       </div>
+
+      <TradingStatusBar />
     </aside>
   );
 }

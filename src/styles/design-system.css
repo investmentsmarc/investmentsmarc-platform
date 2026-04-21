@@ -3110,6 +3110,36 @@
   animation: mi-dot-pulse 1.6s infinite;
 }
 
+/* Status bar pegada al pie de la tarjeta FlowTitan — bleed hacia los bordes del card */
+.mi-flowtitan .mi-trading-status {
+  margin: 18px -26px -24px;
+  padding: 11px 20px;
+  border-radius: 0 0 10px 10px;
+  border-top: 1px solid var(--mi-border-strong);
+  background: linear-gradient(
+    180deg,
+    rgba(6, 6, 6, 0.55),
+    rgba(6, 6, 6, 0.88)
+  );
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+}
+.mi-flowtitan .mi-trading-status-group {
+  gap: 14px !important;
+}
+.mi-flowtitan .mi-trading-status-dot {
+  width: 5px;
+  height: 5px;
+  margin-right: 8px;
+}
+.mi-flowtitan .mi-trading-status-item b {
+  margin: 0 3px;
+}
+
 /* --------------------------------------------------------------------------
    RESPONSIVE — hero trading
    -------------------------------------------------------------------------- */
