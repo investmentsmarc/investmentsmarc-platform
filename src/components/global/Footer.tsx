@@ -1,7 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { SocialIcon } from "@/components/global/SocialIcon";
 import { LEGAL_NAV, SOCIAL_LINKS, WHATSAPP_URL } from "@/lib/site";
+
+type SocialName = "Instagram" | "YouTube" | "WhatsApp" | "TikTok";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -26,11 +29,6 @@ export function Footer() {
   const socialIcons = SOCIAL_LINKS.filter((item) =>
     ["Instagram", "YouTube", "WhatsApp"].includes(item.label),
   );
-  const socialLabels: Record<string, string> = {
-    Instagram: "IG",
-    YouTube: "YT",
-    WhatsApp: "WA",
-  };
 
   return (
     <footer className="mi-footer mi-reveal">
@@ -60,7 +58,7 @@ export function Footer() {
                 rel="noreferrer"
                 aria-label={item.label}
               >
-                {socialLabels[item.label] ?? item.label.slice(0, 2).toUpperCase()}
+                <SocialIcon name={item.label as SocialName} size={18} />
               </a>
             ))}
           </div>
