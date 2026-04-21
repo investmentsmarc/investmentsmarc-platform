@@ -14,7 +14,34 @@ type Flow = {
 
 type Particle = { x: number; y: number; z: number; vx: number; vy: number; r: number; a: number };
 type Node = { x: number; y: number; vx: number; vy: number; pulse: number };
-type Candle = { i: number; up: boolean; h: number; life: number };
+type ChartBar = { open: number; close: number; high: number; low: number; up: boolean };
+
+function generateChartSeries(count: number, start = 0.52): ChartBar[] {
+  const bars: ChartBar[] = [];
+  let px = start;
+  for (let i = 0; i < count; i++) {
+    const open = px;
+    const bias = Math.sin(i * 0.12) * 0.012; // gentle macro trend
+    const drift = (Math.random() - 0.5) * 0.06 + bias;
+    const close = Math.max(0.08, Math.min(0.92, open + drift));
+    const high = Math.max(open, close) + Math.random() * 0.028;
+    const low = Math.min(open, close) - Math.random() * 0.028;
+    bars.push({ open, close, high, low, up: close >= open });
+    px = close;
+  }
+  return bars;
+}
+
+function movingAverage(bars: ChartBar[], window: number): number[] {
+  const out: number[] = [];
+  for (let i = 0; i < bars.length; i++) {
+    const start = Math.max(0, i - window + 1);
+    let sum = 0;
+    for (let j = start; j <= i; j++) sum += bars[j].close;
+    out.push(sum / (i - start + 1));
+  }
+  return out;
+}
 
 const VERTEX_SRC = `
 attribute vec2 aPos;
@@ -184,12 +211,17 @@ export function TradingShader({ variant = "hero" }: TradingShaderProps = {}) {
       { phase: 3.4, speed: 0.72, amp: 0.09, freq: 7.8, y: 0.78, alpha: 0.35, width: 1.2 },
     ];
 
-    const candles: Candle[] = Array.from({ length: 42 }, (_, i) => ({
-      i,
-      up: Math.random() > 0.45,
-      h: 8 + Math.random() * 30,
-      life: Math.random(),
-    }));
+    // Ghost chart (OHLC + SMA) — the "silent witness" behind the nebula
+    const CHART_BARS = 64;
+    let chartSeries = generateChartSeries(CHART_BARS);
+    let chartMA = movingAverage(chartSeries, 8);
+    let lastChartUpdate = 0;
+    // axis labels derived from the series (map normalized 0..1 to pseudo-price)
+    const chartPriceRange = { min: 2580, max: 2720 };
+    const chartPriceLabel = (u: number) =>
+      Math.round(chartPriceRange.min + u * (chartPriceRange.max - chartPriceRange.min))
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
     const nodes: Node[] = Array.from({ length: 14 }, () => ({
       x: Math.random(),
@@ -244,6 +276,133 @@ export function TradingShader({ variant = "hero" }: TradingShaderProps = {}) {
       }
 
       ctx.clearRect(0, 0, W, H);
+
+      // === GHOST CHART (bottom-wide OHLC + SMA + axis) ===
+      // append a new candle every ~1500ms to simulate a live chart
+      if (now - lastChartUpdate > 1500) {
+        const last = chartSeries[chartSeries.length - 1];
+        const open = last.close;
+        const bias = Math.sin(now * 0.00005) * 0.01;
+        const drift = (Math.random() - 0.5) * 0.055 + bias;
+        const close = Math.max(0.08, Math.min(0.92, open + drift));
+        const high = Math.max(open, close) + Math.random() * 0.028;
+        const low = Math.min(open, close) - Math.random() * 0.028;
+        chartSeries = [
+          ...chartSeries.slice(1),
+          { open, close, high, low, up: close >= open },
+        ];
+        chartMA = movingAverage(chartSeries, 8);
+        lastChartUpdate = now;
+      }
+
+      const chartPadL = W * 0.05;
+      const chartPadR = W * 0.05;
+      const chartTop = H * 0.42;
+      const chartBot = H * 0.94;
+      const chartW = W - chartPadL - chartPadR;
+      const chartH = chartBot - chartTop;
+      const cW2 = chartW / chartSeries.length;
+      const yMap = (u: number) => chartTop + (1 - u) * chartH;
+
+      // gridlines
+      ctx.strokeStyle = "rgba(216,182,90,0.055)";
+      ctx.lineWidth = 1;
+      for (let i = 1; i < 5; i++) {
+        const y = chartTop + (i / 5) * chartH;
+        ctx.beginPath();
+        ctx.moveTo(chartPadL, y);
+        ctx.lineTo(chartPadL + chartW, y);
+        ctx.stroke();
+      }
+      for (let i = 1; i < 10; i++) {
+        const x = chartPadL + (i / 10) * chartW;
+        ctx.beginPath();
+        ctx.moveTo(x, chartTop);
+        ctx.lineTo(x, chartTop + chartH);
+        ctx.stroke();
+      }
+
+      // candles
+      for (let i = 0; i < chartSeries.length; i++) {
+        const c = chartSeries[i];
+        const x = chartPadL + i * cW2;
+        const bodyW = cW2 * 0.62;
+        const openY = yMap(c.open);
+        let closeY = yMap(c.close);
+        const highY = yMap(c.high);
+        const lowY = yMap(c.low);
+        // last bar wobbles to simulate live forming price
+        if (i === chartSeries.length - 1) {
+          const wobble = Math.sin(t * 2.8) * Math.min(6, chartH * 0.012);
+          closeY += wobble;
+        }
+        // wick
+        ctx.strokeStyle = c.up
+          ? "rgba(216,182,90,0.28)"
+          : "rgba(166,136,59,0.28)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(x + bodyW / 2, highY);
+        ctx.lineTo(x + bodyW / 2, lowY);
+        ctx.stroke();
+        // body
+        const top = Math.min(openY, closeY);
+        const bh = Math.max(1, Math.abs(openY - closeY));
+        if (c.up) {
+          ctx.fillStyle = "rgba(216,182,90,0.22)";
+          ctx.fillRect(x, top, bodyW, bh);
+        } else {
+          ctx.strokeStyle = "rgba(166,136,59,0.32)";
+          ctx.lineWidth = 1;
+          ctx.strokeRect(x + 0.5, top + 0.5, bodyW - 1, bh - 1);
+        }
+      }
+
+      // moving average (SMA-8) with glow
+      ctx.save();
+      ctx.shadowColor = "rgba(244,217,122,0.45)";
+      ctx.shadowBlur = 8;
+      ctx.strokeStyle = "rgba(244,217,122,0.38)";
+      ctx.lineWidth = 1.4;
+      ctx.lineJoin = "round";
+      ctx.beginPath();
+      for (let i = 0; i < chartMA.length; i++) {
+        const x = chartPadL + i * cW2 + (cW2 * 0.62) / 2;
+        const y = yMap(chartMA[i]);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+      ctx.restore();
+
+      // price axis labels (right edge)
+      ctx.fillStyle = "rgba(255,255,255,0.18)";
+      ctx.font = "10px 'Sora', sans-serif";
+      ctx.textAlign = "right";
+      ctx.textBaseline = "middle";
+      for (let i = 0; i <= 4; i++) {
+        const u = 1 - i / 4;
+        ctx.fillText(chartPriceLabel(u), chartPadL + chartW - 4, yMap(u));
+      }
+      // last-close readout marker
+      const lastC = chartSeries[chartSeries.length - 1];
+      const lastY = yMap(lastC.close);
+      ctx.strokeStyle = "rgba(244,217,122,0.35)";
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.moveTo(chartPadL, lastY);
+      ctx.lineTo(chartPadL + chartW - 38, lastY);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = "rgba(10,10,10,0.72)";
+      ctx.fillRect(chartPadL + chartW - 38, lastY - 9, 38, 18);
+      ctx.strokeStyle = "rgba(244,217,122,0.55)";
+      ctx.lineWidth = 1;
+      ctx.strokeRect(chartPadL + chartW - 38, lastY - 9, 38, 18);
+      ctx.fillStyle = "rgba(244,217,122,0.9)";
+      ctx.font = "10px 'Sora', sans-serif";
+      ctx.textAlign = "right";
+      ctx.fillText(chartPriceLabel(lastC.close), chartPadL + chartW - 4, lastY);
 
       // scan beam
       const beamY = ((t * 0.05) % 1) * H;
@@ -322,39 +481,7 @@ export function TradingShader({ variant = "hero" }: TradingShaderProps = {}) {
         ctx.restore();
       });
 
-      // candles
-      const cW = 7;
-      const cGap = 4;
-      const cBase = W - 30;
-      const cTotal = candles.length * (cW + cGap);
-      const cStart = cBase - cTotal;
-      candles.forEach((c, i) => {
-        c.life += 0.006;
-        if (c.life > 1) {
-          c.life = 0;
-          c.up = Math.random() > 0.48;
-          c.h = 10 + Math.random() * 32;
-        }
-        const x = cStart + i * (cW + cGap);
-        const midY = H - 70;
-        const top = midY - c.h / 2;
-        const bot = midY + c.h / 2;
-        const fade = Math.min(1, c.life * 2.2) * (1 - Math.max(0, c.life - 0.85) * 6);
-        ctx.strokeStyle = `rgba(216,182,90,${0.32 * fade})`;
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(x + cW / 2, top - 6);
-        ctx.lineTo(x + cW / 2, bot + 6);
-        ctx.stroke();
-        if (c.up) {
-          ctx.fillStyle = `rgba(216,182,90,${0.62 * fade})`;
-          ctx.fillRect(x, top, cW, c.h);
-        } else {
-          ctx.strokeStyle = `rgba(166,136,59,${0.8 * fade})`;
-          ctx.lineWidth = 1.2;
-          ctx.strokeRect(x + 0.5, top + 0.5, cW - 1, c.h - 1);
-        }
-      });
+      // (the small drifting candle strip was replaced by the large ghost chart)
 
       // particles
       particles.forEach((p) => {

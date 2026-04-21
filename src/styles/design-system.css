@@ -525,6 +525,51 @@
   backdrop-filter: none !important;
 }
 
+/* ==========================================================================
+   HEADER — brand gold CTA + tighter vertical alignment
+   ========================================================================== */
+
+/* Botón "Curso Gratis" — usar gradiente oro de marca, no el amarillo hardcoded */
+.mi-header-cta,
+.mi-header-scrolled .mi-header-cta {
+  background: var(--mi-gold-gradient) !important;
+  color: #0a0a0a !important;
+  box-shadow:
+    0 10px 26px rgba(201, 168, 76, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-family: var(--mi-font-display);
+}
+.mi-header-cta:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 14px 32px rgba(201, 168, 76, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Alineación vertical del nav con logo + CTA.
+   Los nav links tenían padding-bottom asimétrico que empujaba el texto hacia arriba. */
+.mi-nav-link {
+  padding-top: 11px;
+}
+
+/* Logo: ligero ajuste para que el centro óptico quede alineado con el nav */
+.mi-header-brand {
+  align-self: center;
+}
+.mi-header-brand-image {
+  display: block;
+}
+
+/* Space-between layout más limpio: logo · nav (centrado) · CTA */
+.mi-header-inner {
+  gap: 32px;
+}
+.mi-nav-desktop {
+  margin-left: 20px;
+}
+
 /* --- TRANSLUCENT TILES ON LIVE SHADER: same light scrim recipe across pages.
        Used by: calculator result cards, contact points, contact form shell.
        Keeps the nebula visible but restores text contrast. --- */
@@ -631,8 +676,12 @@
   display: block;
 }
 .mi-hero-trading-stroke {
-  color: transparent;
-  -webkit-text-stroke: 1.5px rgba(216, 182, 90, 0.48);
+  color: #f0e6d2; /* hueso / ivory cálido, armoniza con el oro */
+  -webkit-text-stroke: 1.5px rgba(216, 182, 90, 0.7);
+  paint-order: stroke fill;
+  text-shadow:
+    0 2px 20px rgba(0, 0, 0, 0.65),
+    0 0 40px rgba(216, 182, 90, 0.18);
 }
 .mi-text-gradient-glow {
   filter: drop-shadow(0 0 40px rgba(201, 168, 76, 0.25));
@@ -785,11 +834,69 @@
   animation: mi-dot-pulse 1.6s ease-in-out infinite;
 }
 
+/* deck — holds all content that swaps when the ticker changes */
+.mi-ft-deck {
+  position: relative;
+  transition:
+    opacity 0.32s var(--mi-ease-out),
+    transform 0.32s var(--mi-ease-out),
+    filter 0.32s var(--mi-ease-out);
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+.mi-ft-deck.is-swapping {
+  opacity: 0;
+  transform: translateY(-10px) scale(0.985);
+  filter: blur(4px);
+}
+
 .mi-ft-price-row {
   display: flex;
   align-items: baseline;
   gap: 14px;
   margin-bottom: 2px;
+}
+
+/* Symbol wrap — symbol + company name stacked */
+.mi-ft-sym-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 120px;
+}
+.mi-ft-sym-name {
+  font-family: var(--mi-font);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  color: var(--mi-text-tertiary);
+  font-weight: 500;
+  text-transform: none;
+  line-height: 1;
+}
+
+/* Pager — little gold dots showing the cycle position */
+.mi-ft-pager {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin: 4px 0 14px;
+}
+.mi-ft-pager-dot {
+  width: 22px;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.10);
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  transition: background 0.35s var(--mi-ease-out), transform 0.35s var(--mi-ease-out);
+}
+.mi-ft-pager-dot:hover { background: rgba(216, 182, 90, 0.5); }
+.mi-ft-pager-dot.is-active {
+  background: var(--mi-gold-gradient);
+  box-shadow: 0 0 10px rgba(216, 182, 90, 0.5);
+  transform: scaleY(1.6);
 }
 .mi-ft-sym {
   font-family: var(--mi-font-display);

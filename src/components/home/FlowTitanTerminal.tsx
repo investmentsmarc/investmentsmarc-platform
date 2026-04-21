@@ -4,21 +4,37 @@ import { useEffect, useRef, useState } from "react";
 
 type LogRow = { id: number; t: string; sym: string; msg: string; val: string };
 
-const BASE_PRICE = 2624.0;
+type Ticker = {
+  symbol: string;
+  name: string;
+  base: number;
+  range: [number, number];
+  drift: number;
+  spreadBps: number; // typical spread in basis points
+  volRange: [number, number]; // volume millions
+};
 
-const LOG_SOURCES: Array<{
-  sym: string;
-  build: (price: number) => { msg: string; meta: string; val: string };
-}> = [
-  { sym: "XAUUSD", build: (p) => ({ msg: "Buy order filled", meta: "0.35 lots", val: p.toFixed(2) }) },
-  { sym: "XAUUSD", build: (p) => ({ msg: "Sell stop hit", meta: "0.20 lots", val: p.toFixed(2) }) },
-  { sym: "NQ",     build: () => ({ msg: "Liquidity sweep", meta: "above HOD", val: "20 498" }) },
-  { sym: "ES",     build: () => ({ msg: "FVG mitigation", meta: "H1 imbalance", val: "5 823" }) },
-  { sym: "BTCUSD", build: () => ({ msg: "Short triggered", meta: "0.08 BTC", val: "101 240" }) },
-  { sym: "EURUSD", build: () => ({ msg: "Order block tap", meta: "bullish M15", val: "1.0617" }) },
-  { sym: "DXY",    build: () => ({ msg: "Breaker confirmed", meta: "bearish", val: "104.76" }) },
-  { sym: "XAUUSD", build: () => ({ msg: "Institutional flow", meta: "accumulation", val: "2 645.1" }) },
-  { sym: "USDJPY", build: () => ({ msg: "Kill zone · London", meta: "entry armed", val: "154.12" }) },
+// S&P 500 — Magnificent 7 (mayor capitalización)
+const TICKERS: Ticker[] = [
+  { symbol: "AAPL",  name: "Apple Inc.",      base: 262.4,  range: [240, 285],  drift: 0.45, spreadBps: 1.2, volRange: [38, 75]  },
+  { symbol: "MSFT",  name: "Microsoft",       base: 430.8,  range: [400, 460],  drift: 0.85, spreadBps: 1.4, volRange: [18, 42]  },
+  { symbol: "NVDA",  name: "NVIDIA Corp.",    base: 146.2,  range: [130, 165],  drift: 0.40, spreadBps: 2.2, volRange: [190, 320] },
+  { symbol: "GOOGL", name: "Alphabet Inc.",   base: 195.6,  range: [180, 215],  drift: 0.38, spreadBps: 1.6, volRange: [22, 52]  },
+  { symbol: "AMZN",  name: "Amazon.com",      base: 231.5,  range: [215, 250],  drift: 0.48, spreadBps: 1.8, volRange: [34, 68]  },
+  { symbol: "META",  name: "Meta Platforms",  base: 624.9,  range: [590, 660],  drift: 1.15, spreadBps: 1.5, volRange: [14, 32]  },
+  { symbol: "TSLA",  name: "Tesla Inc.",      base: 382.4,  range: [340, 420],  drift: 1.40, spreadBps: 2.4, volRange: [72, 140] },
+];
+
+const LOG_TEMPLATES: Array<(sym: string, px: number) => { msg: string; meta: string; val: string }> = [
+  (_, p) => ({ msg: "Buy order filled",    meta: "0.35 lots", val: p.toFixed(2) }),
+  (_, p) => ({ msg: "Sell stop hit",        meta: "0.20 lots", val: p.toFixed(2) }),
+  (_, _p) => ({ msg: "Liquidity sweep",      meta: "above HOD", val: "—" }),
+  (_, _p) => ({ msg: "FVG mitigation",       meta: "H1 imbalance", val: "—" }),
+  (_, p) => ({ msg: "Order block tap",      meta: "bullish M15", val: p.toFixed(2) }),
+  (_, _p) => ({ msg: "Breaker confirmed",    meta: "bearish structure", val: "—" }),
+  (_, _p) => ({ msg: "Institutional flow",   meta: "accumulation", val: "—" }),
+  (_, _p) => ({ msg: "Kill zone · London",   meta: "entry armed", val: "—" }),
+  (_, p) => ({ msg: "Market order routed",  meta: "NYSE ARCA",    val: p.toFixed(2) }),
 ];
 
 function pad2(n: number) {
@@ -31,30 +47,72 @@ function formatPrice(p: number) {
     .replace(",", " ");
 }
 
-export function FlowTitanTerminal() {
-  const priceRef = useRef(2647.32);
-  const seriesRef = useRef<number[]>(
-    Array.from(
-      { length: 80 },
-      (_, i) => BASE_PRICE + Math.sin(i * 0.15) * 6 + Math.sin(i * 0.41) * 3 + Math.random() * 2,
-    ),
-  );
-  const sparkRef = useRef<HTMLCanvasElement | null>(null);
-  const priceElRef = useRef<HTMLSpanElement | null>(null);
+function buildSeries(base: number): number[] {
+  return Array.from({ length: 80 }, (_, i) => {
+    const macro = Math.sin(i * 0.14) * (base * 0.012);
+    const micro = Math.sin(i * 0.41) * (base * 0.006);
+    const noise = (Math.random() - 0.5) * (base * 0.005);
+    return base + macro + micro + noise;
+  });
+}
 
-  const [priceLabel, setPriceLabel] = useState(formatPrice(2647.32));
+function randVol(range: [number, number]) {
+  return range[0] + Math.random() * (range[1] - range[0]);
+}
+
+export function FlowTitanTerminal() {
+  const [activeIdx, setActiveIdx] = useState(0);
+  const [isSwapping, setIsSwapping] = useState(false);
+
+  const active = TICKERS[activeIdx];
+
+  // Mutable refs — avoid re-renders on tick
+  const priceRef = useRef(active.base);
+  const seriesRef = useRef<number[]>(buildSeries(active.base));
+  const baselineRef = useRef(active.base); // for % chg
+  const sparkRef = useRef<HTMLCanvasElement | null>(null);
+
+  const [priceLabel, setPriceLabel] = useState(formatPrice(active.base));
   const [flash, setFlash] = useState(false);
-  const [chg, setChg] = useState(0.82);
+  const [chg, setChg] = useState(0);
   const [metrics, setMetrics] = useState({
     spread: 0.18,
-    vol: 1.24,
-    volat: 12.4,
-    rsi: 58.3,
+    vol: 42.1,
+    volat: 14.4,
+    rsi: 54.3,
   });
   const [log, setLog] = useState<LogRow[]>([]);
   const logCounterRef = useRef(0);
 
-  // Draw sparkline
+  // === TICKER CYCLE: every 9s swap to next Mag-7 with enter/exit animation ===
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setIsSwapping(true);
+      window.setTimeout(() => {
+        setActiveIdx((i) => (i + 1) % TICKERS.length);
+      }, 360);
+    }, 9000);
+    return () => window.clearInterval(id);
+  }, []);
+
+  // When active ticker changes, reset price/series/metrics and finish the swap animation
+  useEffect(() => {
+    priceRef.current = active.base;
+    baselineRef.current = active.base;
+    seriesRef.current = buildSeries(active.base);
+    setPriceLabel(formatPrice(active.base));
+    setChg(0);
+    setMetrics({
+      spread: (active.base * active.spreadBps) / 10000,
+      vol: randVol(active.volRange),
+      volat: 8 + Math.random() * 14,
+      rsi: 38 + Math.random() * 32,
+    });
+    const doneId = window.setTimeout(() => setIsSwapping(false), 40);
+    return () => window.clearTimeout(doneId);
+  }, [active]);
+
+  // === PRICE TICK + SPARKLINE DRAW ===
   useEffect(() => {
     const cvs = sparkRef.current;
     if (!cvs) return;
@@ -75,12 +133,11 @@ export function FlowTitanTerminal() {
       if (series.length === 0) return;
       const min = Math.min(...series);
       const max = Math.max(...series);
-      const rng = Math.max(0.01, max - min);
+      const rng = Math.max(0.001, max - min);
       const pad = 6;
       const sx = (i: number) => (i / (series.length - 1)) * w;
       const sy = (v: number) => pad + (1 - (v - min) / rng) * (h - pad * 2);
 
-      // gridlines
       ctx.strokeStyle = "rgba(255,255,255,0.05)";
       ctx.lineWidth = 1;
       for (let i = 1; i < 4; i++) {
@@ -91,7 +148,6 @@ export function FlowTitanTerminal() {
         ctx.stroke();
       }
 
-      // area
       const grad = ctx.createLinearGradient(0, 0, 0, h);
       grad.addColorStop(0, "rgba(216,182,90,0.24)");
       grad.addColorStop(1, "rgba(216,182,90,0)");
@@ -103,7 +159,6 @@ export function FlowTitanTerminal() {
       ctx.closePath();
       ctx.fill();
 
-      // line
       ctx.shadowColor = "rgba(244,217,122,0.55)";
       ctx.shadowBlur = 10;
       ctx.strokeStyle = "#f4d97a";
@@ -116,7 +171,6 @@ export function FlowTitanTerminal() {
       ctx.stroke();
       ctx.shadowBlur = 0;
 
-      // last dot
       const lx = sx(series.length - 1);
       const ly = sy(series[series.length - 1]);
       ctx.fillStyle = "#f4d97a";
@@ -134,14 +188,17 @@ export function FlowTitanTerminal() {
     ro.observe(cvs);
 
     const intId = window.setInterval(() => {
-      const drift = (Math.random() - 0.48) * 1.8;
-      const nextPrice = Math.max(2580, Math.min(2720, priceRef.current + drift));
+      const drift = (Math.random() - 0.48) * active.drift;
+      const nextPrice = Math.max(
+        active.range[0],
+        Math.min(active.range[1], priceRef.current + drift),
+      );
       priceRef.current = nextPrice;
       const s = seriesRef.current;
       s.push(nextPrice);
       if (s.length > 80) s.shift();
       setPriceLabel(formatPrice(nextPrice));
-      setChg(((nextPrice - BASE_PRICE) / BASE_PRICE) * 100);
+      setChg(((nextPrice - baselineRef.current) / baselineRef.current) * 100);
       setFlash(true);
       window.setTimeout(() => setFlash(false), 180);
       draw();
@@ -151,52 +208,57 @@ export function FlowTitanTerminal() {
       ro.disconnect();
       window.clearInterval(intId);
     };
-  }, []);
+  }, [active]);
 
-  // Metric fluctuation
+  // === METRIC FLUCTUATION ===
   useEffect(() => {
     const id = window.setInterval(() => {
       setMetrics({
-        spread: 0.1 + Math.random() * 0.25,
-        vol: 0.9 + Math.random() * 0.7,
-        volat: 10 + Math.random() * 8,
-        rsi: 40 + Math.random() * 30,
+        spread: (active.base * active.spreadBps) / 10000 + (Math.random() - 0.5) * 0.02,
+        vol: randVol(active.volRange),
+        volat: 8 + Math.random() * 14,
+        rsi: 38 + Math.random() * 32,
       });
     }, 1400);
     return () => window.clearInterval(id);
-  }, []);
+  }, [active]);
 
-  // Rolling log
+  // === ROLLING LOG (biased toward the active ticker) ===
   useEffect(() => {
     const push = () => {
       const now = new Date();
       const stamp = `${pad2(now.getHours())}:${pad2(now.getMinutes())}:${pad2(now.getSeconds())}`;
-      const src = LOG_SOURCES[Math.floor(Math.random() * LOG_SOURCES.length)];
-      const built = src.build(priceRef.current);
+      const usesActive = Math.random() < 0.7;
+      const sym = usesActive
+        ? active.symbol
+        : TICKERS[Math.floor(Math.random() * TICKERS.length)].symbol;
+      const template = LOG_TEMPLATES[Math.floor(Math.random() * LOG_TEMPLATES.length)];
+      const built = template(sym, priceRef.current);
       logCounterRef.current += 1;
       const id = logCounterRef.current;
       const row: LogRow = {
         id,
         t: stamp,
-        sym: src.sym,
+        sym,
         msg: `${built.msg} · ${built.meta}`,
         val: built.val,
       };
       setLog((prev) => [row, ...prev].slice(0, 7));
     };
-
-    for (let i = 0; i < 5; i++) push();
+    push();
     const id = window.setInterval(push, 2100);
     return () => window.clearInterval(id);
-  }, []);
+  }, [active]);
 
   const chgClass = chg >= 0 ? "mi-ft-chg" : "mi-ft-chg mi-ft-chg-dn";
+  const volUnit = active.volRange[1] > 100 ? "M" : "M";
+  const volPct = Math.min(100, (metrics.vol / active.volRange[1]) * 100);
 
   return (
     <aside className="mi-flowtitan" aria-label="FlowTitan live engine">
       <header className="mi-ft-head">
         <div className="mi-ft-title">
-          <b>FLOWTITAN</b> · LIVE ENGINE
+          <b>FLOWTITAN</b> · LIVE ENGINE · S&amp;P 500 · MAG 7
         </div>
         <div className="mi-ft-dots">
           <span />
@@ -205,48 +267,71 @@ export function FlowTitanTerminal() {
         </div>
       </header>
 
-      <div className="mi-ft-price-row">
-        <span className="mi-ft-sym">XAU / USD</span>
-        <span
-          ref={priceElRef}
-          className={`mi-ft-price${flash ? " is-flash" : ""}`}
-        >
-          {priceLabel}
-        </span>
-        <span className={chgClass}>
-          {chg >= 0 ? "+" : ""}
-          {chg.toFixed(2)}%
-        </span>
+      <div className={`mi-ft-deck${isSwapping ? " is-swapping" : ""}`}>
+        <div className="mi-ft-price-row">
+          <div className="mi-ft-sym-wrap">
+            <span className="mi-ft-sym">{active.symbol}</span>
+            <span className="mi-ft-sym-name">{active.name}</span>
+          </div>
+          <span className={`mi-ft-price${flash ? " is-flash" : ""}`}>
+            ${priceLabel}
+          </span>
+          <span className={chgClass}>
+            {chg >= 0 ? "+" : ""}
+            {chg.toFixed(2)}%
+          </span>
+        </div>
+
+        <canvas ref={sparkRef} className="mi-ft-spark" />
+
+        <div className="mi-ft-metrics">
+          <div className="mi-ft-metric">
+            <label>Spread</label>
+            <div className="mi-ft-metric-val">${metrics.spread.toFixed(2)}</div>
+          </div>
+          <div className="mi-ft-metric">
+            <label>Volumen</label>
+            <div className="mi-ft-metric-val mi-ft-gold">
+              {metrics.vol.toFixed(1)}
+              {volUnit}
+            </div>
+            <div className="mi-ft-bar">
+              <i style={{ width: `${volPct}%` }} />
+            </div>
+          </div>
+          <div className="mi-ft-metric">
+            <label>Volatilidad</label>
+            <div className="mi-ft-metric-val">{metrics.volat.toFixed(1)}</div>
+            <div className="mi-ft-bar">
+              <i style={{ width: `${Math.min(100, metrics.volat * 5)}%` }} />
+            </div>
+          </div>
+          <div className="mi-ft-metric">
+            <label>RSI 14</label>
+            <div className="mi-ft-metric-val mi-ft-gold">{metrics.rsi.toFixed(1)}</div>
+            <div className="mi-ft-bar">
+              <i style={{ width: `${Math.min(100, metrics.rsi)}%` }} />
+            </div>
+          </div>
+        </div>
       </div>
 
-      <canvas ref={sparkRef} className="mi-ft-spark" />
-
-      <div className="mi-ft-metrics">
-        <div className="mi-ft-metric">
-          <label>Spread</label>
-          <div className="mi-ft-metric-val">{metrics.spread.toFixed(2)}</div>
-        </div>
-        <div className="mi-ft-metric">
-          <label>Volumen</label>
-          <div className="mi-ft-metric-val mi-ft-gold">{metrics.vol.toFixed(2)}M</div>
-          <div className="mi-ft-bar">
-            <i style={{ width: `${Math.min(100, metrics.vol * 58)}%` }} />
-          </div>
-        </div>
-        <div className="mi-ft-metric">
-          <label>Volatilidad</label>
-          <div className="mi-ft-metric-val">{metrics.volat.toFixed(1)}</div>
-          <div className="mi-ft-bar">
-            <i style={{ width: `${Math.min(100, metrics.volat * 5)}%` }} />
-          </div>
-        </div>
-        <div className="mi-ft-metric">
-          <label>RSI 14</label>
-          <div className="mi-ft-metric-val mi-ft-gold">{metrics.rsi.toFixed(1)}</div>
-          <div className="mi-ft-bar">
-            <i style={{ width: `${Math.min(100, metrics.rsi)}%` }} />
-          </div>
-        </div>
+      <div className="mi-ft-pager" role="tablist" aria-label="Ticker activo">
+        {TICKERS.map((t, i) => (
+          <button
+            key={t.symbol}
+            type="button"
+            role="tab"
+            aria-selected={i === activeIdx}
+            aria-label={t.symbol}
+            className={`mi-ft-pager-dot${i === activeIdx ? " is-active" : ""}`}
+            onClick={() => {
+              if (i === activeIdx) return;
+              setIsSwapping(true);
+              window.setTimeout(() => setActiveIdx(i), 360);
+            }}
+          />
+        ))}
       </div>
 
       <div className="mi-ft-log">
