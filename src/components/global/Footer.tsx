@@ -33,9 +33,9 @@ export function Footer() {
   };
 
   return (
-    <footer className="mi-footer">
+    <footer className="mi-footer mi-reveal">
       <div className="mi-container mi-footer-grid">
-        <div className="mi-footer-brand-block">
+        <div className="mi-footer-brand-block mi-reveal">
           <div className="mi-footer-logo-shell">
             <Image
               src="/images/logo.png"
@@ -66,7 +66,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div>
+        <div className="mi-reveal mi-reveal-delay-1">
           <h3 className="mi-footer-heading">Navegacion</h3>
           <ul className="mi-footer-list">
             {navigationLinks.map((item) => (
@@ -79,7 +79,7 @@ export function Footer() {
           </ul>
         </div>
 
-        <div>
+        <div className="mi-reveal mi-reveal-delay-2">
           <h3 className="mi-footer-heading">Educacion</h3>
           <ul className="mi-footer-list">
             {educationLinks.map((item) => (
@@ -92,7 +92,7 @@ export function Footer() {
           </ul>
         </div>
 
-        <div>
+        <div className="mi-reveal mi-reveal-delay-3">
           <h3 className="mi-footer-heading">Legal y contacto</h3>
           <ul className="mi-footer-list">
             {contactLinks.map((item) => (

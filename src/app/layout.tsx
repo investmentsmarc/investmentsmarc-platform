@@ -6,6 +6,8 @@ import { Footer } from "@/components/global/Footer";
 import { Header } from "@/components/global/Header";
 import { TradingViewTicker } from "@/components/global/TradingViewTicker";
 import { WhatsAppFloat } from "@/components/global/WhatsAppFloat";
+import { TradingShader } from "@/components/home/TradingShader";
+import { RevealController } from "@/components/ui/RevealController";
 
 import "./globals.css";
 
@@ -80,6 +82,7 @@ export default function RootLayout({
   return (
     <html lang="es" className={`${manrope.variable} ${sora.variable} h-full`}>
       <body className="min-h-full flex flex-col bg-mi-bg-primary text-mi-text-primary">
+        <TradingShader variant="global" />
         <div className="mi-site-shell">
           <TradingViewTicker />
           <Header />
@@ -88,6 +91,7 @@ export default function RootLayout({
           <WhatsAppFloat />
           <CookieBanner />
         </div>
+        <RevealController />
       </body>
     </html>
   );

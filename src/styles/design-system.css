@@ -308,3 +308,759 @@
 .mi-whatsapp-float {
   animation: mi-pulse-gold 2.5s ease-in-out infinite;
 }
+
+/* ==========================================================================
+   TRADING FLOOR HERO — shader + FX + FlowTitan terminal
+   ========================================================================== */
+
+/* --- SHADER LAYER (hero-scoped) --- */
+.mi-trading-shader {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+.mi-trading-shader-bg,
+.mi-trading-shader-fx {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.mi-trading-shader-bg { z-index: 1; }
+.mi-trading-shader-fx { z-index: 2; pointer-events: none; }
+
+/* --- SHADER LAYER (site-wide, fixed behind all content) --- */
+.mi-site-shader {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+  contain: strict;
+}
+.mi-site-shader > canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Keep the foreground shell above the site shader */
+.mi-site-shell {
+  position: relative;
+  z-index: 1;
+}
+
+/* --- SOFTEN SECTION DIVIDERS (hard 1px line is too visible on glass) --- */
+.mi-section + .mi-section {
+  border-top: 0 !important;
+  position: relative;
+}
+.mi-section + .mi-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 20%;
+  right: 20%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* --- FULLY TRANSPARENT SURFACES for sections — the shader IS the background --- */
+.mi-hero-trading,
+.mi-section-secondary,
+.mi-blog-section,
+.mi-ft-section {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+/* Soften the hard rules on the FlowTitan section borders */
+.mi-ft-section {
+  border-top: 0 !important;
+  border-bottom: 0 !important;
+}
+
+/* --- FOOTER: subtle darkening scrim so columns of plain text stay legible
+       over the live gold nebula. Light enough to keep the atmosphere alive. --- */
+.mi-footer {
+  background: rgba(6, 6, 6, 0.42) !important;
+  backdrop-filter: blur(6px) saturate(1.1);
+  -webkit-backdrop-filter: blur(6px) saturate(1.1);
+  border-top: 1px solid var(--mi-border);
+}
+.mi-footer-disclaimer,
+.mi-footer-bottom {
+  background: transparent !important;
+}
+
+/* ==========================================================================
+   FAQ GRID — card-based Preguntas Frecuentes
+   ========================================================================== */
+.mi-faq-head {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 56px;
+}
+.mi-faq-head .mi-badge {
+  margin-bottom: 14px;
+}
+.mi-faq-head .mi-page-copy {
+  margin: 14px auto 0;
+  color: var(--mi-text-secondary);
+  max-width: 560px;
+}
+
+.mi-faq-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.mi-faq-card {
+  position: relative;
+  padding: 28px 26px 26px;
+  border-radius: 14px;
+  background: rgba(14, 14, 14, 0.62);
+  border: 1px solid var(--mi-border-strong);
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    transform 0.4s var(--mi-ease-out),
+    border-color 0.4s var(--mi-ease-out),
+    box-shadow 0.4s var(--mi-ease-out);
+}
+
+/* subtle diagonal gold sheen baked into each card */
+.mi-faq-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 14px;
+  background: linear-gradient(
+    135deg,
+    rgba(216, 182, 90, 0.20),
+    transparent 40%,
+    transparent 60%,
+    rgba(216, 182, 90, 0.08)
+  );
+  -webkit-mask: linear-gradient(#000, #000) content-box, linear-gradient(#000, #000);
+          mask: linear-gradient(#000, #000) content-box, linear-gradient(#000, #000);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  padding: 1px;
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity 0.4s var(--mi-ease-out);
+}
+
+/* corner number mark */
+.mi-faq-card-index {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  font-family: var(--mi-font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  color: var(--mi-gold-dark);
+  opacity: 0.7;
+  font-variant-numeric: tabular-nums;
+}
+
+.mi-faq-card-question {
+  font-family: var(--mi-font-display);
+  font-size: 1.18rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--mi-text-primary);
+  margin: 0 48px 12px 0;
+}
+
+.mi-faq-card-answer {
+  font-size: 0.95rem;
+  line-height: 1.62;
+  color: var(--mi-text-secondary);
+  margin: 0;
+}
+
+.mi-faq-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(216, 182, 90, 0.35);
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(201, 168, 76, 0.08);
+}
+.mi-faq-card:hover::before { opacity: 1; }
+.mi-faq-card:hover .mi-faq-card-index { color: var(--mi-gold-light); opacity: 1; }
+
+@media (max-width: 768px) {
+  .mi-faq-grid { grid-template-columns: 1fr; gap: 14px; }
+  .mi-faq-card { padding: 22px 20px 20px; }
+  .mi-faq-card-question { font-size: 1.05rem; margin-right: 38px; }
+  .mi-faq-head { margin-bottom: 40px; }
+}
+
+/* Leave the page section fully transparent so the site shader shows through */
+.mi-faq-section {
+  background: transparent !important;
+  backdrop-filter: none !important;
+}
+
+/* --- TRANSLUCENT TILES ON LIVE SHADER: same light scrim recipe across pages.
+       Used by: calculator result cards, contact points, contact form shell.
+       Keeps the nebula visible but restores text contrast. --- */
+.mi-calc-result-item,
+.mi-contact-point,
+.mi-contact-card {
+  background: rgba(10, 10, 10, 0.42) !important;
+  backdrop-filter: blur(10px) saturate(1.1);
+  -webkit-backdrop-filter: blur(10px) saturate(1.1);
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+/* Soft shadow keeps white text crisp against any remaining gold flicker */
+.mi-footer,
+.mi-footer p,
+.mi-footer h2,
+.mi-footer h3,
+.mi-footer a,
+.mi-footer-copy,
+.mi-footer-bottom,
+.mi-footer-disclaimer p {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
+}
+
+
+/* --- HERO TRADING OVERRIDE (transparent — global shader shows through) --- */
+.mi-hero-trading {
+  position: relative;
+  isolation: isolate;
+  min-height: calc(100vh - var(--mi-ticker-height, 46px) - var(--mi-header-height, 74px));
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  overflow: hidden;
+}
+.mi-hero-trading::before,
+.mi-hero-trading::after { display: none !important; }
+
+.mi-hero-trading-inner {
+  position: relative;
+  z-index: 3;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 48px 48px 32px;
+}
+.mi-hero-trading-grid {
+  width: 100%;
+  max-width: 1720px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.15fr 0.95fr;
+  gap: 56px;
+  align-items: center;
+}
+.mi-hero-trading-copy {
+  max-width: 680px;
+  position: relative;
+}
+
+/* pulsing badge */
+.mi-badge-pulse {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 13px;
+  border: 1px solid var(--mi-border-strong);
+  border-radius: 999px;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--mi-text-secondary);
+  font-weight: 600;
+  margin-bottom: 24px;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(6px);
+}
+.mi-badge-pulse::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--mi-gold-light);
+  box-shadow: 0 0 12px var(--mi-gold-light);
+  animation: mi-dot-pulse 1.6s ease-in-out infinite;
+}
+@keyframes mi-dot-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.45; transform: scale(0.82); }
+}
+
+/* hero title */
+.mi-hero-trading-title {
+  font-family: var(--mi-font-display);
+  font-size: clamp(3rem, 6.4vw, 5.7rem);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  font-weight: 800;
+  margin: 0 0 24px;
+  color: var(--mi-text-primary);
+  text-shadow: 0 16px 60px rgba(0, 0, 0, 0.65);
+}
+.mi-hero-trading-line {
+  display: block;
+}
+.mi-hero-trading-stroke {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(216, 182, 90, 0.48);
+}
+.mi-text-gradient-glow {
+  filter: drop-shadow(0 0 40px rgba(201, 168, 76, 0.25));
+}
+
+.mi-hero-trading-lede {
+  font-size: 15.5px;
+  line-height: 1.62;
+  color: var(--mi-text-secondary);
+  max-width: 540px;
+  margin: 0 0 26px;
+}
+.mi-hero-trading-lede b {
+  color: var(--mi-gold-light);
+  font-weight: 600;
+}
+
+.mi-hero-trading-signature {
+  height: 70px;
+  width: auto;
+  display: block;
+  margin: 6px 0 24px;
+  filter: brightness(1.15) drop-shadow(0 4px 16px rgba(0, 0, 0, 0.5));
+  opacity: 0.92;
+}
+
+.mi-hero-trading-actions {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.mi-hero-trading-primary {
+  min-width: 200px;
+  justify-content: center;
+  font-family: var(--mi-font-display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 15px 24px;
+  box-shadow: 0 10px 28px rgba(201, 168, 76, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+/* ghost button variant */
+.mi-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 20px;
+  color: var(--mi-text-secondary);
+  text-decoration: none;
+  font-family: var(--mi-font-display);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border: 1px solid var(--mi-border-strong);
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.015);
+  transition: all 0.35s var(--mi-ease-out);
+}
+.mi-btn-ghost:hover {
+  border-color: var(--mi-gold-dark);
+  color: var(--mi-gold-light);
+  background: rgba(201, 168, 76, 0.04);
+}
+
+/* staggered entrance */
+.mi-hero-trading-copy > * { animation: mi-fade-up 0.9s var(--mi-ease-out) both; }
+.mi-hero-trading-copy > .mi-badge-pulse             { animation-delay: 0.08s; }
+.mi-hero-trading-copy > .mi-hero-trading-title      { animation-delay: 0.20s; }
+.mi-hero-trading-copy > .mi-hero-trading-lede       { animation-delay: 0.32s; }
+.mi-hero-trading-copy > .mi-hero-trading-signature  { animation-delay: 0.44s; }
+.mi-hero-trading-copy > .mi-hero-trading-actions    { animation-delay: 0.56s; }
+
+/* --------------------------------------------------------------------------
+   FLOWTITAN TERMINAL
+   -------------------------------------------------------------------------- */
+.mi-flowtitan {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  justify-self: end;
+  background: linear-gradient(180deg, rgba(23, 23, 23, 0.78), rgba(10, 10, 10, 0.55));
+  border: 1px solid var(--mi-border-strong);
+  border-radius: 10px;
+  padding: 24px 26px;
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.65),
+    0 0 0 1px rgba(201, 168, 76, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  animation: mi-fade-up 1.05s var(--mi-ease-out) 0.6s both;
+}
+.mi-flowtitan::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 10px;
+  background: linear-gradient(
+    135deg,
+    rgba(216, 182, 90, 0.35),
+    transparent 40%,
+    transparent 60%,
+    rgba(216, 182, 90, 0.18)
+  );
+  -webkit-mask: linear-gradient(#000, #000) content-box, linear-gradient(#000, #000);
+          mask: linear-gradient(#000, #000) content-box, linear-gradient(#000, #000);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  padding: 1px;
+  pointer-events: none;
+}
+
+.mi-ft-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 14px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--mi-border);
+}
+.mi-ft-title {
+  font-size: 10.5px;
+  letter-spacing: 0.24em;
+  color: var(--mi-text-secondary);
+  font-weight: 600;
+}
+.mi-ft-title b {
+  font-family: var(--mi-font-display);
+  color: var(--mi-gold-light);
+  font-weight: 700;
+  letter-spacing: 0.3em;
+}
+.mi-ft-dots {
+  display: flex;
+  gap: 6px;
+}
+.mi-ft-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+}
+.mi-ft-dots span.is-live {
+  background: var(--mi-gold-light);
+  box-shadow: 0 0 12px var(--mi-gold-light);
+  animation: mi-dot-pulse 1.6s ease-in-out infinite;
+}
+
+.mi-ft-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 2px;
+}
+.mi-ft-sym {
+  font-family: var(--mi-font-display);
+  font-size: 12px;
+  letter-spacing: 0.26em;
+  color: var(--mi-text-secondary);
+  font-weight: 600;
+}
+.mi-ft-price {
+  font-family: var(--mi-font-display);
+  font-size: 46px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--mi-text-primary);
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 28px rgba(216, 182, 90, 0.22);
+  transition: color 0.25s;
+}
+.mi-ft-price.is-flash { color: var(--mi-gold-light); }
+.mi-ft-chg {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--mi-gold-light);
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 3px;
+  background: rgba(216, 182, 90, 0.1);
+  border: 1px solid rgba(216, 182, 90, 0.25);
+  font-variant-numeric: tabular-nums;
+}
+.mi-ft-chg::before { content: "▲"; font-size: 9px; }
+.mi-ft-chg-dn {
+  color: var(--mi-text-tertiary);
+  background: rgba(255, 255, 255, 0.03);
+  border-color: var(--mi-border);
+}
+.mi-ft-chg-dn::before { content: "▼"; }
+
+.mi-ft-spark {
+  display: block;
+  width: 100%;
+  height: 78px;
+  margin: 14px 0 18px;
+}
+
+.mi-ft-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--mi-border);
+  border: 1px solid var(--mi-border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 18px;
+}
+.mi-ft-metric {
+  background: rgba(10, 10, 10, 0.6);
+  padding: 11px 12px;
+  min-height: 68px;
+}
+.mi-ft-metric label {
+  display: block;
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  color: var(--mi-text-tertiary);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.mi-ft-metric-val {
+  font-family: var(--mi-font-display);
+  font-size: 15px;
+  color: var(--mi-text-primary);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+.mi-ft-gold { color: var(--mi-gold-light); }
+.mi-ft-bar {
+  height: 2px;
+  margin-top: 7px;
+  background: var(--mi-border);
+  position: relative;
+  overflow: hidden;
+  border-radius: 1px;
+}
+.mi-ft-bar i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  height: 100%;
+  background: var(--mi-gold-gradient);
+  transition: width 0.6s var(--mi-ease-out);
+  box-shadow: 0 0 10px rgba(216, 182, 90, 0.5);
+  display: block;
+}
+
+.mi-ft-log {
+  font-size: 11px;
+  line-height: 1.7;
+  color: var(--mi-text-tertiary);
+  font-variant-numeric: tabular-nums;
+  max-height: 120px;
+  overflow: hidden;
+  position: relative;
+  mask-image: linear-gradient(180deg, transparent 0, #000 38px, #000 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 38px, #000 100%);
+}
+.mi-ft-log-row {
+  display: grid;
+  grid-template-columns: 64px 68px 1fr auto;
+  gap: 10px;
+  padding: 1px 0;
+  animation: mi-log-in 0.45s var(--mi-ease-out);
+}
+.mi-ft-log-t { color: var(--mi-text-tertiary); letter-spacing: 0.04em; }
+.mi-ft-log-s {
+  color: var(--mi-gold-dark);
+  font-weight: 700;
+  font-family: var(--mi-font-display);
+  letter-spacing: 0.14em;
+  font-size: 10.5px;
+}
+.mi-ft-log-m { color: var(--mi-text-secondary); letter-spacing: 0.02em; }
+.mi-ft-log-v { color: var(--mi-text-primary); font-weight: 600; }
+@keyframes mi-log-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* --------------------------------------------------------------------------
+   TRADING STATUS BAR (bottom of hero)
+   -------------------------------------------------------------------------- */
+.mi-trading-status {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding: 12px 36px;
+  border-top: 1px solid var(--mi-border);
+  background: linear-gradient(180deg, rgba(10, 10, 10, 0.35), rgba(10, 10, 10, 0.78));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font-size: 10.5px;
+  letter-spacing: 0.22em;
+  color: var(--mi-text-tertiary);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.mi-trading-status-group {
+  display: inline-flex;
+  gap: 30px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.mi-trading-status-item {
+  display: inline-flex;
+  align-items: center;
+}
+.mi-trading-status-item b {
+  color: var(--mi-gold-light);
+  font-weight: 700;
+  font-family: var(--mi-font-display);
+  margin: 0 4px;
+  font-variant-numeric: tabular-nums;
+}
+.mi-trading-status-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--mi-gold-light);
+  border-radius: 50%;
+  box-shadow: 0 0 12px var(--mi-gold-light);
+  margin-right: 10px;
+  display: inline-block;
+  animation: mi-dot-pulse 1.6s infinite;
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE — hero trading
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .mi-hero-trading-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .mi-hero-trading-inner { padding: 36px 24px 28px; }
+  .mi-flowtitan {
+    justify-self: stretch;
+    max-width: 100%;
+  }
+  .mi-trading-status {
+    padding: 10px 20px;
+    font-size: 9.5px;
+    letter-spacing: 0.16em;
+  }
+  .mi-trading-status-group { gap: 16px; }
+}
+
+@media (max-width: 768px) {
+  .mi-hero-trading-title { font-size: clamp(2.6rem, 10vw, 4rem); }
+  .mi-hero-trading-lede { font-size: 14.5px; }
+  .mi-flowtitan { padding: 18px 18px; }
+  .mi-ft-price { font-size: 36px; }
+  .mi-ft-metrics { grid-template-columns: repeat(2, 1fr); }
+  .mi-trading-status { flex-direction: column; align-items: flex-start; gap: 8px; }
+}
+
+/* --------------------------------------------------------------------------
+   SECTION UPGRADE — gold radial bands for content sections
+   -------------------------------------------------------------------------- */
+.mi-home-band {
+  position: relative;
+  isolation: isolate;
+}
+.mi-home-band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 40% at 50% 0%, rgba(201, 168, 76, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 85% 100%, rgba(201, 168, 76, 0.04) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* reduce-motion safety */
+@media (prefers-reduced-motion: reduce) {
+  .mi-ft-dots span.is-live,
+  .mi-badge-pulse::before,
+  .mi-trading-status-dot {
+    animation: none !important;
+  }
+}
+
+/* ==========================================================================
+   SCROLL REVEAL — progressive enhancement
+   ========================================================================== */
+
+/* Before JS is ready, nothing is hidden — SSR users see content immediately. */
+html:not(.js-ready) .mi-reveal {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Extra stagger levels beyond the default 3 already in globals.css */
+.mi-reveal-delay-4 { transition-delay: 0.4s; }
+.mi-reveal-delay-5 { transition-delay: 0.5s; }
+.mi-reveal-delay-6 { transition-delay: 0.6s; }
+
+/* Slightly richer default reveal motion for the new aesthetic */
+.mi-reveal {
+  transition-duration: 0.85s !important;
+}
+
+/* Directional variants */
+.mi-reveal-left  { transform: translateX(-28px); }
+.mi-reveal-right { transform: translateX(28px); }
+.mi-reveal-scale { transform: translateY(24px) scale(0.96); transform-origin: center; }
+.mi-reveal-left.mi-visible,
+.mi-reveal-right.mi-visible,
+.mi-reveal-scale.mi-visible { transform: translateX(0) translateY(0) scale(1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .mi-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
