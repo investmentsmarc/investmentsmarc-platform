@@ -86,27 +86,99 @@ export const BLOG_POSTS: BlogPost[] = [
 
 export const TESTIMONIALS: Testimonial[] = [
   {
-    id: "testimonial-1",
-    name: "Carlos M.",
-    role: "Trader independiente",
+    id: "t-henry",
+    name: "Henry de la Osa",
+    role: "Tape reading · 2 años operando",
     quote:
-      "Lo que mas valoro es la claridad. Pase de operar por impulso a entender contexto, riesgo y ejecucion con una metodologia real.",
+      "Antes compraba porque subía. Cuando aprendí a leer el tape, vi con claridad dónde entraba el dinero grande. Dejé de perseguir el precio — ahora me posiciono antes de que se mueva.",
     rating: 5,
   },
   {
-    id: "testimonial-2",
-    name: "Daniela R.",
-    role: "Estudiante de FlowTitan",
+    id: "t-yoan",
+    name: "Yoan Cespedes Williams",
+    role: "Ingeniero · Trader part-time",
     quote:
-      "El contenido combina estructura, disciplina y lectura institucional. Senti por primera vez que estaba construyendo criterio y no solo copiando entradas.",
+      "Las opciones me daban miedo hasta que entendí los griegos de verdad. Hoy las uso como herramienta quirúrgica: defino riesgo al milímetro y monto estructuras que antes ni sabía que existían.",
     rating: 5,
   },
   {
-    id: "testimonial-3",
-    name: "Luis A.",
-    role: "Inversor retail",
+    id: "t-jessilie",
+    name: "Jessilie Paz Lara",
+    role: "Inversora largo plazo",
     quote:
-      "Las herramientas y el enfoque de gestion de riesgo cambiaron mi forma de ver el mercado. Menos ruido, mejores decisiones.",
+      "Me tensaba cada vez que una posición bajaba. Aprendí a separar precio de valor real: si la tesis sigue intacta, la caída es oportunidad, no pánico. Duermo distinto desde ese día.",
+    rating: 5,
+  },
+  {
+    id: "t-pablo",
+    name: "Pablo Manuel Salazar",
+    role: "Trader full-time · Smart Money",
+    quote:
+      "El flujo institucional no es magia, es lectura. Cuando vi la primera whale sweep en vivo y el movimiento que siguió 48 h después, entendí que esto no es casualidad. Te enseñan a ver lo que siempre estuvo ahí.",
+    rating: 5,
+  },
+  {
+    id: "t-orlando",
+    name: "Orlando Saavedra",
+    role: "Ex-day trader · Swing",
+    quote:
+      "Venía de hacer 20 trades al día por FOMO. Hoy hago 3 o 4 a la semana, todos con plan, contexto y confirmación. Menos trades, mejor sueño, mejores resultados.",
+    rating: 5,
+  },
+  {
+    id: "t-david",
+    name: "David Gago",
+    role: "Analista financiero",
+    quote:
+      "Dejé de pensar como minorista. La pregunta ya no es '¿subirá?' sino '¿quién está comprando, a qué precio y con cuánto tamaño?'. Ese cambio de lente te convierte en otro trader.",
+    rating: 5,
+  },
+  {
+    id: "t-carolina",
+    name: "Carolina Méndez",
+    role: "Dividend investor",
+    quote:
+      "Invertir en compañías pilares dejó de ser abstracto. Cuando entiendes el moat, los márgenes y la salud del balance, ves por qué esa empresa es inmune al ruido del día. Mi cartera ya no reacciona a titulares.",
+    rating: 5,
+  },
+  {
+    id: "t-rafael",
+    name: "Rafael Estévez",
+    role: "Swing trader · 18 meses",
+    quote:
+      "Saber dónde entrar es la mitad; saber dónde salir, la otra. El framework de gestión de riesgo me enseñó a respetar el stop sin emociones. Perder 1% duele menos que comerse un −8% por orgullo.",
+    rating: 5,
+  },
+  {
+    id: "t-maria",
+    name: "María Fernanda Vega",
+    role: "Estudiante · Primer año",
+    quote:
+      "No es solo aprender a operar, es aprender a pensar el mercado. Macro, flujo, sector, sentiment — cada clase es una capa más de contexto que antes me faltaba.",
+    rating: 5,
+  },
+  {
+    id: "t-eduardo",
+    name: "Eduardo Campos",
+    role: "Trader de opciones · GEX",
+    quote:
+      "El día que entendí cómo funciona el gamma exposure y por qué el precio 'imanta' ciertos niveles, se me cayó la venda. Ya no veo charts al azar: veo física del mercado.",
+    rating: 5,
+  },
+  {
+    id: "t-luisa",
+    name: "Luisa Marín",
+    role: "Inversora sistemática",
+    quote:
+      "Pasé de ver YouTube horas buscando señales a tener un plan propio. La diferencia entre seguir gurús y tener criterio propio es abismal — y se nota en la cuenta.",
+    rating: 5,
+  },
+  {
+    id: "t-angel",
+    name: "Ángel Ramírez",
+    role: "Comunidad FlowTitan",
+    quote:
+      "Lo más valioso no es solo el contenido, es estar rodeado de gente que se toma el mercado en serio. Preguntas, debates, análisis compartidos — eso no se paga con un curso, se construye.",
     rating: 5,
   },
 ];

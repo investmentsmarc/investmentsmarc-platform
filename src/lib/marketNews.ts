@@ -17,7 +17,12 @@ export type MarketNewsArticle = {
   pubDate: string;
   imageUrl: string | null;
   category: NewsCategory;
+  impact: "high" | "normal";
 };
+
+// Heurística simple para marcar "HIGH IMPACT": keywords que mueven mercados.
+const HIGH_IMPACT_RE =
+  /\b(breaking|crash|surge|plunge|plummet|soar|record|emergency|tariff|sanction|hike|cut|war|ban|bans|halt|outage|lawsuit|probe|recall|bankrupt|acquisition|merger|ipo|halted|suspended|miss|beats)\b/i;
 
 const BROWSER_UA =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
@@ -148,15 +153,21 @@ function parseRss(xml: string, category: NewsCategory): MarketNewsArticle[] {
     }
 
     const id = `${category}-${idx}-${link.length}-${Date.parse(pubDate) || 0}`;
+    const decodedTitle = decodeEntities(title);
+    const impact: MarketNewsArticle["impact"] =
+      HIGH_IMPACT_RE.test(decodedTitle) || HIGH_IMPACT_RE.test(description)
+        ? "high"
+        : "normal";
     items.push({
       id,
-      title: decodeEntities(title),
+      title: decodedTitle,
       description,
       source: decodeEntities(source),
       url: link,
       pubDate,
       imageUrl,
       category,
+      impact,
     });
     idx += 1;
   }
@@ -505,7 +516,10 @@ async function getMarketNewsUnsafe(limit: number): Promise<MarketNewsArticle[]> 
   if (withImages.length < limit) {
     for (const a of enriched.map((_v, i) => picked[i])) {
       if (withImages.length >= limit) break;
-      const has = withImages.some((w) => w.url === a.url);
+      // Important: `withImages` may contain the *resolved* publisher URL
+      // while `picked` still has the original Google News URL. Comparing by URL
+      // can miss duplicates and produce repeated `id`s → React key collisions.
+      const has = withImages.some((w) => w.id === a.id);
       if (!has) withImages.push(a);
     }
   }

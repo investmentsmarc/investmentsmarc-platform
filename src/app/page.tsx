@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import { Suspense } from "react";
 
 import { JsonLd } from "@/components/global/JsonLd";
@@ -6,7 +7,22 @@ import { HeroSection } from "@/components/home/HeroSection";
 import { LatestArticles } from "@/components/home/LatestArticles";
 import { NewsSkeleton } from "@/components/home/NewsSkeleton";
 import { TelegramCommunity } from "@/components/home/TelegramCommunity";
-import { Testimonials } from "@/components/home/Testimonials";
+
+const Testimonials = dynamic(
+  () =>
+    import("@/components/home/Testimonials").then((m) => ({
+      default: m.Testimonials,
+    })),
+  {
+    loading: () => (
+      <section
+        className="mi-section mi-home-band mi-tstm-placeholder"
+        id="testimonios"
+        aria-hidden="true"
+      />
+    ),
+  },
+);
 
 export const metadata: Metadata = {
   title: "Investments Marc — Trading Profesional & Institucional",

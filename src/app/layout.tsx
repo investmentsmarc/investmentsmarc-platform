@@ -4,6 +4,7 @@ import { Manrope, Sora } from "next/font/google";
 import { CookieBanner } from "@/components/global/CookieBanner";
 import { Footer } from "@/components/global/Footer";
 import { Header } from "@/components/global/Header";
+import { NewsPrefetcher } from "@/components/global/NewsPrefetcher";
 import { TradingViewTicker } from "@/components/global/TradingViewTicker";
 import { TelegramFloat } from "@/components/global/TelegramFloat";
 import { WhatsAppFloat } from "@/components/global/WhatsAppFloat";
@@ -81,8 +82,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={`${manrope.variable} ${sora.variable} h-full`}>
-      <body className="min-h-full flex flex-col bg-mi-bg-primary text-mi-text-primary">
+    <html
+      lang="es"
+      className={`${manrope.variable} ${sora.variable} h-full`}
+      suppressHydrationWarning
+    >
+      <body
+        className="min-h-full flex flex-col bg-mi-bg-primary text-mi-text-primary"
+        suppressHydrationWarning
+        cz-shortcut-listen="true"
+      >
         <TradingShader variant="global" />
         <div className="mi-site-shell">
           <TradingViewTicker />
@@ -94,6 +103,7 @@ export default function RootLayout({
           <CookieBanner />
         </div>
         <RevealController />
+        <NewsPrefetcher />
       </body>
     </html>
   );
