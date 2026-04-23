@@ -4656,6 +4656,7 @@
   .mi-ft-price { font-size: 34px; }
   .mi-ft-metrics { grid-template-columns: repeat(2, 1fr); }
   .mi-flowtitan .mi-trading-status {
+    margin: 0 -16px -16px;           /* matchea el padding mobile del card */
     padding: 9px 14px;
     font-size: 9px;
     letter-spacing: 0.14em;
