@@ -3,3 +3,9 @@ runConfig:
   memoryMiB: 512
   maxInstances: 3
   minInstances: 0
+
+env:
+  - variable: NEWS_REFRESH_SECRET
+    secret: NEWS_REFRESH_SECRET
+    availability:
+      - RUNTIME
