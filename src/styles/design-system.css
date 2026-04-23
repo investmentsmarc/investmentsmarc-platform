@@ -1357,7 +1357,8 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* typing indicator */
+/* typing indicator — alto siempre reservado; solo cambia opacidad
+   para que el toggle cada 7s no empuje el layout de la página. */
 .mi-telegram-typing {
   display: inline-flex;
   align-items: center;
@@ -1367,14 +1368,17 @@
   background: rgba(6, 6, 6, 0.4);
   border: 1px dashed rgba(216, 182, 90, 0.25);
   width: fit-content;
+  align-self: flex-start;
   color: var(--mi-text-secondary);
   font-size: 0.84rem;
   font-style: italic;
-  animation: mi-telegram-typing-in 0.4s var(--mi-ease-out) both;
+  opacity: 1;
+  transition: opacity 0.35s var(--mi-ease-out);
+  will-change: opacity;
 }
-@keyframes mi-telegram-typing-in {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0); }
+.mi-telegram-typing[data-visible="false"] {
+  opacity: 0;
+  pointer-events: none;
 }
 .mi-telegram-typing-dots {
   display: inline-flex;

@@ -131,16 +131,18 @@ export function TelegramCommunity() {
                 </article>
               ))}
 
-              {isTyping ? (
-                <div className="mi-telegram-typing" aria-live="polite">
-                  <span className="mi-telegram-typing-dots" aria-hidden="true">
-                    <i />
-                    <i />
-                    <i />
-                  </span>
-                  <em>Marc está escribiendo…</em>
-                </div>
-              ) : null}
+              <div
+                className="mi-telegram-typing"
+                aria-live="polite"
+                data-visible={isTyping ? "true" : "false"}
+              >
+                <span className="mi-telegram-typing-dots" aria-hidden="true">
+                  <i />
+                  <i />
+                  <i />
+                </span>
+                <em>Marc está escribiendo…</em>
+              </div>
             </div>
 
             <footer className="mi-telegram-foot">
