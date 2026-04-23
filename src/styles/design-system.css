@@ -3690,6 +3690,7 @@
    ========================================================================== */
 .mi-header-brand {
   padding-right: 18px;
+  margin-left: 26px;
   margin-right: 10px;
   position: relative;
 }
@@ -3872,8 +3873,10 @@
    El nav es el protagonista central — con gap 22 y font 0.92 respira mejor. */
 .mi-header-inner {
   gap: 24px !important;
-  padding: 13px 28px !important;
-  max-width: 1180px !important;
+  /* padding 0 horizontal para que logo y CTA toquen los bordes exteriores
+     del par hero (680 + 24 + 680 = 1384px). */
+  padding: 13px 0 !important;
+  max-width: 1384px !important;
 }
 .mi-nav-desktop {
   gap: 22px !important;
@@ -4091,9 +4094,12 @@
   max-width: 1720px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 1fr; /* columnas iguales */
-  gap: 28px;                       /* antes 56px — mucho más cerca */
-  align-items: stretch;            /* el terminal crece vertical para matchear la copy */
+  grid-template-columns: 680px 680px; /* anchos fijos — evita rebote al
+                                         cambiar ticker del terminal */
+  justify-content: center;            /* el par se centra como bloque con
+                                         márgenes exteriores simétricos */
+  gap: 24px;
+  align-items: stretch;               /* el terminal crece vertical para matchear la copy */
 }
 .mi-hero-trading-copy {
   max-width: 680px;
