@@ -28,10 +28,12 @@ const BROWSER_UA =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
 
 // Timeouts (ms) — evitan que un publisher lento cuelgue todo el pipeline.
-const TIMEOUT_RSS = 6_000;
-const TIMEOUT_RESOLVE = 7_000;
-const TIMEOUT_PUBLISHER = 5_000;
-const TIMEOUT_IMAGE_HEAD = 3_500;
+// Cloud Run cold-network + parallel DNS/TLS a news.google.com pasa fácil los 6s
+// cuando el isolate recién arranca. Subimos umbrales — el endpoint tiene maxDuration 60s.
+const TIMEOUT_RSS = 18_000;
+const TIMEOUT_RESOLVE = 9_000;
+const TIMEOUT_PUBLISHER = 7_000;
+const TIMEOUT_IMAGE_HEAD = 4_000;
 
 function fetchWithTimeout(
   url: string,
@@ -196,6 +198,7 @@ async function fetchQuery(
   category: NewsCategory,
   url: string,
 ): Promise<MarketNewsArticle[]> {
+  const startedAt = Date.now();
   try {
     const res = await fetchWithTimeout(
       url,
@@ -209,10 +212,23 @@ async function fetchQuery(
       },
       TIMEOUT_RSS,
     );
-    if (!res.ok) return [];
+    if (!res.ok) {
+      console.warn(
+        `[marketNews] RSS ${category} HTTP ${res.status} in ${Date.now() - startedAt}ms`,
+      );
+      return [];
+    }
     const xml = await res.text();
-    return parseRss(xml, category);
-  } catch {
+    const items = parseRss(xml, category);
+    console.info(
+      `[marketNews] RSS ${category} ok — ${items.length} items in ${Date.now() - startedAt}ms`,
+    );
+    return items;
+  } catch (err) {
+    console.warn(
+      `[marketNews] RSS ${category} failed in ${Date.now() - startedAt}ms:`,
+      err instanceof Error ? `${err.name}: ${err.message}` : String(err),
+    );
     return [];
   }
 }
