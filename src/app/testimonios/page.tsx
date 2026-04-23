@@ -14,15 +14,15 @@ export default function TestimoniosPage() {
     <section className="mi-section mi-tstm-archive mi-home-band">
       <div className="mi-container">
         <header className="mi-home-section-head mi-home-section-head-centered mi-reveal">
-          <span className="mi-badge">12 historias</span>
+          <span className="mi-badge">10 historias</span>
           <h1 className="mi-section-title">
             Así cambió su forma de{" "}
             <span className="mi-text-gradient">leer el mercado</span>
           </h1>
           <p className="mi-home-section-copy-sub">
             Estudiantes de tape reading, opciones avanzadas, smart money y gestión de
-            riesgo. Doce voces, un mismo punto en común: operar con criterio en vez de
-            impulso.
+            riesgo. Diez voces, un mismo patrón: llegaron con una pérdida, encontraron
+            una herramienta que les cambió la lente y hoy operan con tesis y resultado.
           </p>
         </header>
 

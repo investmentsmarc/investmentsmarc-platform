@@ -27,6 +27,24 @@ const HIGH_IMPACT_RE =
 const BROWSER_UA =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
 
+// Timeouts (ms) — evitan que un publisher lento cuelgue todo el pipeline.
+const TIMEOUT_RSS = 6_000;
+const TIMEOUT_RESOLVE = 7_000;
+const TIMEOUT_PUBLISHER = 5_000;
+const TIMEOUT_IMAGE_HEAD = 3_500;
+
+function fetchWithTimeout(
+  url: string,
+  init: RequestInit & { next?: { revalidate?: number } },
+  timeoutMs: number,
+): Promise<Response> {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+  return fetch(url, { ...init, signal: ctrl.signal }).finally(() =>
+    clearTimeout(timer),
+  );
+}
+
 const RSS_QUERIES: Array<{ category: NewsCategory; url: string }> = [
   {
     category: "markets",
@@ -179,14 +197,18 @@ async function fetchQuery(
   url: string,
 ): Promise<MarketNewsArticle[]> {
   try {
-    const res = await fetch(url, {
-      next: { revalidate: 1800 },
-      headers: {
-        "User-Agent":
-          "Mozilla/5.0 (compatible; InvestmentsMarcBot/1.0; +https://investmentsmarc.com)",
-        Accept: "application/rss+xml, application/xml;q=0.9, */*;q=0.8",
+    const res = await fetchWithTimeout(
+      url,
+      {
+        next: { revalidate: 1800 },
+        headers: {
+          "User-Agent":
+            "Mozilla/5.0 (compatible; InvestmentsMarcBot/1.0; +https://investmentsmarc.com)",
+          Accept: "application/rss+xml, application/xml;q=0.9, */*;q=0.8",
+        },
       },
-    });
+      TIMEOUT_RSS,
+    );
     if (!res.ok) return [];
     const xml = await res.text();
     return parseRss(xml, category);
@@ -209,15 +231,19 @@ async function resolveGoogleNewsUrl(googleUrl: string): Promise<string | null> {
   let ts: string | null = null;
   let sg: string | null = null;
   try {
-    const res = await fetch(googleUrl, {
-      headers: {
-        "User-Agent": BROWSER_UA,
-        "Accept-Language": "en-US,en;q=0.9",
-        Accept: "text/html",
+    const res = await fetchWithTimeout(
+      googleUrl,
+      {
+        headers: {
+          "User-Agent": BROWSER_UA,
+          "Accept-Language": "en-US,en;q=0.9",
+          Accept: "text/html",
+        },
+        redirect: "follow",
+        next: { revalidate: 3600 },
       },
-      redirect: "follow",
-      next: { revalidate: 3600 },
-    });
+      TIMEOUT_RESOLVE,
+    );
     if (!res.ok) return null;
     const html = await res.text();
     ts = html.match(/data-n-a-ts="(\d+)"/)?.[1] ?? null;
@@ -252,7 +278,7 @@ async function resolveGoogleNewsUrl(googleUrl: string): Promise<string | null> {
   form.set("f.req", envelope);
 
   try {
-    const res = await fetch(
+    const res = await fetchWithTimeout(
       "https://news.google.com/_/DotsSplashUi/data/batchexecute",
       {
         method: "POST",
@@ -263,6 +289,7 @@ async function resolveGoogleNewsUrl(googleUrl: string): Promise<string | null> {
         body: form.toString(),
         next: { revalidate: 3600 },
       },
+      TIMEOUT_RESOLVE,
     );
     if (!res.ok) return null;
     const text = await res.text();
@@ -326,15 +353,19 @@ function withTimeout<T>(p: Promise<T>, ms: number): Promise<T | null> {
 
 async function fetchOgImage(url: string): Promise<string | null> {
   try {
-    const res = await fetch(url, {
-      headers: {
-        "User-Agent": META_UA,
-        "Accept-Language": "en-US,en;q=0.9",
-        Accept: "text/html,application/xhtml+xml",
+    const res = await fetchWithTimeout(
+      url,
+      {
+        headers: {
+          "User-Agent": META_UA,
+          "Accept-Language": "en-US,en;q=0.9",
+          Accept: "text/html,application/xhtml+xml",
+        },
+        redirect: "follow",
+        next: { revalidate: 3600 },
       },
-      redirect: "follow",
-      next: { revalidate: 3600 },
-    });
+      TIMEOUT_PUBLISHER,
+    );
     if (!res.ok) return null;
     const chunk = (await res.text()).slice(0, 80_000);
     return extractOgImage(chunk);
@@ -349,15 +380,19 @@ async function fetchOgImage(url: string): Promise<string | null> {
  */
 async function validateImageUrl(url: string): Promise<boolean> {
   try {
-    const res = await fetch(url, {
-      method: "GET",
-      headers: {
-        "User-Agent": META_UA,
-        Accept: "image/*,*/*;q=0.8",
-        Range: "bytes=0-512", // partial read — we only need to confirm it's an image
+    const res = await fetchWithTimeout(
+      url,
+      {
+        method: "GET",
+        headers: {
+          "User-Agent": META_UA,
+          Accept: "image/*,*/*;q=0.8",
+          Range: "bytes=0-512",
+        },
+        redirect: "follow",
       },
-      redirect: "follow",
-    });
+      TIMEOUT_IMAGE_HEAD,
+    );
     if (!res.ok && res.status !== 206) return false;
     const ct = res.headers.get("content-type") ?? "";
     return ct.startsWith("image/");

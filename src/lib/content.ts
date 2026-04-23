@@ -86,99 +86,83 @@ export const BLOG_POSTS: BlogPost[] = [
 
 export const TESTIMONIALS: Testimonial[] = [
   {
-    id: "t-henry",
-    name: "Henry de la Osa",
-    role: "Tape reading · 2 años operando",
+    id: "t-ricardo",
+    name: "Ricardo M.",
+    role: "Médico internista · 47 años · Venezuela → Houston",
     quote:
-      "Antes compraba porque subía. Cuando aprendí a leer el tape, vi con claridad dónde entraba el dinero grande. Dejé de perseguir el precio — ahora me posiciono antes de que se mueva.",
+      "Yo llegué a Marc con casi 18 mil dólares perdidos siguiendo señales de Telegram. Lo que no esperaba es que él no me iba a dar «la receta», me iba a enseñar a cocinar. La primera sesión me voló la cabeza cuando me mostró cómo leer un dark pool print. Llevaba 20 años operando y nunca había visto el mercado desde ahí. Para la sesión 6 ya hacía mi propia tesis sobre AMD antes de earnings, cruzando GEX con posicionamiento institucional. Llevo 9 meses verde de forma consistente. Marc no te vende promesas. Te enseña a ver.",
     rating: 5,
   },
   {
-    id: "t-yoan",
-    name: "Yoan Cespedes Williams",
-    role: "Ingeniero · Trader part-time",
+    id: "t-daniela",
+    name: "Daniela P.",
+    role: "Emprendedora · agencia de marketing · 39 años · CDMX",
     quote:
-      "Las opciones me daban miedo hasta que entendí los griegos de verdad. Hoy las uso como herramienta quirúrgica: defino riesgo al milímetro y monto estructuras que antes ni sabía que existían.",
+      "Empecé escéptica. He pagado cursos de 3 mil dólares donde me enseñaban a dibujar rayitas y ya. Con Marc fue otra cosa: él te lleva a entender quién está del otro lado de tu operación. En la sesión 3, cuando me explicó cómo los market makers usan el GEX para cubrirse y cómo eso mueve el precio intradía, literalmente dije «ah, por eso». Llevaba dos años sin poder explicármelo. Mi cuenta pasó de 42k a 58k en cinco meses con coberturas y entradas con confluencia. Pero lo más valioso es que ahora duermo tranquila.",
     rating: 5,
   },
   {
-    id: "t-jessilie",
-    name: "Jessilie Paz Lara",
-    role: "Inversora largo plazo",
+    id: "t-andres",
+    name: "Andrés V.",
+    role: "Ingeniero de software · 28 años · Medellín",
     quote:
-      "Me tensaba cada vez que una posición bajaba. Aprendí a separar precio de valor real: si la tesis sigue intacta, la caída es oportunidad, no pánico. Duermo distinto desde ese día.",
+      "Parce, yo venía quemado. 14 mil dólares perdidos apostando en cada earnings. Marc fue el primero que me dijo en la cara «tú no estás operando, estás apostando». Y tenía razón. Lo que más me sirvió fue aprender tape reading en serio: order flow, bloques institucionales, sweeps. Para un ingeniero eso es oro puro porque es data real, no cuentos. Hoy llevo 7 meses con método. No abro una posición sin tres razones escritas. Mi mejor mes fue +11%, mi peor −2%. Antes era impensable.",
     rating: 5,
   },
   {
-    id: "t-pablo",
-    name: "Pablo Manuel Salazar",
-    role: "Trader full-time · Smart Money",
+    id: "t-mariela",
+    name: "Mariela S.",
+    role: "Ama de casa · 43 años · Lima",
     quote:
-      "El flujo institucional no es magia, es lectura. Cuando vi la primera whale sweep en vivo y el movimiento que siguió 48 h después, entendí que esto no es casualidad. Te enseñan a ver lo que siempre estuvo ahí.",
+      "Yo no vengo de finanzas. Mi esposo me regaló una cuenta de 8 mil dólares y me dijo «aprende». Probé de todo, hasta un «mentor» que resultó ser un muchacho de 22 años. Lo que me gustó de Marc es que me trató con respeto desde la primera llamada. El antes y después fue la sesión donde me enseñó análisis fundamental real: leer un 10-K, márgenes, flujo de caja libre. Empecé a elegir empresas yo sola. Hoy tengo tres posiciones que entiendo, vendo covered calls cada mes, y mi cuenta está en 14 mil. Para mí eso es libertad.",
     rating: 5,
   },
   {
-    id: "t-orlando",
-    name: "Orlando Saavedra",
-    role: "Ex-day trader · Swing",
+    id: "t-fernando",
+    name: "Fernando R.",
+    role: "Profesor universitario de economía · 54 años · Buenos Aires",
     quote:
-      "Venía de hacer 20 trades al día por FOMO. Hoy hago 3 o 4 a la semana, todos con plan, contexto y confirmación. Menos trades, mejor sueño, mejores resultados.",
+      "Voy a decir algo polémico: yo enseño economía financiera y Marc me enseñó cosas que no están en los libros. Yo tenía el marco teórico, pero no sabía leer el tape ni el posicionamiento de opciones. La parte de GEX y cómo afecta la volatilidad intradía fue revelador. En la sesión 8 hicimos juntos un análisis completo de Meta antes de earnings, cruzando técnico, fundamental e institucional. Salió una tesis limpia y un spread que funcionó exactamente como lo planeamos. Lo recomiendo a mis colegas sin reservas.",
     rating: 5,
   },
   {
-    id: "t-david",
-    name: "David Gago",
-    role: "Analista financiero",
+    id: "t-luis",
+    name: "Luis A.",
+    role: "Dueño de restaurante · 49 años · Miami",
     quote:
-      "Dejé de pensar como minorista. La pregunta ya no es '¿subirá?' sino '¿quién está comprando, a qué precio y con cuánto tamaño?'. Ese cambio de lente te convierte en otro trader.",
+      "Mira, yo te hablo claro. Llevaba tres años metiéndole a la bolsa sin saber qué coño estaba haciendo. Compraba lo que decía la tele. Lo primero que Marc me dijo fue «deja de ver CNBC», porque las instituciones ya se posicionaron antes. Él me enseñó a ver dónde está el dinero grande antes de que el precio se mueva: dark pools, unusual options activity, sweeps de millones minutos antes de la noticia. Si tú sabes quién compra el pescado al mayorista, sabes qué se va a vender la otra semana. Es lo mismo. Llevo 10 meses con método, mi cuenta subió 38%. Marc no te vende, te forma.",
     rating: 5,
   },
   {
-    id: "t-carolina",
-    name: "Carolina Méndez",
-    role: "Dividend investor",
+    id: "t-camila",
+    name: "Camila T.",
+    role: "Recién graduada en finanzas · 25 años · Quito",
     quote:
-      "Invertir en compañías pilares dejó de ser abstracto. Cuando entiendes el moat, los márgenes y la salud del balance, ves por qué esa empresa es inmune al ruido del día. Mi cartera ya no reacciona a titulares.",
+      "Estudié finanzas y cuando salí pensé que estaba lista. En seis meses perdí el 40% de mis ahorros. Tenía el vocabulario pero no el oficio. A Marc le pedí literalmente «enséñame a ver el mercado como lo ven los que saben». Y lo hizo. Lo que más me impactó fue aprender tape reading de verdad: ver cómo se construye una posición institucional a lo largo del día, cómo absorben el papel, cómo se defienden ciertos niveles. Hoy opero swing de 3 a 10 días con confluencia entre GEX, flujo institucional y técnico. Llevo cuatro meses positiva.",
     rating: 5,
   },
   {
-    id: "t-rafael",
-    name: "Rafael Estévez",
-    role: "Swing trader · 18 meses",
+    id: "t-patricio",
+    name: "Patricio N.",
+    role: "Contador público · 37 años · Santiago de Chile",
     quote:
-      "Saber dónde entrar es la mitad; saber dónde salir, la otra. El framework de gestión de riesgo me enseñó a respetar el stop sin emociones. Perder 1% duele menos que comerse un −8% por orgullo.",
+      "Lo que me marcó fue la disciplina. Soy contador, ordenado con números, pero en el mercado me ponía emocional. En la segunda sesión Marc me dijo «tú no tienes problema de análisis, tienes problema de gestión». Me hizo armar un plan escrito por operación: tesis, niveles, riesgo, objetivo, invalidación. Desde la sesión 5 entraron las herramientas institucionales y todo se conectó: strikes con más gamma, flujo de opciones, cuándo los market makers tienen que cubrirse. Mi cuenta creció 24% en los seis meses siguientes. Real, sostenible, y entiendo cada peso.",
     rating: 5,
   },
   {
-    id: "t-maria",
-    name: "María Fernanda Vega",
-    role: "Estudiante · Primer año",
+    id: "t-yolanda",
+    name: "Yolanda C.",
+    role: "Enfermera · 45 años · San Juan de Puerto Rico",
     quote:
-      "No es solo aprender a operar, es aprender a pensar el mercado. Macro, flujo, sector, sentiment — cada clase es una capa más de contexto que antes me faltaba.",
+      "Trabajo turnos de 12 horas, no puedo estar pegada a una pantalla. Marc me armó un plan adaptado: swing más largo, covered calls mensuales sobre mis acciones, revisión semanal. Las 10 sesiones me las dio con paciencia, porque yo llegaba muerta del hospital. Lo que aprendí de fundamental me permite tomar decisiones en empresas que entiendo (tengo dos farmacéuticas que analicé yo desde los reportes), y los covered calls se volvieron un ingreso extra. El año pasado generé unos $4,200 solo en primas. Para mí eso es la luz y el agua de varios meses.",
     rating: 5,
   },
   {
-    id: "t-eduardo",
-    name: "Eduardo Campos",
-    role: "Trader de opciones · GEX",
+    id: "t-jose",
+    name: "José Ramón B.",
+    role: "Dentista · 52 años · Santo Domingo",
     quote:
-      "El día que entendí cómo funciona el gamma exposure y por qué el precio 'imanta' ciertos niveles, se me cayó la venda. Ya no veo charts al azar: veo física del mercado.",
-    rating: 5,
-  },
-  {
-    id: "t-luisa",
-    name: "Luisa Marín",
-    role: "Inversora sistemática",
-    quote:
-      "Pasé de ver YouTube horas buscando señales a tener un plan propio. La diferencia entre seguir gurús y tener criterio propio es abismal — y se nota en la cuenta.",
-    rating: 5,
-  },
-  {
-    id: "t-angel",
-    name: "Ángel Ramírez",
-    role: "Comunidad FlowTitan",
-    quote:
-      "Lo más valioso no es solo el contenido, es estar rodeado de gente que se toma el mercado en serio. Preguntas, debates, análisis compartidos — eso no se paga con un curso, se construye.",
+      "Uno aprende mejor cuando alguien te lleva de la mano. Por eso las 10 sesiones en vivo con Marc me funcionaron: uno pregunta y él te responde ahí, te corrige si estás viendo mal un gráfico, te muestra en su pantalla cómo lee la misma situación. Lo que más me impresionó fue cuando me mostró una operación suya en Amazon: vio el flujo de opciones entrando, el dark pool print, y eso coincidió con un nivel técnico que él tenía marcado. Ahí entendí que esto no es adivinar, es leer la evidencia. Ya no entro por corazonadas, entro por tesis.",
     rating: 5,
   },
 ];

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Manrope, Sora } from "next/font/google";
+import { Manrope, Fraunces } from "next/font/google";
 
 import { CookieBanner } from "@/components/global/CookieBanner";
 import { Footer } from "@/components/global/Footer";
 import { Header } from "@/components/global/Header";
+import { MetaPixel } from "@/components/global/MetaPixel";
 import { NewsPrefetcher } from "@/components/global/NewsPrefetcher";
 import { TradingViewTicker } from "@/components/global/TradingViewTicker";
 import { TelegramFloat } from "@/components/global/TelegramFloat";
@@ -20,11 +21,11 @@ const manrope = Manrope({
   weight: ["400", "500", "600", "700", "800"],
 });
 
-const sora = Sora({
+const fraunces = Fraunces({
   subsets: ["latin"],
   variable: "--font-mi-display",
   display: "swap",
-  weight: ["500", "600", "700", "800"],
+  weight: ["500", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -84,7 +85,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${manrope.variable} ${sora.variable} h-full`}
+      className={`${manrope.variable} ${fraunces.variable} h-full`}
       suppressHydrationWarning
     >
       <body
@@ -104,6 +105,7 @@ export default function RootLayout({
         </div>
         <RevealController />
         <NewsPrefetcher />
+        <MetaPixel />
       </body>
     </html>
   );

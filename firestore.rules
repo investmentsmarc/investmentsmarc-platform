@@ -42,5 +42,11 @@ service cloud.firestore {
     match /progress/{progressId} {
       allow read, write: if isSignedIn();
     }
+
+    // cache/* solo lo escribe y lee el servidor via Admin SDK (bypasses rules).
+    // Denegamos cualquier acceso desde clientes.
+    match /cache/{docId} {
+      allow read, write: if false;
+    }
   }
 }

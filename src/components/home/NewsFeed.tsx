@@ -286,7 +286,9 @@ export function NewsFeed({
                         ) : null}
                         <span className="mi-newsv2-src">{a.source}</span>
                         <span className="mi-newsv2-dot">·</span>
-                        <span className="mi-newsv2-time">{timeAgo(a.pubDate)}</span>
+                        <span className="mi-newsv2-time" suppressHydrationWarning>
+                          {timeAgo(a.pubDate)}
+                        </span>
                       </div>
                       <h3 className="mi-newsv2-title">{a.title}</h3>
                       {a.description ? (

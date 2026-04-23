@@ -15,18 +15,26 @@ const ROTATION_MS = 6_500;
 
 /** Voces cortas para la home; /testimonios conserva las citas completas. */
 const HOME_TEASER: Record<string, string> = {
-  "t-henry":
-    "Antes entraba porque el precio subía. Hoy miro el tape y decido con más calma.",
-  "t-yoan":
-    "Las opciones ya no me paralizan: limito el riesgo y duermo sin drama.",
-  "t-jessilie":
-    "Si la idea sigue bien plantada, una caída ya no es el fin del mundo.",
-  "t-pablo":
-    "Vi el flujo como lo ves en clase y por fin encajó: hay lectura, no suerte.",
-  "t-orlando":
-    "Pasé de muchos trades por ansiedad a pocos con plan. Menos ruido en la cabeza.",
-  "t-david":
-    "Ya no solo pregunto si va a subir; miro quién mueve tamaño y dónde.",
+  "t-ricardo":
+    "Llegué con 18k perdidos siguiendo señales de Telegram. La primera sesión leí un dark pool print y el mercado dejó de ser ruido. Llevo 9 meses verde.",
+  "t-daniela":
+    "Había pagado cursos de 3k que solo enseñaban a dibujar rayitas. Con GEX entendí cómo los market makers mueven el precio. Pasé de 42k a 58k en cinco meses.",
+  "t-andres":
+    "14k perdidos apostando cada earnings. El tape reading —order flow, sweeps, bloques— me dio data real. Mi mejor mes fue +11%, el peor −2%.",
+  "t-mariela":
+    "8 mil dólares y cero idea de finanzas. Marc me enseñó a leer un 10-K y vender covered calls. Mi cuenta pasó de 8k a 14k con tres posiciones que entiendo.",
+  "t-fernando":
+    "Enseño economía y aun así no leía el tape. Aprender GEX y posicionamiento de opciones destapó un spread en Meta que funcionó tal cual lo planeamos.",
+  "t-luis":
+    "Compraba lo que decía la tele. Aprender a ver dark pools y unusual options antes de la noticia me subió la cuenta un 38% en 10 meses.",
+  "t-camila":
+    "Diploma en finanzas y perdí 40% en seis meses. El tape reading me mostró cómo se construye una posición institucional. Llevo cuatro meses positiva.",
+  "t-patricio":
+    "Mi problema no era analizar, era gestionar. Hoy cada trade va con plan escrito y strikes con gamma. La cuenta creció 24% en seis meses.",
+  "t-yolanda":
+    "Turnos de 12 horas, sin pantallas. Swing largo y covered calls mensuales me generaron $4,200 en primas el año pasado. Ingreso extra real.",
+  "t-jose":
+    "Entraba por corazonadas. Cruzar flujo de opciones, dark pool print y técnico me mostró que esto se lee, no se adivina. Ahora entro por tesis.",
 };
 
 const ROTATOR_IDS = Object.keys(HOME_TEASER);
@@ -183,7 +191,7 @@ export function Testimonials() {
       <div className="mi-container">
         <div className="mi-tstm-footer mi-reveal">
           <Link href="/testimonios" className="mi-btn-ghost mi-tstm-more">
-            Leer los 12 testimonios completos
+            Leer los 10 testimonios completos
           </Link>
           <Link href="/curso-gratis" className="mi-btn-gold mi-home-section-cta">
             Empieza gratis
