@@ -6,7 +6,7 @@ import { InvestmentCalc } from "@/components/calculators/InvestmentCalc";
 export const metadata: Metadata = {
   title: "Calculadora de Inversion Compuesta",
   description:
-    "Calculadora avanzada de inversion compuesta con aportes, ETFs, dividendos y DRIP.",
+    "Calculadora avanzada de inversión compuesta con aportes, ETFs, dividendos y DRIP.",
 };
 
 export default function InvestmentCalculatorPage() {

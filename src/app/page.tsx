@@ -27,7 +27,7 @@ const Testimonials = dynamic(
 export const metadata: Metadata = {
   title: "Investments Marc — Trading Profesional & Institucional",
   description:
-    "Tu camino hacia el trading institucional. Cursos, herramientas y analisis de mercado para traders serios.",
+    "Tu camino hacia el trading institucional. Cursos, herramientas y análisis de mercado para traders serios.",
 };
 
 const homeSchema = [

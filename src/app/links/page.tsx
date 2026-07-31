@@ -16,8 +16,8 @@ export default function LinksPage() {
         <div className="mi-links-name">Marc Investments</div>
         <div className="mi-links-handle">@investmentsmarc</div>
         <p className="mi-links-bio">
-          Trading institucional, Smart Money y analisis de mercado. Aprende a operar
-          con mas contexto y mejor gestion de riesgo.
+          Trading institucional, Smart Money y análisis de mercado. Aprende a operar
+          con más contexto y mejor gestión de riesgo.
         </p>
 
         <div className="mi-links-list">

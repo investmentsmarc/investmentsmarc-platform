@@ -46,9 +46,9 @@ export function Footer() {
               className="mi-footer-logo"
             />
           </div>
-          <h2 className="mi-footer-title">Plataforma de educacion en trading institucional, analisis de mercado y herramientas profesionales.</h2>
+          <h2 className="mi-footer-title">Plataforma de educación en trading institucional, análisis de mercado y herramientas profesionales.</h2>
           <p className="mi-footer-copy">
-            Plataforma de educacion en trading institucional, analisis de mercado y
+            Plataforma de educación en trading institucional, análisis de mercado y
             herramientas profesionales.
           </p>
           <div className="mi-footer-socials">
@@ -68,7 +68,7 @@ export function Footer() {
         </div>
 
         <div className="mi-reveal mi-reveal-delay-1">
-          <h3 className="mi-footer-heading">Navegacion</h3>
+          <h3 className="mi-footer-heading">Navegación</h3>
           <ul className="mi-footer-list">
             {navigationLinks.map((item) => (
               <li key={item.label}>

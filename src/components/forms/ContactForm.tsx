@@ -71,7 +71,7 @@ export function ContactForm() {
           </div>
           <div className="mi-contact-point">
             <strong>Respuesta esperada</strong>
-            <span>Seguimiento manual y priorizado segun contexto</span>
+            <span>Seguimiento manual y priorizado según contexto</span>
           </div>
           <div className="mi-contact-point">
             <strong>Ideal para</strong>

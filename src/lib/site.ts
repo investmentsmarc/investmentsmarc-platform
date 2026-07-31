@@ -26,8 +26,8 @@ export const FOOTER_NAV: NavItem[] = [
 ];
 
 export const LEGAL_NAV: NavItem[] = [
-  { label: "Politica de Privacidad", href: "/legal/privacidad" },
-  { label: "Terminos de Uso", href: "/legal/terminos" },
+  { label: "Política de Privacidad", href: "/legal/privacidad" },
+  { label: "Términos de Uso", href: "/legal/terminos" },
 ];
 
 // Handles confirmados por Marc. El anterior, @investmentsmarc, no era el suyo:
