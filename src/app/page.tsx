@@ -44,8 +44,18 @@ const homeSchema = [
     name: "Investments Marc",
     url: "https://investmentsmarc.com",
     description:
-      "Educacion, herramientas y analisis de mercado enfocados en trading institucional.",
+      "Educación, herramientas y análisis de mercado enfocados en trading institucional.",
     telephone: "+1-832-953-4918",
+    // Sin sameAs, Google no tiene forma de saber que estos perfiles son de la
+    // misma entidad que el sitio. Cada URL verificada con HTTP 200; el handle
+    // @investmentsmarc que se enlazaba antes no es de Marc y en YouTube era 404.
+    sameAs: [
+      "https://www.instagram.com/marc_investments/",
+      "https://www.youtube.com/@marcinvestments",
+      "https://www.tiktok.com/@marc_investments",
+      "https://www.facebook.com/profile.php?id=61574292711011",
+      "https://t.me/MarcInvestments",
+    ],
   },
 ];
 
