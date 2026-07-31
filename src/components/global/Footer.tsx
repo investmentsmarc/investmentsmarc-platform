@@ -4,7 +4,7 @@ import Link from "next/link";
 import { SocialIcon } from "@/components/global/SocialIcon";
 import { LEGAL_NAV, SOCIAL_LINKS, TELEGRAM_URL, WHATSAPP_URL } from "@/lib/site";
 
-type SocialName = "Instagram" | "YouTube" | "WhatsApp" | "TikTok" | "Telegram";
+type SocialName = "Instagram" | "YouTube" | "WhatsApp" | "TikTok" | "Telegram" | "Facebook";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -30,7 +30,7 @@ export function Footer() {
   // TikTok estaba en SOCIAL_LINKS y tiene icono en SocialIcon, pero quedaba
   // fuera de este filtro: el enlace existía y no se mostraba en ningún sitio.
   const socialIcons = SOCIAL_LINKS.filter((item) =>
-    ["Instagram", "YouTube", "TikTok", "Telegram", "WhatsApp"].includes(item.label),
+    ["Instagram", "YouTube", "TikTok", "Facebook", "Telegram", "WhatsApp"].includes(item.label),
   );
 
   return (
