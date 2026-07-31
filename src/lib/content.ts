@@ -334,7 +334,7 @@ export const FAQ_ITEMS: FaqItem[] = [
 
 export const LEGAL_CONTENT: Record<string, { title: string; intro: string; sections: LegalSection[] }> = {
   privacidad: {
-    title: "Politica de Privacidad",
+    title: "Política de Privacidad",
     intro:
       "Esta política describe cómo recopilamos, usamos y protegemos la información que compartes con Investments Marc al navegar el sitio o al registrarte en nuestros formularios.",
     sections: [
@@ -368,7 +368,7 @@ export const LEGAL_CONTENT: Record<string, { title: string; intro: string; secti
     ],
   },
   terminos: {
-    title: "Terminos de Uso",
+    title: "Términos de Uso",
     intro:
       "Al acceder a Investments Marc aceptas usar este sitio y sus recursos con fines informativos y educativos, bajo tu propia responsabilidad.",
     sections: [
@@ -442,7 +442,7 @@ export const WHATSAPP_OPTIONS: WhatsAppOption[] = [
   {
     title: "Cursos y programas",
     description: "Si quieres orientación sobre rutas de aprendizaje, cursos o acceso a programas.",
-    message: "Hola Marc, quiero informacion sobre sus cursos y programas.",
+    message: "Hola Marc, quiero información sobre sus cursos y programas.",
   },
   {
     title: "Consulta de trading",

@@ -289,7 +289,7 @@ export function InvestmentCalc() {
           Investment <span className="mi-text-gradient">Calculator</span>
         </h1>
         <p className="mi-page-copy">
-          Simula el crecimiento de tu inversion con datos reales de los principales ETFs
+          Simula el crecimiento de tu inversión con datos reales de los principales ETFs
           del mercado.
         </p>
       </div>

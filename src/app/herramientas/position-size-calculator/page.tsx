@@ -5,7 +5,7 @@ import { PositionSizeCalc } from "@/components/calculators/PositionSizeCalc";
 
 export const metadata: Metadata = {
   title: "Position Size Calculator",
-  description: "Calcula el tamano de tu posicion segun riesgo, capital y stop loss.",
+  description: "Calcula el tamaño de tu posición según riesgo, capital y stop loss.",
 };
 
 export default function PositionSizeCalculatorPage() {

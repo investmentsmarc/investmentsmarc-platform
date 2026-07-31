@@ -11,13 +11,13 @@ const toolCards = [
     href: "/herramientas/position-size-calculator",
     title: "Position Size Calculator",
     description:
-      "Calcula el tamano exacto de tu posicion segun capital, riesgo y stop loss.",
+      "Calcula el tamaño exacto de tu posición según capital, riesgo y stop loss.",
     icon: "PS",
   },
   {
     href: "/herramientas/risk-reward-calculator",
     title: "Risk / Reward Calculator",
-    description: "Evalua si una operacion compensa el riesgo antes de ejecutarla.",
+    description: "Evalúa si una operación compensa el riesgo antes de ejecutarla.",
     icon: "RR",
   },
   {
@@ -41,7 +41,7 @@ export default function HerramientasPage() {
           </h1>
           <p className="mi-page-copy mi-tools-copy">
             Calculadoras y utilidades pensadas para tomar decisiones con criterio,
-            precision y gestion de riesgo. Todo dentro del mismo lenguaje visual de la marca.
+            precisión y gestión de riesgo. Todo dentro del mismo lenguaje visual de la marca.
           </p>
         </div>
 

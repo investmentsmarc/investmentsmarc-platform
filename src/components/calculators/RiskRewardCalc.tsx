@@ -108,8 +108,8 @@ export function RiskRewardCalc() {
             Risk / Reward <span className="mi-text-gradient">Calculator</span>
           </h1>
           <p className="mi-page-copy">
-            Evalua si una operacion vale la pena antes de ejecutarla. Esta version
-            replica la logica del WordPress original y añade un veredicto visual.
+            Evalúa si una operación vale la pena antes de ejecutarla. Esta versión
+            replica la lógica del WordPress original y añade un veredicto visual.
           </p>
         </div>
 

@@ -87,8 +87,8 @@ export function PositionSizeCalc() {
             Position Size <span className="mi-text-gradient">Calculator</span>
           </h1>
           <p className="mi-page-copy">
-            Calcula el tamano exacto de tu posicion en funcion de tu capital, riesgo
-            y distancia al stop. Portado desde la logica original de WordPress.
+            Calcula el tamaño exacto de tu posición en función de tu capital, riesgo
+            y distancia al stop. Portado desde la lógica original de WordPress.
           </p>
         </div>
 

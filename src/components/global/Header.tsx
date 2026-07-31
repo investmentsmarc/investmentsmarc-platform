@@ -46,7 +46,7 @@ export function Header() {
           />
         </Link>
 
-        <nav className="mi-nav-desktop" aria-label="Navegacion principal">
+        <nav className="mi-nav-desktop" aria-label="Navegación principal">
           {NAV_ITEMS.map((item) => {
             const className = item.isExternal
               ? "mi-nav-link"

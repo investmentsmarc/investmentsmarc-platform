@@ -24,7 +24,7 @@ export function BlogCard({ post }: { post: BlogPost }) {
           </p>
           <h3 className="mi-blog-card-title">{post.title}</h3>
           <p className="mi-blog-card-excerpt">{post.excerpt}</p>
-          <span className="mi-blog-card-read">Leer analisis</span>
+          <span className="mi-blog-card-read">Leer análisis</span>
         </div>
       </Link>
     </article>
