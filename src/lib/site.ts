@@ -30,10 +30,12 @@ export const LEGAL_NAV: NavItem[] = [
   { label: "Terminos de Uso", href: "/legal/terminos" },
 ];
 
+// Handles confirmados por Marc. El anterior, @investmentsmarc, no era el suyo:
+// en YouTube devolvía 404 y en Instagram apuntaba a una cuenta distinta.
 export const SOCIAL_LINKS: NavItem[] = [
-  { label: "Instagram", href: "https://instagram.com/investmentsmarc", isExternal: true },
-  { label: "YouTube", href: "https://youtube.com/@investmentsmarc", isExternal: true },
-  { label: "TikTok", href: "https://tiktok.com/@investmentsmarc", isExternal: true },
+  { label: "Instagram", href: "https://www.instagram.com/marc_investments/", isExternal: true },
+  { label: "YouTube", href: "https://www.youtube.com/@marcinvestments", isExternal: true },
+  { label: "TikTok", href: "https://www.tiktok.com/@marc_investments", isExternal: true },
   { label: "Telegram", href: TELEGRAM_URL, isExternal: true },
   { label: "WhatsApp", href: `${WHATSAPP_URL}?text=Hola%20Marc%2C%20quiero%20mas%20informacion`, isExternal: true },
 ];

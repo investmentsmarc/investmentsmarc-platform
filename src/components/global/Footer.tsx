@@ -27,8 +27,10 @@ export function Footer() {
     { label: "Telegram", href: TELEGRAM_URL, isExternal: true },
     { label: "info@investmentsmarc.com", href: "mailto:info@investmentsmarc.com", isExternal: true },
   ];
+  // TikTok estaba en SOCIAL_LINKS y tiene icono en SocialIcon, pero quedaba
+  // fuera de este filtro: el enlace existía y no se mostraba en ningún sitio.
   const socialIcons = SOCIAL_LINKS.filter((item) =>
-    ["Instagram", "YouTube", "Telegram", "WhatsApp"].includes(item.label),
+    ["Instagram", "YouTube", "TikTok", "Telegram", "WhatsApp"].includes(item.label),
   );
 
   return (
