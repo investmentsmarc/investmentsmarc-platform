@@ -31,11 +31,11 @@ const fraunces = Fraunces({
 export const metadata: Metadata = {
   metadataBase: new URL("https://investmentsmarc.com"),
   title: {
-    default: "Investments Marc — Trading e Inversiones Profesionales",
-    template: "%s | Investments Marc",
+    default: "Marc Investments — FlowTitan, formación y comunidad de trading",
+    template: "%s | Marc Investments",
   },
   description:
-    "Aprende trading institucional, gestión de riesgo y análisis de mercados con Marc. FlowTitan PRO, cursos y herramientas para inversores serios.",
+    "Marc Investments desarrolla FlowTitan, la plataforma que sigue el flujo institucional de opciones en tiempo real, y forma a una comunidad hispanohablante de inversores.",
   keywords: ["trading", "inversiones", "bolsa", "forex", "análisis técnico", "smart money", "FlowTitan"],
   authors: [{ name: "Marc Investments LLC" }],
   creator: "Marc Investments LLC",
@@ -43,23 +43,23 @@ export const metadata: Metadata = {
     type: "website",
     locale: "es_ES",
     url: "https://investmentsmarc.com",
-    siteName: "Investments Marc",
-    title: "Investments Marc — Trading e Inversiones Profesionales",
+    siteName: "Marc Investments",
+    title: "Marc Investments — FlowTitan, formación y comunidad de trading",
     description:
-      "Aprende trading institucional, gestión de riesgo y análisis de mercados con Marc.",
+      "FlowTitan sigue el flujo institucional de opciones en tiempo real. Formación y comunidad de Marc Investments.",
     images: [
       {
         url: "/images/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Investments Marc",
+        alt: "Marc Investments",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Investments Marc — Trading e Inversiones Profesionales",
-    description: "Aprende trading institucional, gestión de riesgo y análisis de mercados.",
+    title: "Marc Investments — FlowTitan, formación y comunidad de trading",
+    description: "FlowTitan sigue el flujo institucional de opciones en tiempo real.",
     images: ["/images/og-image.png"],
   },
   robots: {
@@ -67,7 +67,7 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true },
   },
-  applicationName: "Investments Marc",
+  applicationName: "Marc Investments",
   icons: {
     icon: [
       { url: "/favicon.ico",  sizes: "any" },
