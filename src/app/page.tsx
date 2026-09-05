@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import { Suspense } from "react";
 
 import { JsonLd } from "@/components/global/JsonLd";
+import { FlowTitanSection } from "@/components/home/FlowTitanSection";
 import { HeroSection } from "@/components/home/HeroSection";
 import { LatestArticles } from "@/components/home/LatestArticles";
 import { NewsSkeleton } from "@/components/home/NewsSkeleton";
@@ -137,6 +138,7 @@ export default function HomePage() {
     <>
       <JsonLd data={homeSchema} />
       <HeroSection />
+      <FlowTitanSection />
       <TelegramCommunity />
       <Suspense fallback={<NewsSkeleton />}>
         <LatestArticles />

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Manrope, Fraunces } from "next/font/google";
 
+import { AnalyticsConsent } from "@/components/global/AnalyticsConsent";
 import { CookieBanner } from "@/components/global/CookieBanner";
 import { Footer } from "@/components/global/Footer";
 import { Header } from "@/components/global/Header";
@@ -103,6 +104,7 @@ export default function RootLayout({
           <WhatsAppFloat />
           <CookieBanner />
         </div>
+        <AnalyticsConsent />
         <RevealController />
         <NewsPrefetcher />
         <MetaPixel />

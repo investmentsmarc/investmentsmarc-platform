@@ -11,11 +11,15 @@ export function HeroSection() {
           <div className="mi-hero-trading-copy">
             <span className="mi-badge mi-badge-pulse">Trading Floor · Sesión NY activa</span>
 
+            {/* El nombre entra en el `h1` a proposito: era la unica pieza que el
+                buscador lee como titular y en la que la marca no aparecia. El
+                degradado se mueve de "Instituciones" a "FlowTitan" porque dos
+                lineas con el mismo enfasis compiten y ninguna gana. */}
             <h1 className="mi-hero-trading-title">
-              <span className="mi-hero-trading-line">El poder de las</span>
               <span className="mi-hero-trading-line">
-                <span className="mi-text-gradient mi-text-gradient-glow">Instituciones</span>
+                <span className="mi-text-gradient mi-text-gradient-glow">FlowTitan</span>
               </span>
+              <span className="mi-hero-trading-line">El poder de las Instituciones</span>
               <span className="mi-hero-trading-line mi-hero-trading-stroke">en tus manos.</span>
             </h1>
 

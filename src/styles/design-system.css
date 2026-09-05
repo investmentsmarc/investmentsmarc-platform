@@ -4814,3 +4814,115 @@ html:not(.js-ready) .mi-reveal {
     max-width: 1180px !important;
   }
 }
+
+
+/* -- Seccion FlowTitan de la portada -------------------------------------
+   🚨 El prefijo es `mi-ftsec-`, NO `mi-ft-`: ese ya es del terminal del hero
+   (`.mi-ft-title` existe con 10.5px y letter-spacing de terminal, y la linea
+   1656 tiene `.mi-ftx .mi-ft-grid { display:none }`). Reutilizarlo habria
+   heredado estilos ajenos y dejado la rejilla ocultable por una regla que no
+   es de esta seccion.
+   Sin un solo hex: todo sale de las variables `--mi-*`. Los dos unicos
+   breakpoints del proyecto son 768 y 1024. */
+.mi-ftsec-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+
+.mi-ftsec-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  border: 1px solid var(--mi-border);
+  border-radius: 14px;
+  background: var(--mi-bg-elevated);
+  transition: border-color var(--mi-duration) var(--mi-ease-out),
+              transform var(--mi-duration) var(--mi-ease-out);
+}
+
+.mi-ftsec-card:hover {
+  border-color: var(--mi-border-strong);
+  transform: translateY(-2px);
+}
+
+.mi-ftsec-kicker {
+  font-family: var(--mi-font);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mi-gold);
+}
+
+.mi-ftsec-title {
+  font-family: var(--mi-font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--mi-text-primary);
+}
+
+.mi-ftsec-copy {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--mi-text-secondary);
+}
+
+.mi-ftsec-actions {
+  /* En movil apilados: en 430px de ancho los dos en fila quedaban pegados al
+     borde del contenedor. Desde 768 vuelven a ir en linea. */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.75rem;
+  margin-top: 2.5rem;
+}
+
+.mi-ftsec-actions > * {
+  /* Los botones del sistema son `inline-flex`; al estirarlos a todo el ancho el
+     contenido se quedaba pegado a la izquierda. `justify-content` lo centra sin
+     tocar el primitivo, que lo usan otras pantallas. */
+  justify-content: center;
+  text-align: center;
+}
+
+.mi-ftsec-legal {
+  /* Iba en `--mi-text-tertiary` y se perdia sobre el shader animado del fondo.
+     Sube a `secondary` y se apoya en una banda translucida propia para no
+     depender de lo que pase por detras. */
+  margin-top: 1.75rem;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.32);
+  text-align: center;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--mi-text-secondary);
+}
+
+@media (min-width: 768px) {
+  .mi-ftsec-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .mi-ftsec-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media (min-width: 1024px) {
+  .mi-ftsec-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .mi-ftsec-legal {
+    max-width: 62ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
