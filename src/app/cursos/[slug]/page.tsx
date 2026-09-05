@@ -70,10 +70,10 @@ export default async function CoursePage({
           {/* El gratuito tiene su propia captacion publica; los privados se
               piden por contacto, que es la unica via que hoy existe de verdad. */}
           <Link
-            href={course.acceso === "gratis" ? "/curso-gratis" : "/contacto"}
+            href={course.acceso === "gratis" ? "/curso-gratis" : "/programa"}
             className="mi-btn-gold"
           >
-            {course.acceso === "gratis" ? "Acceder al curso gratis" : "Solicitar acceso"}
+            {course.acceso === "gratis" ? "Acceder al curso gratis" : "Ver el programa completo"}
           </Link>
           <Link href="/contacto" className="mi-btn-outline">
             Hablar con el equipo

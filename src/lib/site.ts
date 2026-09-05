@@ -30,6 +30,7 @@ export const NAV_ITEMS: NavItem[] = [
 
 export const FOOTER_NAV: NavItem[] = [
   { label: "Curso Gratis", href: "/curso-gratis" },
+  { label: "Programa", href: "/programa" },
   { label: "Blog", href: "/blog" },
   { label: "Herramientas", href: "/herramientas" },
   { label: "FAQs", href: "/faqs" },

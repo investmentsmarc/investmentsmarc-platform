@@ -92,9 +92,8 @@ export default function CursosPage() {
 
         <footer className="mi-courses-foot mi-reveal mi-reveal-delay-4">
           <p>
-            ¿No sabes por dónde empezar?{" "}
-            <Link href="/contacto">Habla con el equipo</Link> y te armamos una ruta
-            personalizada.
+            Los cinco módulos privados forman un solo programa.{" "}
+            <Link href="/programa">Mira cómo funciona y qué incluye →</Link>
           </p>
         </footer>
       </div>
