@@ -10,61 +10,28 @@ import type {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
-    _id: "post-1",
-    slug: "las-siete-magnificas-en-2026",
-    title: "Las Siete Magnificas en 2026: El Crash del 17%",
+    // Primer informe con datos propios del registro institucional. Todas las
+    // cifras salen de una consulta ejecutada el 2026-09-05 sobre la semana del
+    // 31 de agosto al 4 de septiembre, deduplicando el ledger por sus cinco
+    // columnas de clave. El script vive en el repo de FlowTitan.
+    _id: "post-flujo-2026-w36",
+    slug: "el-30-por-ciento-que-no-era-una-apuesta",
+    title: "El 30% del dinero grande de esta semana no era una apuesta",
     excerpt:
-      "Que nombres siguen liderando el flujo y donde empiezan a aparecer zonas de distribucion institucional.",
-    category: "Analisis de Mercado",
-    publishedAt: "2026-03-20",
-    readingTime: 6,
-    body: [
-      "Las Siete Magnificas siguen siendo el termometro del apetito por riesgo, pero su lectura correcta ya no pasa solo por momentum. El mercado empieza a premiar balance sheets mas resilientes y castiga narrativas sobreextendidas.",
-      "Cuando el flujo institucional se concentra, la pregunta no es solo quien sube mas, sino quien sigue absorbiendo liquidez sin deteriorar estructura. Ahí es donde se separan los lideres reales de los rebotes emocionales.",
-      "Para traders e inversores, el foco debe estar en contexto, posicionamiento y confirmacion. La narrativa importa, pero la ejecucion disciplinada importa mas.",
-    ],
-  },
-  {
-    _id: "post-2",
-    slug: "fed-2026-recortes-pausados",
-    title: "La Fed en 2026: Recortes Pausados, Inflacion Resistente",
-    excerpt:
-      "Un mapa práctico para traducir tono macro en sesgo operativo sobre índices, dólar y sectores sensibles a tipos.",
-    category: "Analisis de Mercado",
-    publishedAt: "2026-03-17",
+      "Casi un tercio de la prima institucional de la semana del 31 de agosto se pagó por opciones tan dentro del dinero que apenas compraban opcionalidad. La mayor operación, 540 millones de dólares en calls del SPX, es el ejemplo perfecto.",
+    category: "Trading Institucional",
+    publishedAt: "2026-09-05",
     readingTime: 5,
     body: [
-      "El escenario de recortes pausados crea un mercado menos complaciente. La sensibilidad a datos vuelve a dominar y los activos de duration larga reaccionan de forma mas violenta ante cualquier sorpresa.",
-      "En este entorno, la clave está en identificar cuando el mercado ya descontó el mensaje de la Fed y cuando todavía hay espacio para repricing. Esa diferencia define la calidad de las entradas.",
-      "Operar la macro no significa adivinar titulares. Significa entender como cambian los flujos entre indices, bonos, dólar y sectores de crecimiento.",
-    ],
-  },
-  {
-    _id: "post-3",
-    slug: "aranceles-trump-2026",
-    title: "Aranceles Trump 2026: La Guerra Comercial Escala",
-    excerpt:
-      "Como la tensión comercial reordena riesgo sectorial y genera oportunidades tácticas para capital paciente.",
-    category: "Analisis de Mercado",
-    publishedAt: "2026-03-14",
-    readingTime: 4,
-    body: [
-      "Las medidas arancelarias vuelven a introducir fricción en cadenas de suministro y percepción de riesgo. El impacto no es uniforme: afecta margenes, expectativas y rotación sectorial de forma desigual.",
-      "La lectura institucional exige separar ruido político de consecuencias en beneficios, pricing power y asignación de capital.",
-    ],
-  },
-  {
-    _id: "post-4",
-    slug: "geopolitica-2026",
-    title: "Geopolitica 2026: Paz en Ucrania, Tension en Asia",
-    excerpt:
-      "Una lectura de cómo los eventos geopolíticos alteran rotación, commodities y sentimiento global.",
-    category: "Analisis de Mercado",
-    publishedAt: "2026-03-10",
-    readingTime: 4,
-    body: [
-      "La geopolítica no se opera por titulares aislados. Se opera por la manera en que altera correlaciones, prima de riesgo y narrativa en commodities, energía, defensa y divisas.",
-      "Cuando el mercado mezcla alivio en un frente y tensión en otro, la volatilidad relativa entre activos se vuelve una fuente real de oportunidad.",
+      "Entre el lunes 31 de agosto y el viernes 4 de septiembre de 2026, el registro institucional de FlowTitan capturó 32.063 operaciones de opciones sobre 53 subyacentes, por un total de 46.948 millones de dólares en prima. La operación más grande de toda la semana fueron 2.400 calls del SPX con strike 5.500 y vencimiento el 31 de diciembre, pagados a 2.252,33 dólares cada uno: 540,6 millones de dólares en una sola impresión.",
+      "Leído de la forma habitual, eso es un titular: alguien acaba de apostar medio billón de dólares a que el S&P sube. Leído con el dato completo, es otra cosa. En el momento de la operación el índice cotizaba a 7.677,81. Un call con strike 5.500 ya valía por sí solo 2.177,81 dólares de valor intrínseco. Del precio pagado, sólo 74,52 dólares —un 3,3%— correspondían al valor extrínseco, que es lo único que se paga por la opcionalidad.",
+      "Dicho de otro modo: el 96,7% de esa operación era comprar el índice, no apostar por él. Un call profundamente dentro del dinero comprado casi a paridad se comporta como una posición larga financiada. Se usa para construir un sintético, para trasladar una posición existente, o para financiar. No expresa una opinión direccional nueva, y confundirlo con una señal es el error más caro que se comete leyendo la cinta.",
+      "Lo interesante no es el caso aislado, sino cuánto pesa el patrón. Aplicando el mismo criterio —valor extrínseco por debajo del 10% del precio pagado— a toda la semana, el resultado es que 13.637 millones de dólares de prima, el 30,4% del total, se pagaron por contratos que apenas compraban opcionalidad. Entre las operaciones de 10 millones de dólares o más, la proporción sube al 42,3%: de 20.844 millones, 8.808 son estructura y no apuesta.",
+      "El cálculo se hace así. El valor intrínseco de un call es la diferencia entre el precio del subyacente y el strike cuando es positiva, y en un put al revés. El extrínseco es lo que queda del precio pagado. Se compara contra el precio del subyacente registrado en el mismo instante de la impresión, no contra el cierre. El 98,9% de las operaciones de la semana tenían ese precio disponible; el resto queda fuera del cálculo en vez de rellenarse con una estimación.",
+      "Un detalle de método que cambia el resultado y casi nunca se menciona: el registro escribe cada operación dos veces por diseño, una al capturarla y otra al enriquecerla con las griegas. Sin deduplicar, la misma consulta habría devuelto 38.523 filas y 54.332 millones de prima, un 15,7% de más. Cualquier cifra de flujo institucional que no explique cómo deduplica es una cifra que no se puede comprobar.",
+      "Tres cosas que este análisis no demuestra, y conviene decirlas. La primera: el total es una cota inferior. Las estructuras de varias patas imprimen todas sus patas en el mismo milisegundo, y un lector en tiempo real puede capturar una y perder las demás, así que el volumen real es mayor que el registrado. La segunda: «casi paridad» es un criterio, no un veredicto. Una opción muy dentro del dinero a pocos días de vencer también tiene poco extrínseco sin que haya nada de financiación detrás. La tercera: el 71,8% de las operaciones de la semana se imprimieron en el punto medio de la horquilla, lo que no dice si alguien compró o vendió.",
+      "La conclusión útil no es «el mercado está alcista» ni «el mercado está bajista». Es que casi un tercio del dinero grande que aparece en cualquier pantalla de flujo no está expresando una dirección, y separarlo del que sí la expresa es la diferencia entre leer el mercado y leer un titular. Ese filtro se puede aplicar con el dato de cada impresión: strike, precio del subyacente en ese instante, y precio pagado.",
+      "Nada de lo publicado aquí constituye asesoría de inversión. Operar en bolsa conlleva riesgo y puede acabar en la pérdida total de lo invertido.",
     ],
   },
   {
