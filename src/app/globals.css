@@ -156,10 +156,13 @@ textarea:focus-visible {
    BADGE
    -------------------------------------------------------------------------- */
 .mi-badge {
+  /* 🚨 Era fondo dorado translucido + borde dorado + texto dorado: TRES acentos
+     por cada pildora, y hay una por seccion. El antetitulo es una etiqueta de
+     orientacion, no una llamada a la accion; el oro queda para el boton. */
   display: inline-block;
   padding: 6px 16px;
-  background: rgba(201, 168, 76, 0.06);
-  border: 1px solid rgba(201, 168, 76, 0.16);
+  background: transparent;
+  border: 1px solid var(--mi-border);
   border-radius: 4px;
   font-size: 0.7rem;
   font-weight: 600;

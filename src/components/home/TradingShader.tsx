@@ -78,8 +78,8 @@ void main(){
   float r1 = length(p - vec2(0.35, 0.30));
   float r2 = length(p - vec2(-0.40, -0.32));
   vec3 col = mix(vec3(0.022, 0.017, 0.012), vec3(0.0), smoothstep(0.0, 1.6, r1));
-  col += vec3(0.032, 0.024, 0.012) * smoothstep(1.4, 0.2, r1);
-  col += vec3(0.020, 0.015, 0.008) * smoothstep(1.4, 0.2, r2);
+  col += vec3(0.018, 0.015, 0.010) * smoothstep(1.4, 0.2, r1);
+  col += vec3(0.012, 0.010, 0.007) * smoothstep(1.4, 0.2, r2);
 
   vec2 q = p * 1.5;
   q.x += 0.45 * fbm(q + vec2(uTime * 0.045, 0.0));
@@ -87,20 +87,25 @@ void main(){
   float n = fbm(q * 1.25 + uTime * 0.015);
   vec3 gold    = vec3(0.79, 0.66, 0.30);
   vec3 goldHot = vec3(0.96, 0.84, 0.48);
-  col += gold * pow(n, 2.1) * 0.38;
-  col += goldHot * pow(n, 4.2) * 0.20;
+  // 🚨 Estos dos multiplicadores eran 0.38 y 0.20, y eran el motivo de que la
+  // pagina se leyera marron dorada en vez de negra. Medido el 2026-09-05: 20
+  // elementos con oro en una sola pantalla, y el fondo competia con todos ellos.
+  // El oro luce contra el negro; contra oro, no luce. Se conserva la textura viva
+  // — sigue siendo el mismo ruido animado — a un tercio de intensidad.
+  col += gold * pow(n, 2.1) * 0.13;
+  col += goldHot * pow(n, 4.2) * 0.07;
 
   // Mouse halo — luminosidad reducida para que no encandile al mover el cursor
   float md = length(p - m);
-  col += goldHot * 0.18 * exp(-md * 3.4);
-  col += gold    * 0.10 * exp(-md * 1.5);
+  col += goldHot * 0.07 * exp(-md * 3.4);
+  col += gold    * 0.04 * exp(-md * 1.5);
 
   float gy = abs(fract(p.y * 14.0 + uTime * 0.12) - 0.5);
   float gx = abs(fract(p.x * 22.0 - uMouse.x * 0.1) - 0.5);
   float lineY = smoothstep(0.022, 0.000, gy);
   float lineX = smoothstep(0.018, 0.000, gx);
   float gridFade = smoothstep(0.95, 0.0, p.y + 0.05) * smoothstep(-0.95, -0.1, p.y);
-  col += gold * (lineY * 0.06 + lineX * 0.04) * gridFade;
+  col += gold * (lineY * 0.03 + lineX * 0.02) * gridFade;
 
   // Gentle vignette — no longer darkens edges aggressively, so footer stays alive
   float vig = smoothstep(1.45, 0.35, length(p));
@@ -109,7 +114,7 @@ void main(){
   float grain = hash(gl_FragCoord.xy + vec2(uTime * 73.0, uTime * 41.0));
   col += (grain - 0.5) * 0.018;
 
-  col = pow(max(col, 0.0), vec3(0.94));
+  col = pow(max(col, 0.0), vec3(1.0));
 
   gl_FragColor = vec4(col, 1.0);
 }
@@ -196,20 +201,25 @@ export function TradingShader({ variant = "hero" }: TradingShaderProps = {}) {
       }
     }
 
-    const particles: Particle[] = Array.from({ length: 90 }, () => ({
+    // Eran 90. Cada una es un punto dorado permanente en pantalla; a la mitad
+    // siguen dando profundidad sin sumar ruido.
+    const particles: Particle[] = Array.from({ length: 45 }, () => ({
       x: Math.random(),
       y: Math.random(),
       z: 0.4 + Math.random() * 0.9,
       vy: 0.0003 + Math.random() * 0.0009,
       vx: (Math.random() - 0.5) * 0.0004,
       r: 0.4 + Math.random() * 1.3,
-      a: 0.18 + Math.random() * 0.5,
+      a: 0.10 + Math.random() * 0.22,
     }));
 
+    // 🚨 Las opacidades eran 0.85 / 0.55 / 0.35 con un resplandor dorado encima:
+    // las ondas competian con el titular por la atencion. Bajadas a un cuarto,
+    // el movimiento se conserva y deja de leerse como un elemento mas.
     const flows: Flow[] = [
-      { phase: 0.0, speed: 0.55, amp: 0.22, freq: 3.2, y: 0.58, alpha: 0.85, width: 2.0 },
-      { phase: 1.7, speed: 0.38, amp: 0.16, freq: 5.1, y: 0.68, alpha: 0.55, width: 1.6 },
-      { phase: 3.4, speed: 0.72, amp: 0.09, freq: 7.8, y: 0.78, alpha: 0.35, width: 1.2 },
+      { phase: 0.0, speed: 0.55, amp: 0.22, freq: 3.2, y: 0.58, alpha: 0.22, width: 2.0 },
+      { phase: 1.7, speed: 0.38, amp: 0.16, freq: 5.1, y: 0.68, alpha: 0.14, width: 1.6 },
+      { phase: 3.4, speed: 0.72, amp: 0.09, freq: 7.8, y: 0.78, alpha: 0.09, width: 1.2 },
     ];
 
     // Ghost chart (OHLC + SMA) — the "silent witness" behind the nebula
@@ -409,7 +419,7 @@ export function TradingShader({ variant = "hero" }: TradingShaderProps = {}) {
       const beamY = ((t * 0.05) % 1) * H;
       const beamGrad = ctx.createLinearGradient(0, beamY - 40, 0, beamY + 40);
       beamGrad.addColorStop(0, "rgba(216,182,90,0)");
-      beamGrad.addColorStop(0.5, "rgba(216,182,90,0.08)");
+      beamGrad.addColorStop(0.5, "rgba(216,182,90,0.035)");
       beamGrad.addColorStop(1, "rgba(216,182,90,0)");
       ctx.fillStyle = beamGrad;
       ctx.fillRect(0, beamY - 40, W, 80);
@@ -472,8 +482,8 @@ export function TradingShader({ variant = "hero" }: TradingShaderProps = {}) {
         ctx.strokeStyle = `rgba(216,182,90,${f.alpha})`;
         ctx.lineWidth = f.width;
         ctx.lineCap = "round";
-        ctx.shadowColor = "rgba(244,217,122,0.55)";
-        ctx.shadowBlur = 14;
+        ctx.shadowColor = "rgba(244,217,122,0.20)";
+        ctx.shadowBlur = 6;
         ctx.stroke();
         ctx.shadowBlur = 0;
         ctx.strokeStyle = `rgba(244,217,122,${f.alpha * 0.55})`;

@@ -23,7 +23,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/links",
     "/whatsapp",
     "/cursos",
-    "/dashboard",
+    // "/dashboard" fuera a proposito: la pagina dice "en preparacion" y no tiene
+    // contenido. Ofrecersela al buscador es mandar visitas a una pagina vacia.
   ];
 
   // Blog hidden for now — `BLOG_POSTS` is intentionally unused here.

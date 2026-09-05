@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import { TELEGRAM_URL } from "@/lib/site";
+import { WHATSAPP_NUMBER, WHATSAPP_URL } from "@/lib/site";
 
 type Msg = {
   id: number;
@@ -48,14 +48,17 @@ const BENEFITS = [
   "Acceso directo al equipo y a Marc",
 ];
 
-export function TelegramCommunity() {
-  const [memberCount, setMemberCount] = useState(12_847);
+export function CanalWhatsApp() {
   const [isTyping, setIsTyping] = useState(true);
 
-  // Contador sube sutilmente (sensación de comunidad viva)
+  // 🚨 Aqui vivia un contador de miembros que arrancaba en 12.847 y se
+  // autoincrementaba cada 4,2 s "para dar sensacion de comunidad viva". Era un
+  // numero inventado presentado como un hecho, en la web de un negocio
+  // financiero. Se retiro el 2026-09-05. Si hay una cifra real, vuelve aqui —
+  // pero medida, no simulada.
   useEffect(() => {
     const id = window.setInterval(() => {
-      setMemberCount((c) => c + Math.floor(Math.random() * 3));
+      // marcador de posicion: sin efecto, se conserva el ciclo del "escribiendo"
     }, 4200);
     return () => window.clearInterval(id);
   }, []);
@@ -68,10 +71,13 @@ export function TelegramCommunity() {
     return () => window.clearInterval(id);
   }, []);
 
-  const memberLabel = memberCount.toLocaleString("es-ES");
+  // El numero se muestra formateado para que se lea como un telefono, y el
+  // enlace lleva el saludo prellenado: quien pulsa llega con el mensaje escrito.
+  const telefonoLegible = `+1 ${WHATSAPP_NUMBER.slice(1, 4)} ${WHATSAPP_NUMBER.slice(4, 7)} ${WHATSAPP_NUMBER.slice(7)}`;
+  const enlaceWhatsApp = `${WHATSAPP_URL}?text=${encodeURIComponent("Hola Marc, vengo de la web y quiero entrar a la comunidad.")}`;
 
   return (
-    <section className="mi-section mi-telegram-section mi-home-band">
+    <section className="mi-section mi-canal-section mi-home-band">
       <div className="mi-container">
         <header className="mi-home-section-head mi-home-section-head-centered mi-reveal">
           <div className="mi-home-section-copy">
@@ -82,61 +88,60 @@ export function TelegramCommunity() {
             </h2>
             <p className="mi-home-section-copy-sub">
               Alertas, análisis y whale sweeps cuando los ves por primera vez — directo
-              en Telegram
+              a tu WhatsApp
             </p>
           </div>
         </header>
 
-        <div className="mi-telegram-stage">
+        <div className="mi-canal-stage">
           {/* === LEFT: live dispatch terminal === */}
-          <article className="mi-telegram-channel mi-reveal mi-reveal-scale">
-            <header className="mi-telegram-head">
-              <div className="mi-telegram-avatar" aria-hidden="true">
+          <article className="mi-canal-channel mi-reveal mi-reveal-scale">
+            <header className="mi-canal-head">
+              <div className="mi-canal-avatar" aria-hidden="true">
                 <span>M</span>
               </div>
-              <div className="mi-telegram-head-meta">
-                <strong className="mi-telegram-handle">@MarcInvestments</strong>
-                <span className="mi-telegram-sub">
-                  Canal oficial ·{" "}
-                  <b className="mi-telegram-count">{memberLabel}</b> miembros
+              <div className="mi-canal-head-meta">
+                <strong className="mi-canal-handle">{telefonoLegible}</strong>
+                <span className="mi-canal-sub">
+                  WhatsApp Business · Comunidad privada
                 </span>
               </div>
-              <span className="mi-telegram-live" aria-hidden="true">
-                <span className="mi-telegram-live-dot" />
+              <span className="mi-canal-live" aria-hidden="true">
+                <span className="mi-canal-live-dot" />
                 LIVE
               </span>
             </header>
 
-            <div className="mi-telegram-messages">
+            <div className="mi-canal-messages">
               {MESSAGES.map((m) => (
                 <article
                   key={m.id}
-                  className={`mi-telegram-msg${
+                  className={`mi-canal-msg${
                     m.badge === "PIN" ? " is-pinned" : ""
                   }`}
                 >
                   {m.badge ? (
                     <span
-                      className={`mi-telegram-msg-badge mi-telegram-badge-${m.badge.toLowerCase()}`}
+                      className={`mi-canal-msg-badge mi-canal-badge-${m.badge.toLowerCase()}`}
                     >
                       {m.badge === "PIN" ? "📌 " : ""}
                       {m.badge}
                     </span>
                   ) : null}
-                  <div className="mi-telegram-msg-body">
-                    {m.tag ? <span className="mi-telegram-msg-tag">${m.tag}</span> : null}
+                  <div className="mi-canal-msg-body">
+                    {m.tag ? <span className="mi-canal-msg-tag">${m.tag}</span> : null}
                     <p>{m.text}</p>
                   </div>
-                  <span className="mi-telegram-msg-time">{m.time}</span>
+                  <span className="mi-canal-msg-time">{m.time}</span>
                 </article>
               ))}
 
               <div
-                className="mi-telegram-typing"
+                className="mi-canal-typing"
                 aria-live="polite"
                 data-visible={isTyping ? "true" : "false"}
               >
-                <span className="mi-telegram-typing-dots" aria-hidden="true">
+                <span className="mi-canal-typing-dots" aria-hidden="true">
                   <i />
                   <i />
                   <i />
@@ -145,45 +150,45 @@ export function TelegramCommunity() {
               </div>
             </div>
 
-            <footer className="mi-telegram-foot">
-              <span className="mi-telegram-foot-meta">
-                <span className="mi-telegram-foot-dot" />
+            <footer className="mi-canal-foot">
+              <span className="mi-canal-foot-meta">
+                <span className="mi-canal-foot-dot" />
                 Última transmisión hace 4 min
               </span>
-              <span className="mi-telegram-foot-signal" aria-hidden="true">
+              <span className="mi-canal-foot-signal" aria-hidden="true">
                 ·  ·  ·
               </span>
             </footer>
           </article>
 
           {/* === RIGHT: benefits + CTA === */}
-          <aside className="mi-telegram-pitch mi-reveal mi-reveal-right">
-            <span className="mi-telegram-kicker">Gratis · Sin spam</span>
-            <h3 className="mi-telegram-pitch-title">
+          <aside className="mi-canal-pitch mi-reveal mi-reveal-right">
+            <span className="mi-canal-kicker">Gratis · Sin spam</span>
+            <h3 className="mi-canal-pitch-title">
               Solo <span className="mi-text-gradient">señal institucional</span>.
               Cero ruido.
             </h3>
-            <p className="mi-telegram-pitch-desc">
+            <p className="mi-canal-pitch-desc">
               La cinta del smart money en tu bolsillo: lo que captura la mesa
               institucional de FlowTitan, se envía al canal segundos después.
             </p>
 
-            <ul className="mi-telegram-benefits">
+            <ul className="mi-canal-benefits">
               {BENEFITS.map((b, i) => (
                 <li key={b}>
-                  <span className="mi-telegram-benefit-num">
+                  <span className="mi-canal-benefit-num">
                     0{i + 1}
                   </span>
-                  <span className="mi-telegram-benefit-text">{b}</span>
+                  <span className="mi-canal-benefit-text">{b}</span>
                 </li>
               ))}
             </ul>
 
             <a
-              href={TELEGRAM_URL}
+              href={enlaceWhatsApp}
               target="_blank"
               rel="noreferrer noopener"
-              className="mi-btn-gold mi-telegram-cta"
+              className="mi-btn-gold mi-canal-cta"
             >
               <svg
                 width="18"
@@ -192,12 +197,12 @@ export function TelegramCommunity() {
                 fill="currentColor"
                 aria-hidden="true"
               >
-                <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.67 6.88-1.57 7.4c-.12.53-.44.66-.89.41l-2.46-1.81-1.19 1.14c-.13.13-.24.24-.49.24l.17-2.5 4.58-4.14c.2-.18-.04-.28-.31-.1l-5.67 3.57-2.44-.76c-.53-.17-.54-.53.11-.78l9.53-3.67c.44-.16.83.11.67.7Z" />
+                <path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.25-.46-2.38-1.47-.88-.79-1.47-1.76-1.65-2.05-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.01-1.04 2.470 0 1.45 1.06 2.86 1.21 3.05.15.2 2.09 3.2 5.07 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.28.17-1.41-.07-.13-.27-.2-.57-.35Z"/><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.86 9.86 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2Zm0 18.02h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.17 8.17 0 0 1-1.26-4.37c0-4.54 3.7-8.23 8.25-8.23a8.23 8.23 0 0 1 0 16.46Z"/>
               </svg>
-              Sintonizar el canal →
+              Escríbeme por WhatsApp →
             </a>
-            <p className="mi-telegram-tiny">
-              {memberLabel} traders ya están dentro. Tú eres el siguiente.
+            <p className="mi-canal-tiny">
+              Escribes, y te contesta Marc. No es un bot.
             </p>
           </aside>
         </div>

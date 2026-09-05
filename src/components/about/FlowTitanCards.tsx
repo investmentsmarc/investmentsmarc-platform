@@ -44,7 +44,9 @@ export function FlowTitanCards() {
   const totalNum = FLOWTITAN_FEATURES.length.toString().padStart(2, "0");
 
   return (
-    <section className="mi-section mi-ft-section mi-ftx">
+    // El `id` existe porque la seccion FlowTitan de la portada enlaza aqui
+    // (`/about-us#flowtitan`). Sin el, ese enlace aterriza arriba del todo.
+    <section className="mi-section mi-ft-section mi-ftx" id="flowtitan">
       <div className="mi-container">
         {/* ==== HEADER ZONE ==== */}
         <header className="mi-ftx-head mi-reveal">

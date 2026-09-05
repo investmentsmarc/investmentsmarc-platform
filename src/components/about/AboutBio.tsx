@@ -8,10 +8,11 @@ export function AboutBio() {
       <div className="mi-container mi-about-grid">
         <div className="mi-about-image-wrapper">
           <Image
-            src="/images/marc-image.jpg"
-            alt="Marcos Martinez"
-            width={720}
-            height={960}
+            src="/images/marc-2026.jpg"
+            alt="Marcos Martínez, fundador de Marc Investments"
+            width={843}
+            height={1264}
+            priority
             className="mi-about-image"
           />
         </div>
