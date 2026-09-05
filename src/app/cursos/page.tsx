@@ -46,7 +46,9 @@ export default function CursosPage() {
                 <span className="mi-courses-card-num">
                   {course.order.toString().padStart(2, "0")}
                 </span>
-                <span className="mi-courses-card-of">/ 05</span>
+                <span className="mi-courses-card-of">
+                  / {COURSE_SEEDS.length.toString().padStart(2, "0")}
+                </span>
               </div>
 
               <div className="mi-courses-card-body">
@@ -65,20 +67,21 @@ export default function CursosPage() {
                     href={`/cursos/${course.slug}`}
                     className="mi-btn-gold mi-courses-card-cta"
                   >
-                    {course.price === 0
-                      ? "Empezar gratis"
-                      : `Ver curso · $${course.price}`}
+                    {course.acceso === "gratis" ? "Empezar gratis" : "Ver el programa"}
                     <span className="mi-courses-card-arrow" aria-hidden="true">
                       →
                     </span>
                   </Link>
-                  {course.price === 0 ? (
+                  {/* Los privados no llevan precio porque no hay uno publico
+                      que citar: el catalogo vive dentro del programa. Inventar
+                      una cifra aqui seria anunciar algo que nadie puede pagar. */}
+                  {course.acceso === "gratis" ? (
                     <span className="mi-courses-card-tag mi-courses-card-tag-free">
                       Ruta de entrada · Gratis
                     </span>
                   ) : (
                     <span className="mi-courses-card-tag">
-                      Acceso de por vida
+                      Programa privado
                     </span>
                   )}
                 </div>

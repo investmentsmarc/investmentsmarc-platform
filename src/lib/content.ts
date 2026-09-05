@@ -215,13 +215,15 @@ export const FLOWTITAN_FEATURES = [
   },
 ];
 
+// Los nombres van en el MISMO orden que `FLOWTITAN_SCREEN_IMAGES` en
+// `FlowTitanCards.tsx`: son la etiqueta de cada captura. Si se anade una imagen,
+// se anade aqui su nombre o el carrusel las descuadra.
 export const FLOWTITAN_SCREENS = [
-  "Whale Ledger",
-  "GEX Engine",
-  "Confluence",
-  "TITAN AI",
+  "Dashboard",
   "Tape Scanner",
-  "Command Center",
+  "Option Chain",
+  "GEX Dashboard",
+  "Advance Chart",
 ];
 
 export const CORE_VALUES: ValueItem[] = [
@@ -464,89 +466,126 @@ export const WEBINAR_BENEFITS = [
 ];
 
 // Ruta del Inversor — Academia Marc Investments, progresión 1 → 5
+// 🚨 Estos son los SEIS cursos reales del programa, leidos del catalogo el
+// 2026-09-05. Antes habia cinco inventados ("GENESIS", "CARTOGRAFIA"...) con
+// pagina publica propia: el sitio comercial anunciaba productos que no existen.
+//
+// `acceso` dice como se entra, y no es cosmetico: el catalogo real vive tras un
+// muro de sesion —medido el 2026-09-05, un visitante sin cuenta que abre
+// /courses acaba en /login— asi que enlazar ahi directamente manda a todo
+// interesado frio a un formulario de contrasena. Hasta que exista una pagina
+// publica de venta, el gratuito entra por su propia captacion y los privados
+// pasan por contacto.
+//
+// Las descripciones de los cinco privados son de posicionamiento, escritas aqui:
+// no llevan cifras de lecciones ni horas porque esas no se midieron. La del
+// gratuito si: sus datos salen de su ficha real.
 export const COURSE_SEEDS = [
   {
-    id: "genesis",
-    slug: "genesis",
+    id: "mentalidad-tiburon",
+    slug: "mentalidad-de-tiburon",
     order: 1,
-    codename: "GÉNESIS",
-    title: "De Cero a Inversor",
-    kicker: "Fundamentos del Stock Market · Mentalidad del Capital",
+    codename: "TIBURÓN",
+    title: "Mentalidad de Tiburón",
+    kicker: "Módulo 01 · Método Marc Investments · Nivel inicial",
     description:
-      "Forja la mentalidad que separa al especulador del inversor. Aprende cómo funciona realmente la bolsa, por qué el 90% pierde y cómo posicionarte en el 10% que construye riqueza.",
+      "Siete lecciones, unas 2,5 horas, y un entregable: tu Carta de Reglas del Tiburón. Identificas tu arquetipo dentro de las cuatro criaturas del océano financiero, construyes tu identidad operativa, neutralizas las tres emociones que destruyen cuentas —miedo, codicia y esperanza— y dominas el protocolo del no-entrada: las cinco condiciones en las que no se opera.",
     price: 0,
+    acceso: "gratis" as const,
     currency: "USD" as const,
     coverImage: "",
-    tags: ["fundamentos", "mentalidad", "beginner"],
+    tags: ["mentalidad", "fundamentos", "beginner"],
     publishedAt: "2026-04-01",
     isActive: true,
     stripePriceId: "",
   },
   {
-    id: "cartografia",
-    slug: "cartografia",
+    id: "bienvenida-stock-market",
+    slug: "bienvenida-al-stock-market",
     order: 2,
-    codename: "CARTOGRAFÍA",
-    title: "El Lenguaje del Precio",
-    kicker: "Análisis Técnico · Lectura de Charts",
+    codename: "BIENVENIDA",
+    title: "Bienvenida al Stock Market",
+    kicker: "Fundamentos del mercado · Nivel inicial",
     description:
-      "Domina el mapa del mercado. Estructura, soportes, resistencias, volumen, patrones y timing — para que cada gráfico te hable antes de que hagas click.",
-    price: 297,
+      "Cómo funciona de verdad la bolsa de Estados Unidos: quién está al otro lado de tu orden, qué mueve un precio y por qué la mayoría opera sin saber contra quién compite. El punto de partida antes de tocar un gráfico.",
+    price: 0,
+    acceso: "privado" as const,
     currency: "USD" as const,
     coverImage: "",
-    tags: ["tecnico", "charts", "price-action"],
-    publishedAt: "2026-04-02",
+    tags: ["fundamentos", "beginner"],
+    publishedAt: "2026-04-01",
     isActive: true,
     stripePriceId: "",
   },
   {
-    id: "rayos-x",
-    slug: "rayos-x",
+    id: "analisis-tecnico",
+    slug: "analisis-tecnico",
     order: 3,
-    codename: "RAYOS X",
-    title: "La Anatomía de una Empresa",
-    kicker: "Análisis Fundamental · Valuación de Compañías",
+    codename: "TÉCNICO",
+    title: "Análisis Técnico",
+    kicker: "Estructura y lectura de precio · Nivel intermedio",
     description:
-      "Disecciona balances, márgenes y valuaciones como un analista de Wall Street. Identifica compañías de alta salud financiera antes de que el mercado las descubra.",
-    price: 397,
+      "Estructura de mercado, soportes y resistencias, volumen y contexto. Leer el gráfico como un mapa de decisiones, no como una colección de patrones que se aprenden de memoria.",
+    price: 0,
+    acceso: "privado" as const,
     currency: "USD" as const,
     coverImage: "",
-    tags: ["fundamental", "valuacion", "balance"],
-    publishedAt: "2026-04-03",
+    tags: ["tecnico", "intermediate"],
+    publishedAt: "2026-04-01",
     isActive: true,
     stripePriceId: "",
   },
   {
-    id: "arsenal",
-    slug: "arsenal",
+    id: "analisis-fundamental",
+    slug: "analisis-fundamental",
     order: 4,
-    codename: "ARSENAL",
-    title: "Maestría en Opciones",
-    kicker: "Master de Opciones · Estrategias de Alto Apalancamiento",
+    codename: "FUNDAMENTAL",
+    title: "Análisis Fundamental",
+    kicker: "Valoración de empresas · Nivel avanzado",
     description:
-      "Desbloquea el instrumento financiero más poderoso del mercado. Calls, puts, spreads, covered calls, wheels e iron condors — con Greeks, IV y gestión de riesgo profesional.",
-    price: 597,
+      "Qué vale una empresa y por qué el mercado paga otra cosa. Estados financieros, márgenes, deuda y ventaja competitiva: el marco para sostener una posición cuando el gráfico se pone en contra.",
+    price: 0,
+    acceso: "privado" as const,
     currency: "USD" as const,
     coverImage: "",
-    tags: ["opciones", "spreads", "greeks"],
-    publishedAt: "2026-04-04",
+    tags: ["fundamental", "advanced"],
+    publishedAt: "2026-04-01",
     isActive: true,
     stripePriceId: "",
   },
   {
-    id: "oraculo",
-    slug: "oraculo",
+    id: "master-opciones",
+    slug: "master-de-opciones",
     order: 5,
-    codename: "ORÁCULO",
-    title: "Tape Reading Institucional",
-    kicker: "Flujo Institucional · GEX · Dark Pools",
+    codename: "OPCIONES",
+    title: "Master de Opciones",
+    kicker: "Derivados y estructura · Nivel avanzado",
     description:
-      "El curso más avanzado del ecosistema. Aprende a leer el tape como los market makers, detectar whales en tiempo real, interpretar gamma exposure y operar al lado del smart money — no en su contra.",
-    price: 997,
+      "Opciones como instrumento de estructura, no como billete de lotería. Griegas, volatilidad implícita, spreads y gestión de riesgo definido: cómo se construye una posición con las pérdidas acotadas antes de entrar.",
+    price: 0,
+    acceso: "privado" as const,
     currency: "USD" as const,
     coverImage: "",
-    tags: ["smart-money", "gex", "dark-pools", "tape"],
-    publishedAt: "2026-04-05",
+    tags: ["opciones", "advanced"],
+    publishedAt: "2026-04-01",
+    isActive: true,
+    stripePriceId: "",
+  },
+  {
+    id: "analisis-institucional",
+    slug: "analisis-institucional",
+    order: 6,
+    codename: "INSTITUCIONAL",
+    title: "Análisis Institucional",
+    kicker: "Flujo, gamma y smart money · Nivel avanzado",
+    description:
+      "El nivel donde entra FlowTitan: flujo institucional real, exposición a gamma y presión de mercado. Leer dónde se está posicionando el dinero grande en lugar de reaccionar al precio cuando ya se movió.",
+    price: 0,
+    acceso: "privado" as const,
+    currency: "USD" as const,
+    coverImage: "",
+    tags: ["institucional", "flowtitan", "advanced"],
+    publishedAt: "2026-04-01",
     isActive: true,
     stripePriceId: "",
   },

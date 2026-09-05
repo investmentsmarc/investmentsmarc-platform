@@ -1150,12 +1150,12 @@
 /* ==========================================================================
    TELEGRAM COMMUNITY — "Live Dispatch" con mensajes simulados + CTA
    ========================================================================== */
-.mi-telegram-section {
+.mi-canal-section {
   background: transparent !important;
   backdrop-filter: none !important;
 }
 
-.mi-telegram-stage {
+.mi-canal-stage {
   display: grid;
   grid-template-columns: 1.15fr 1fr;
   gap: 34px;
@@ -1164,11 +1164,11 @@
   margin: 0 auto;
 }
 @media (max-width: 1024px) {
-  .mi-telegram-stage { grid-template-columns: 1fr; gap: 22px; }
+  .mi-canal-stage { grid-template-columns: 1fr; gap: 22px; }
 }
 
 /* ---------- LEFT: CHANNEL TERMINAL ---------- */
-.mi-telegram-channel {
+.mi-canal-channel {
   position: relative;
   border: 1px solid var(--mi-border-strong);
   border-radius: 16px;
@@ -1184,7 +1184,7 @@
   display: flex;
   flex-direction: column;
 }
-.mi-telegram-channel::before {
+.mi-canal-channel::before {
   content: "";
   position: absolute;
   inset: -1px;
@@ -1203,7 +1203,7 @@
   pointer-events: none;
 }
 
-.mi-telegram-head {
+.mi-canal-head {
   display: flex;
   align-items: center;
   gap: 14px;
@@ -1211,7 +1211,7 @@
   border-bottom: 1px solid var(--mi-border);
   background: rgba(6, 6, 6, 0.55);
 }
-.mi-telegram-avatar {
+.mi-canal-avatar {
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -1227,33 +1227,33 @@
   box-shadow: 0 0 18px rgba(216, 182, 90, 0.32);
   flex-shrink: 0;
 }
-.mi-telegram-head-meta {
+.mi-canal-head-meta {
   display: flex;
   flex-direction: column;
   gap: 2px;
   min-width: 0;
   flex: 1;
 }
-.mi-telegram-handle {
+.mi-canal-handle {
   font-family: var(--mi-font-display);
   font-size: 0.98rem;
   font-weight: 700;
   color: var(--mi-text-primary);
   letter-spacing: -0.01em;
 }
-.mi-telegram-sub {
+.mi-canal-sub {
   font-size: 11px;
   letter-spacing: 0.06em;
   color: var(--mi-text-tertiary);
   font-weight: 500;
 }
-.mi-telegram-count {
+.mi-canal-count {
   color: var(--mi-gold-light);
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   font-family: var(--mi-font-display);
 }
-.mi-telegram-live {
+.mi-canal-live {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -1267,7 +1267,7 @@
   font-weight: 700;
   letter-spacing: 0.22em;
 }
-.mi-telegram-live-dot {
+.mi-canal-live-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
@@ -1276,7 +1276,7 @@
   animation: mi-dot-pulse 1.6s ease-in-out infinite;
 }
 
-.mi-telegram-messages {
+.mi-canal-messages {
   padding: 18px 18px 10px;
   display: flex;
   flex-direction: column;
@@ -1285,7 +1285,7 @@
   min-height: 0;
 }
 
-.mi-telegram-msg {
+.mi-canal-msg {
   position: relative;
   display: grid;
   grid-template-columns: 1fr auto;
@@ -1295,7 +1295,7 @@
   background: rgba(6, 6, 6, 0.55);
   border: 1px solid var(--mi-border);
 }
-.mi-telegram-msg.is-pinned {
+.mi-canal-msg.is-pinned {
   border-color: rgba(216, 182, 90, 0.28);
   background: linear-gradient(
     180deg,
@@ -1304,7 +1304,7 @@
   );
   box-shadow: 0 0 0 1px rgba(216, 182, 90, 0.08);
 }
-.mi-telegram-msg-badge {
+.mi-canal-msg-badge {
   grid-column: 1;
   grid-row: 1;
   display: inline-block;
@@ -1320,11 +1320,11 @@
   width: fit-content;
   margin-bottom: 4px;
 }
-.mi-telegram-badge-pin   { color: var(--mi-gold-light); border-color: rgba(216,182,90,0.55); }
-.mi-telegram-badge-alert { color: #ff9a4f; border-color: rgba(255,154,79,0.45); }
-.mi-telegram-badge-flow  { color: var(--mi-gold-light); border-color: rgba(216,182,90,0.45); }
+.mi-canal-badge-pin   { color: var(--mi-gold-light); border-color: rgba(216,182,90,0.55); }
+.mi-canal-badge-alert { color: #ff9a4f; border-color: rgba(255,154,79,0.45); }
+.mi-canal-badge-flow  { color: var(--mi-gold-light); border-color: rgba(216,182,90,0.45); }
 
-.mi-telegram-msg-body {
+.mi-canal-msg-body {
   grid-column: 1;
   grid-row: 2;
   display: flex;
@@ -1332,20 +1332,20 @@
   gap: 3px;
   min-width: 0;
 }
-.mi-telegram-msg-tag {
+.mi-canal-msg-tag {
   font-family: var(--mi-font-display);
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 0.16em;
   color: var(--mi-gold-light);
 }
-.mi-telegram-msg-body p {
+.mi-canal-msg-body p {
   margin: 0;
   font-size: 0.92rem;
   line-height: 1.5;
   color: var(--mi-text-primary);
 }
-.mi-telegram-msg-time {
+.mi-canal-msg-time {
   grid-column: 2;
   grid-row: 1 / span 2;
   align-self: end;
@@ -1359,7 +1359,7 @@
 
 /* typing indicator — alto siempre reservado; solo cambia opacidad
    para que el toggle cada 7s no empuje el layout de la página. */
-.mi-telegram-typing {
+.mi-canal-typing {
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -1376,29 +1376,29 @@
   transition: opacity 0.35s var(--mi-ease-out);
   will-change: opacity;
 }
-.mi-telegram-typing[data-visible="false"] {
+.mi-canal-typing[data-visible="false"] {
   opacity: 0;
   pointer-events: none;
 }
-.mi-telegram-typing-dots {
+.mi-canal-typing-dots {
   display: inline-flex;
   gap: 4px;
 }
-.mi-telegram-typing-dots i {
+.mi-canal-typing-dots i {
   width: 5px;
   height: 5px;
   border-radius: 50%;
   background: var(--mi-gold-light);
-  animation: mi-telegram-typing-bounce 1.2s ease-in-out infinite;
+  animation: mi-canal-typing-bounce 1.2s ease-in-out infinite;
 }
-.mi-telegram-typing-dots i:nth-child(2) { animation-delay: 0.15s; }
-.mi-telegram-typing-dots i:nth-child(3) { animation-delay: 0.30s; }
-@keyframes mi-telegram-typing-bounce {
+.mi-canal-typing-dots i:nth-child(2) { animation-delay: 0.15s; }
+.mi-canal-typing-dots i:nth-child(3) { animation-delay: 0.30s; }
+@keyframes mi-canal-typing-bounce {
   0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
   30%           { transform: translateY(-3px); opacity: 1; }
 }
 
-.mi-telegram-foot {
+.mi-canal-foot {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1411,29 +1411,29 @@
   color: var(--mi-text-tertiary);
   font-weight: 600;
 }
-.mi-telegram-foot-meta {
+.mi-canal-foot-meta {
   display: inline-flex;
   align-items: center;
   gap: 8px;
 }
-.mi-telegram-foot-dot {
+.mi-canal-foot-dot {
   width: 5px;
   height: 5px;
   border-radius: 50%;
   background: var(--mi-gold-light);
   box-shadow: 0 0 8px var(--mi-gold-light);
 }
-.mi-telegram-foot-signal { letter-spacing: 0.4em; color: var(--mi-gold-dark); }
+.mi-canal-foot-signal { letter-spacing: 0.4em; color: var(--mi-gold-dark); }
 
 /* ---------- RIGHT: PITCH ---------- */
-.mi-telegram-pitch {
+.mi-canal-pitch {
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 14px;
   padding: 8px 4px;
 }
-.mi-telegram-kicker {
+.mi-canal-kicker {
   display: inline-block;
   font-family: var(--mi-font-display);
   font-size: 10.5px;
@@ -1447,7 +1447,7 @@
   border-radius: 3px;
   width: fit-content;
 }
-.mi-telegram-pitch-title {
+.mi-canal-pitch-title {
   font-family: var(--mi-font-display);
   font-size: clamp(1.5rem, 2.6vw, 2rem);
   font-weight: 800;
@@ -1456,7 +1456,7 @@
   color: var(--mi-text-primary);
   margin: 4px 0 2px;
 }
-.mi-telegram-pitch-desc {
+.mi-canal-pitch-desc {
   font-size: 0.98rem;
   line-height: 1.6;
   color: var(--mi-text-secondary);
@@ -1464,7 +1464,7 @@
   max-width: 420px;
 }
 
-.mi-telegram-benefits {
+.mi-canal-benefits {
   list-style: none;
   padding: 0;
   margin: 0 0 14px;
@@ -1472,7 +1472,7 @@
   flex-direction: column;
   gap: 10px;
 }
-.mi-telegram-benefits li {
+.mi-canal-benefits li {
   display: grid;
   grid-template-columns: 32px 1fr;
   gap: 12px;
@@ -1483,8 +1483,8 @@
   line-height: 1.45;
   color: var(--mi-text-primary);
 }
-.mi-telegram-benefits li:last-child { border-bottom: 0; }
-.mi-telegram-benefit-num {
+.mi-canal-benefits li:last-child { border-bottom: 0; }
+.mi-canal-benefit-num {
   font-family: var(--mi-font-display);
   font-size: 10px;
   font-weight: 800;
@@ -1493,11 +1493,15 @@
   padding-top: 3px;
   font-variant-numeric: tabular-nums;
 }
-.mi-telegram-benefit-text {
+.mi-canal-benefit-text {
   font-weight: 500;
 }
 
-.mi-telegram-cta {
+/* Los dos botones del bloque comparten metrica a proposito: si el secundario
+   la duplicara con valores propios, en el momento en que alguien ajuste el
+   primario quedarian desalineados sin que nada avise. */
+.mi-canal-cta,
+.mi-canal-cta-alt {
   display: inline-flex !important;
   align-items: center;
   gap: 10px;
@@ -1509,9 +1513,9 @@
   font-size: 12px;
   width: fit-content;
 }
-.mi-telegram-cta svg { flex-shrink: 0; }
+.mi-canal-cta svg { flex-shrink: 0; }
 
-.mi-telegram-tiny {
+.mi-canal-tiny {
   margin: 4px 0 0;
   font-size: 0.82rem;
   color: var(--mi-text-tertiary);
@@ -1519,10 +1523,10 @@
 }
 
 @media (max-width: 640px) {
-  .mi-telegram-head { padding: 12px 14px; }
-  .mi-telegram-messages { padding: 14px 12px; }
-  .mi-telegram-msg { padding: 10px 12px; }
-  .mi-telegram-msg-time { font-size: 9.5px; }
+  .mi-canal-head { padding: 12px 14px; }
+  .mi-canal-messages { padding: 14px 12px; }
+  .mi-canal-msg { padding: 10px 12px; }
+  .mi-canal-msg-time { font-size: 9.5px; }
 }
 
 /* --------------------------------------------------------------------------
@@ -1823,6 +1827,12 @@
   overflow: hidden;
 }
 .mi-ftx-screen-img {
+  /* El posicionado vive aqui y no en el consumidor: `<Image fill>` lo traia
+     inline, pero un `<video>` no, y sin el los clips no se apilan en el marco. */
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover !important;
   object-position: center;
   opacity: 0;
@@ -4015,7 +4025,7 @@
 }
 
 /* --- TELEGRAM FLOAT: apilado sobre WhatsApp, mismo tratamiento oro --- */
-.mi-telegram-float {
+.mi-canal-float {
   position: fixed;
   right: 24px;
   bottom: 100px; /* apila por encima del WhatsApp float (bottom: 24 + 62 + 14 gap) */
@@ -4034,20 +4044,20 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.28);
   transition: box-shadow 0.3s var(--mi-ease-out), transform 0.3s var(--mi-ease-out);
 }
-.mi-telegram-float:hover {
+.mi-canal-float:hover {
   transform: translateY(-2px);
   box-shadow:
     0 22px 38px rgba(201, 168, 76, 0.42),
     inset 0 1px 0 rgba(255, 255, 255, 0.32);
 }
-.mi-telegram-float-pulse {
+.mi-canal-float-pulse {
   position: absolute;
   inset: 0;
   border-radius: inherit;
   border: 1px solid rgba(216, 182, 90, 0.55);
   animation: mi-pulse-gold 2.5s ease-in-out infinite;
 }
-.mi-telegram-float-icon {
+.mi-canal-float-icon {
   position: relative;
   z-index: 1;
   width: 26px;
@@ -4409,13 +4419,17 @@
   text-shadow: 0 0 28px rgba(216, 182, 90, 0.22);
   transition: color 0.25s;
 }
-.mi-ft-price.is-flash { color: var(--mi-gold-light); }
+/* El destello marca que el precio cambio, y esta bien que lo marque. Lo que
+   no puede es ser dorado: con un tick por segundo el precio se leia permanentemente
+   como un acento, y es el numero mas grande de la pantalla. */
+.mi-ft-price.is-flash { color: #ffffff; }
 .mi-ft-chg {
   margin-left: auto;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.06em;
-  color: var(--mi-gold-light);
+  /* Era `--mi-gold-light`. Un porcentaje de cambio es informacion. */
+  color: var(--mi-text-secondary);
   display: inline-flex;
   gap: 6px;
   align-items: center;
@@ -4472,7 +4486,11 @@
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.01em;
 }
-.mi-ft-gold { color: var(--mi-gold-light); }
+/* 🚨 Era `var(--mi-gold-light)`. Se aplica a valores de metrica del terminal
+   —volumen, volatilidad— y un dato no es una llamada a la accion: el oro tiene
+   que quedar libre para la marca y para el boton. Medido el 2026-09-05: de los
+   20 acentos dorados de la primera pantalla, la mitad eran datos como estos. */
+.mi-ft-gold { color: var(--mi-text-primary); }
 .mi-ft-bar {
   height: 2px;
   margin-top: 7px;
@@ -4511,7 +4529,9 @@
 }
 .mi-ft-log-t { color: var(--mi-text-tertiary); letter-spacing: 0.04em; }
 .mi-ft-log-s {
-  color: var(--mi-gold-dark);
+  /* Eran `--mi-gold-dark`: cinco simbolos dorados seguidos en el registro. Como
+     texto secundario siguen legibles y dejan de pedir atencion. */
+  color: var(--mi-text-secondary);
   font-weight: 700;
   font-family: var(--mi-font-display);
   letter-spacing: 0.14em;
@@ -4556,7 +4576,9 @@
   align-items: center;
 }
 .mi-trading-status-item b {
-  color: var(--mi-gold-light);
+  /* Eran `--mi-gold-light`: tres valores dorados seguidos en el pie del terminal
+     (latencia, ticks, estado) que no piden ninguna accion. */
+  color: var(--mi-text-primary);
   font-weight: 700;
   font-family: var(--mi-font-display);
   margin: 0 4px;
@@ -4663,7 +4685,7 @@
     letter-spacing: 0.14em;
     gap: 6px 12px;
   }
-  .mi-telegram-float { right: 16px; bottom: 86px; width: 52px; height: 52px; }
+  .mi-canal-float { right: 16px; bottom: 86px; width: 52px; height: 52px; }
   .mi-whatsapp-float { right: 16px; bottom: 20px; width: 56px; height: 56px; }
 }
 

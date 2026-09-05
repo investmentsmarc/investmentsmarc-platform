@@ -7,7 +7,7 @@ import { FlowTitanSection } from "@/components/home/FlowTitanSection";
 import { HeroSection } from "@/components/home/HeroSection";
 import { LatestArticles } from "@/components/home/LatestArticles";
 import { NewsSkeleton } from "@/components/home/NewsSkeleton";
-import { TelegramCommunity } from "@/components/home/TelegramCommunity";
+import { CanalComunidad } from "@/components/home/CanalComunidad";
 
 const Testimonials = dynamic(
   () =>
@@ -139,7 +139,7 @@ export default function HomePage() {
       <JsonLd data={homeSchema} />
       <HeroSection />
       <FlowTitanSection />
-      <TelegramCommunity />
+      <CanalComunidad />
       <Suspense fallback={<NewsSkeleton />}>
         <LatestArticles />
       </Suspense>

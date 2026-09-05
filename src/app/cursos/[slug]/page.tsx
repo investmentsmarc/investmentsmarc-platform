@@ -46,26 +46,34 @@ export default async function CoursePage({
         <Link href="/cursos" className="mi-back-link">
           ← Volver al catalogo
         </Link>
-        <span className="mi-badge">{course.price === 0 ? "Ruta gratuita" : "Curso premium"}</span>
+        <span className="mi-badge">
+          {course.acceso === "gratis" ? "Ruta gratuita" : "Programa privado"}
+        </span>
         <h1 className="mi-section-title">{course.title}</h1>
         <p className="mi-page-copy">{course.description}</p>
 
+        {/* 🚨 Aqui vivia una nota de desarrollo — "la siguiente fase conectara
+            Stripe, lecciones y progreso real" — publicada en la web comercial,
+            bajo cada curso. Se retiro el 2026-09-05. */}
         <div className="mi-contact-points">
           <div className="mi-contact-point">
-            <strong>Estado actual</strong>
-            <span>
-              Base de catálogo lista. La siguiente fase conectará Stripe, lecciones y progreso real.
-            </span>
+            <strong>Nivel</strong>
+            <span>{course.kicker}</span>
           </div>
           <div className="mi-contact-point">
-            <strong>Tags</strong>
+            <strong>Temas</strong>
             <span>{course.tags.join(" · ")}</span>
           </div>
         </div>
 
         <div className="mi-inline-actions">
-          <Link href={`/cursos/${course.slug}/lecciones/introduccion`} className="mi-btn-gold">
-            Ver lección inicial
+          {/* El gratuito tiene su propia captacion publica; los privados se
+              piden por contacto, que es la unica via que hoy existe de verdad. */}
+          <Link
+            href={course.acceso === "gratis" ? "/curso-gratis" : "/contacto"}
+            className="mi-btn-gold"
+          >
+            {course.acceso === "gratis" ? "Acceder al curso gratis" : "Solicitar acceso"}
           </Link>
           <Link href="/contacto" className="mi-btn-outline">
             Hablar con el equipo

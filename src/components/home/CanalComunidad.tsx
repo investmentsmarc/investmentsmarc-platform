@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import { TELEGRAM_URL } from "@/lib/site";
+import { COMUNIDAD_URL, TELEGRAM_URL } from "@/lib/site";
 
 type Msg = {
   id: number;
@@ -48,14 +48,17 @@ const BENEFITS = [
   "Acceso directo al equipo y a Marc",
 ];
 
-export function TelegramCommunity() {
-  const [memberCount, setMemberCount] = useState(12_847);
+export function CanalComunidad() {
   const [isTyping, setIsTyping] = useState(true);
 
-  // Contador sube sutilmente (sensación de comunidad viva)
+  // 🚨 Aqui vivia un contador de miembros que arrancaba en 12.847 y se
+  // autoincrementaba cada 4,2 s "para dar sensacion de comunidad viva". Era un
+  // numero inventado presentado como un hecho, en la web de un negocio
+  // financiero. Se retiro el 2026-09-05. Si hay una cifra real, vuelve aqui —
+  // pero medida, no simulada.
   useEffect(() => {
     const id = window.setInterval(() => {
-      setMemberCount((c) => c + Math.floor(Math.random() * 3));
+      // marcador de posicion: sin efecto, se conserva el ciclo del "escribiendo"
     }, 4200);
     return () => window.clearInterval(id);
   }, []);
@@ -68,10 +71,9 @@ export function TelegramCommunity() {
     return () => window.clearInterval(id);
   }, []);
 
-  const memberLabel = memberCount.toLocaleString("es-ES");
 
   return (
-    <section className="mi-section mi-telegram-section mi-home-band">
+    <section className="mi-section mi-canal-section mi-home-band">
       <div className="mi-container">
         <header className="mi-home-section-head mi-home-section-head-centered mi-reveal">
           <div className="mi-home-section-copy">
@@ -87,56 +89,55 @@ export function TelegramCommunity() {
           </div>
         </header>
 
-        <div className="mi-telegram-stage">
+        <div className="mi-canal-stage">
           {/* === LEFT: live dispatch terminal === */}
-          <article className="mi-telegram-channel mi-reveal mi-reveal-scale">
-            <header className="mi-telegram-head">
-              <div className="mi-telegram-avatar" aria-hidden="true">
+          <article className="mi-canal-channel mi-reveal mi-reveal-scale">
+            <header className="mi-canal-head">
+              <div className="mi-canal-avatar" aria-hidden="true">
                 <span>M</span>
               </div>
-              <div className="mi-telegram-head-meta">
-                <strong className="mi-telegram-handle">@MarcInvestments</strong>
-                <span className="mi-telegram-sub">
-                  Canal oficial ·{" "}
-                  <b className="mi-telegram-count">{memberLabel}</b> miembros
+              <div className="mi-canal-head-meta">
+                <strong className="mi-canal-handle">@MarcInvestments</strong>
+                <span className="mi-canal-sub">
+                  Canal oficial · Comunidad privada
                 </span>
               </div>
-              <span className="mi-telegram-live" aria-hidden="true">
-                <span className="mi-telegram-live-dot" />
+              <span className="mi-canal-live" aria-hidden="true">
+                <span className="mi-canal-live-dot" />
                 LIVE
               </span>
             </header>
 
-            <div className="mi-telegram-messages">
+            <div className="mi-canal-messages">
               {MESSAGES.map((m) => (
                 <article
                   key={m.id}
-                  className={`mi-telegram-msg${
+                  className={`mi-canal-msg${
                     m.badge === "PIN" ? " is-pinned" : ""
                   }`}
                 >
                   {m.badge ? (
                     <span
-                      className={`mi-telegram-msg-badge mi-telegram-badge-${m.badge.toLowerCase()}`}
+                      className={`mi-canal-msg-badge mi-canal-badge-${m.badge.toLowerCase()}`}
                     >
                       {m.badge === "PIN" ? "📌 " : ""}
                       {m.badge}
                     </span>
                   ) : null}
-                  <div className="mi-telegram-msg-body">
-                    {m.tag ? <span className="mi-telegram-msg-tag">${m.tag}</span> : null}
+                  <div className="mi-canal-msg-body">
+                    {m.tag ? <span className="mi-canal-msg-tag">${m.tag}</span> : null}
                     <p>{m.text}</p>
                   </div>
-                  <span className="mi-telegram-msg-time">{m.time}</span>
+                  <span className="mi-canal-msg-time">{m.time}</span>
                 </article>
               ))}
 
               <div
-                className="mi-telegram-typing"
+                className="mi-canal-typing"
                 aria-live="polite"
                 data-visible={isTyping ? "true" : "false"}
               >
-                <span className="mi-telegram-typing-dots" aria-hidden="true">
+                <span className="mi-canal-typing-dots" aria-hidden="true">
                   <i />
                   <i />
                   <i />
@@ -145,36 +146,36 @@ export function TelegramCommunity() {
               </div>
             </div>
 
-            <footer className="mi-telegram-foot">
-              <span className="mi-telegram-foot-meta">
-                <span className="mi-telegram-foot-dot" />
+            <footer className="mi-canal-foot">
+              <span className="mi-canal-foot-meta">
+                <span className="mi-canal-foot-dot" />
                 Última transmisión hace 4 min
               </span>
-              <span className="mi-telegram-foot-signal" aria-hidden="true">
+              <span className="mi-canal-foot-signal" aria-hidden="true">
                 ·  ·  ·
               </span>
             </footer>
           </article>
 
           {/* === RIGHT: benefits + CTA === */}
-          <aside className="mi-telegram-pitch mi-reveal mi-reveal-right">
-            <span className="mi-telegram-kicker">Gratis · Sin spam</span>
-            <h3 className="mi-telegram-pitch-title">
+          <aside className="mi-canal-pitch mi-reveal mi-reveal-right">
+            <span className="mi-canal-kicker">Gratis · Sin spam</span>
+            <h3 className="mi-canal-pitch-title">
               Solo <span className="mi-text-gradient">señal institucional</span>.
               Cero ruido.
             </h3>
-            <p className="mi-telegram-pitch-desc">
+            <p className="mi-canal-pitch-desc">
               La cinta del smart money en tu bolsillo: lo que captura la mesa
               institucional de FlowTitan, se envía al canal segundos después.
             </p>
 
-            <ul className="mi-telegram-benefits">
+            <ul className="mi-canal-benefits">
               {BENEFITS.map((b, i) => (
                 <li key={b}>
-                  <span className="mi-telegram-benefit-num">
+                  <span className="mi-canal-benefit-num">
                     0{i + 1}
                   </span>
-                  <span className="mi-telegram-benefit-text">{b}</span>
+                  <span className="mi-canal-benefit-text">{b}</span>
                 </li>
               ))}
             </ul>
@@ -183,7 +184,7 @@ export function TelegramCommunity() {
               href={TELEGRAM_URL}
               target="_blank"
               rel="noreferrer noopener"
-              className="mi-btn-gold mi-telegram-cta"
+              className="mi-btn-gold mi-canal-cta"
             >
               <svg
                 width="18"
@@ -194,10 +195,21 @@ export function TelegramCommunity() {
               >
                 <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.67 6.88-1.57 7.4c-.12.53-.44.66-.89.41l-2.46-1.81-1.19 1.14c-.13.13-.24.24-.49.24l.17-2.5 4.58-4.14c.2-.18-.04-.28-.31-.1l-5.67 3.57-2.44-.76c-.53-.17-.54-.53.11-.78l9.53-3.67c.44-.16.83.11.67.7Z" />
               </svg>
-              Sintonizar el canal →
+              Entrar al canal →
             </a>
-            <p className="mi-telegram-tiny">
-              {memberLabel} traders ya están dentro. Tú eres el siguiente.
+            {/* Telegram es el canal de avisos; la comunidad es donde estan los
+                cursos y la conversacion. Son dos sitios distintos y conviene
+                que se vean como dos, no como uno con dos nombres. */}
+            <a
+              href={COMUNIDAD_URL}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="mi-btn-outline mi-canal-cta-alt"
+            >
+              Ver la comunidad →
+            </a>
+            <p className="mi-canal-tiny">
+              Escribes, y te contesta Marc. No es un bot.
             </p>
           </aside>
         </div>

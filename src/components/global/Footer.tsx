@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { SocialIcon } from "@/components/global/SocialIcon";
-import { LEGAL_NAV, SOCIAL_LINKS, TELEGRAM_URL, WHATSAPP_URL } from "@/lib/site";
+import { COMUNIDAD_URL, LEGAL_NAV, SOCIAL_LINKS, TELEGRAM_URL, WHATSAPP_URL } from "@/lib/site";
 
 type SocialName = "Instagram" | "YouTube" | "WhatsApp" | "TikTok" | "Telegram" | "Facebook";
 
@@ -18,6 +18,7 @@ export function Footer() {
   const educationLinks: Array<{ label: string; href: string; isExternal?: boolean }> = [
     { label: "Curso Gratis", href: "/curso-gratis" },
     { label: "Plataforma de Cursos", href: "/cursos" },
+    { label: "Comunidad", href: COMUNIDAD_URL, isExternal: true },
     { label: "FlowTitan PRO", href: "https://flowtitan.investmentsmarc.com", isExternal: true },
     { label: "Webinar", href: "/webinar" },
   ];
