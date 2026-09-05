@@ -197,9 +197,9 @@ export const FLOWTITAN_FEATURES = [
   },
   {
     title: "TITAN AI — Director de Inteligencia",
-    kicker: "Agente IA · 16 herramientas propietarias",
+    kicker: "Agente IA · 46 herramientas propietarias",
     description:
-      "Agente IA con acceso a 16 herramientas propietarias: forensic reports, IV crush, option chain snapshots, whale ledger y visualización on-demand.",
+      "Agente IA con acceso a 46 herramientas propietarias: forensic reports, IV crush, option chain snapshots, whale ledger y visualización on-demand.",
   },
   {
     title: "Tape Scanner Institucional",
