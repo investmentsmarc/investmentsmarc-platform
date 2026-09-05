@@ -215,13 +215,15 @@ export const FLOWTITAN_FEATURES = [
   },
 ];
 
+// Los nombres van en el MISMO orden que `FLOWTITAN_SCREEN_IMAGES` en
+// `FlowTitanCards.tsx`: son la etiqueta de cada captura. Si se anade una imagen,
+// se anade aqui su nombre o el carrusel las descuadra.
 export const FLOWTITAN_SCREENS = [
-  "Whale Ledger",
-  "GEX Engine",
-  "Confluence",
-  "TITAN AI",
+  "Dashboard",
   "Tape Scanner",
-  "Command Center",
+  "Option Chain",
+  "GEX Dashboard",
+  "Advance Chart",
 ];
 
 export const CORE_VALUES: ValueItem[] = [
