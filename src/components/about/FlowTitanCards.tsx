@@ -9,12 +9,16 @@ import { FLOWTITAN_FEATURES, FLOWTITAN_SCREENS } from "@/lib/content";
 // 🚨 Son CINCO, no seis: la sexta iba a ser TITAN y salio con una conversacion
 // real de Marc —su portafolio y una correccion de error— asi que no se publica.
 // Hace falta capturarla con una sesion sin historial.
-const FLOWTITAN_SCREEN_IMAGES = [
-  "/images/ft-dashboard.png",
-  "/images/ft-tape-scanner.png",
-  "/images/ft-option-chain.png",
-  "/images/ft-gex.png",
-  "/images/ft-advance-chart.png",
+// Cuatro de las cinco son clips cortos grabados del sistema real, con clics de
+// verdad: se abre un vencimiento, se cambia un filtro, se alterna una vista. El
+// PNG hace de poster, asi que quien no reproduce video —o pidio menos
+// animacion— sigue viendo exactamente lo que veia antes.
+const PANTALLAS = [
+  { src: "/images/ft-dashboard.png",     video: null },
+  { src: "/images/ft-tape-scanner.png",  video: "/video/ft-tape-scanner.mp4" },
+  { src: "/images/ft-option-chain.png",  video: "/video/ft-option-chain.mp4" },
+  { src: "/images/ft-gex.png",           video: "/video/ft-gex.mp4" },
+  { src: "/images/ft-advance-chart.png", video: "/video/ft-advance-chart.mp4" },
 ] as const;
 
 // 🚨 Las features son SEIS y las capturas CINCO, asi que emparejarlas por indice
@@ -37,7 +41,9 @@ const STATS = [
   { value: "46",     label: "Herramientas AI" },
 ];
 
-const AUTO_ADVANCE_MS = 7000;
+// Subido de 7 s: los clips duran entre 7,5 y 11,8 s y con la cadencia anterior
+// se cortaban antes de llegar al clic que justifican.
+const AUTO_ADVANCE_MS = 10000;
 
 export function FlowTitanCards() {
   const [activeIdx, setActiveIdx] = useState(0);
@@ -53,8 +59,64 @@ export function FlowTitanCards() {
   }, [paused]);
 
   const active = FLOWTITAN_FEATURES[activeIdx];
+  const videos = useRef<Array<HTMLVideoElement | null>>([]);
+  const marco = useRef<HTMLDivElement | null>(null);
+  const [enPantalla, setEnPantalla] = useState(true);
   const pantallaIdx = PANTALLA_DE_FEATURE[activeIdx] ?? 0;
   const activeScreenLabel = FLOWTITAN_SCREENS[pantallaIdx] ?? "Dashboard";
+
+  // Solo se mueve el clip visible: cuatro videos a la vez calientan el portatil
+  // de quien lee la pagina. Y si el sistema pide menos animacion, ninguno
+  // arranca — el poster ya cuenta lo mismo.
+  useEffect(() => {
+    const marcoEl = marco.current;
+    // Sin observador se queda en visible, que es el valor inicial: mejor un clip
+    // reproduciendo de mas que un marco congelado.
+    if (!marcoEl || typeof IntersectionObserver === "undefined") return;
+    const obs = new IntersectionObserver(
+      (entradas) => setEnPantalla(entradas[0]?.isIntersecting ?? false),
+      { threshold: 0.25 },
+    );
+    obs.observe(marcoEl);
+    return () => obs.disconnect();
+  }, []);
+
+  useEffect(() => {
+    videos.current.forEach((v, i) => {
+      if (v && i !== pantallaIdx) v.pause();
+    });
+
+    const reducido =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const activo = videos.current[pantallaIdx];
+    if (!activo || reducido || !enPantalla) return;
+
+    // 🚨 Chrome rechaza reproducir un video que considera invisible y devuelve
+    // "AbortError: video-only background media was paused to save power". Los
+    // clips se apilan y el activo entra con una transicion de opacidad de 0,7 s,
+    // asi que durante ese rato sigue contando como invisible: pedir play al
+    // vuelo —o incluso dos fotogramas despues, ya probado— falla en silencio,
+    // porque el .catch() se traga el error. Hay que esperar a que la transicion
+    // termine, y reintentar por si el navegador aun no lo daba por visible.
+    let cancelado = false;
+    const temporizadores: number[] = [];
+    const arrancar = () => {
+      if (cancelado || !activo.paused) return;
+      activo.currentTime = 0;
+      void activo.play().catch(() => {});
+    };
+    const alTerminar = () => arrancar();
+    activo.addEventListener("transitionend", alTerminar);
+    temporizadores.push(window.setTimeout(arrancar, 780));
+    temporizadores.push(window.setTimeout(arrancar, 1500));
+    return () => {
+      cancelado = true;
+      activo.removeEventListener("transitionend", alTerminar);
+      temporizadores.forEach(window.clearTimeout);
+    };
+  }, [pantallaIdx, enPantalla]);
+
   const activeNum = (activeIdx + 1).toString().padStart(2, "0");
   const totalNum = FLOWTITAN_FEATURES.length.toString().padStart(2, "0");
 
@@ -111,18 +173,38 @@ export function FlowTitanCards() {
                 </span>
               </div>
 
-              <div className="mi-ftx-frame-screen">
-                {FLOWTITAN_SCREEN_IMAGES.map((src, i) => (
-                  <Image
-                    key={src}
-                    src={src}
-                    alt={`${FLOWTITAN_SCREENS[i] ?? `Pantalla ${i + 1}`} de FlowTitan PRO`}
-                    fill
-                    priority={i === 0}
-                    sizes="(max-width: 1024px) 100vw, 720px"
-                    className={`mi-ftx-screen-img${i === pantallaIdx ? " is-active" : ""}`}
-                  />
-                ))}
+              <div className="mi-ftx-frame-screen" ref={marco}>
+                {PANTALLAS.map((p, i) => {
+                  const clase = `mi-ftx-screen-img${i === pantallaIdx ? " is-active" : ""}`;
+                  const nombre = `${FLOWTITAN_SCREENS[i] ?? `Pantalla ${i + 1}`} de FlowTitan PRO`;
+                  return p.video ? (
+                    <video
+                      key={p.video}
+                      ref={(el) => {
+                        videos.current[i] = el;
+                      }}
+                      className={clase}
+                      poster={p.src}
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                      aria-label={nombre}
+                    >
+                      <source src={p.video} type="video/mp4" />
+                    </video>
+                  ) : (
+                    <Image
+                      key={p.src}
+                      src={p.src}
+                      alt={nombre}
+                      fill
+                      priority={i === 0}
+                      sizes="(max-width: 1024px) 100vw, 720px"
+                      className={clase}
+                    />
+                  );
+                })}
                 <div className="mi-ftx-screen-glow" aria-hidden="true" />
                 <div className="mi-ftx-screen-scrim" aria-hidden="true" />
 

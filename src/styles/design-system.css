@@ -1497,7 +1497,11 @@
   font-weight: 500;
 }
 
-.mi-canal-cta {
+/* Los dos botones del bloque comparten metrica a proposito: si el secundario
+   la duplicara con valores propios, en el momento en que alguien ajuste el
+   primario quedarian desalineados sin que nada avise. */
+.mi-canal-cta,
+.mi-canal-cta-alt {
   display: inline-flex !important;
   align-items: center;
   gap: 10px;
@@ -1823,6 +1827,12 @@
   overflow: hidden;
 }
 .mi-ftx-screen-img {
+  /* El posicionado vive aqui y no en el consumidor: `<Image fill>` lo traia
+     inline, pero un `<video>` no, y sin el los clips no se apilan en el marco. */
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover !important;
   object-position: center;
   opacity: 0;
