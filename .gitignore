@@ -50,3 +50,8 @@ next-env.d.ts
 
 .env.local.example
 server.log
+
+# capturas: fotogramas crudos (~55 MB por toma) y los poster jpg que montar.py
+# deja de paso. El poster que usa el sitio es el PNG de public/images.
+tools/capturas/clips/
+public/video/*.jpg
