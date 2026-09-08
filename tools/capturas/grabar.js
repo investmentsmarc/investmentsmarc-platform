@@ -70,28 +70,32 @@ const CLIPS = [
       await pulsar(page, 928, 460);      // primer vencimiento de la lista
       await esperar(4000);               // la cadena tarda en poblarse
 
-      // v1 no encontro ninguna fila con un filtro estrecho. Aqui se busca mas
-      // ancho y se DEVUELVE el diagnostico, para no quedarnos sin saber por que.
+      // Las filas se buscan por su SELECTOR, no adivinando la geometria. Las dos
+      // tomas anteriores fallaron por creer que el problema era la longitud del
+      // texto: se subio el tope de 160 a 420 caracteres y siguio dando n=0.
+      // Medido el 2026-09-08 con el filtro instrumentado: de 7.045 elementos,
+      // 6.601 caian por POSICION y 444 por tamano — ninguno llegaba siquiera al
+      // test de longitud. Una fila mide ~70 caracteres, nunca sobro por larga.
+      // Las dos causas reales:
+      //   1. la fila empieza en left=246, y el filtro exigia left>=280;
+      //   2. la cadena se autocentra en el spot, asi que de sus 62 filas la
+      //      mayoria tiene top negativo o mayor que el viewport (-437 a 1584).
       const diag = await page.evaluate(() => {
         const cand = [];
-        for (const el of document.querySelectorAll("*")) {
+        for (const el of document.querySelectorAll("div.grid.items-center")) {
           const r = el.getBoundingClientRect();
-          if (r.left < 280 || r.top < 330 || r.top > 940) continue;
-          if (r.width < 200 || r.height < 10 || r.height > 46) continue;
+          if (r.top < 340 || r.bottom > 950) continue;       // solo lo visible
+          if (r.width < 900 || r.height < 12 || r.height > 46) continue;
           const t = (el.innerText || "").trim().replace(/\s+/g, " ");
-          // una fila de cadena lleva strike y precios: varios numeros
-          const nums = (t.match(/\d+[.,]?\d*/g) || []).length;
-          // El limite de 160 caracteres descartaba TODAS las filas: una fila de
-          // cadena tiene veinte columnas y pasa de 300 sin esfuerzo. Por eso la
-          // toma del 2026-09-05 abrio el vencimiento pero no pulso ningun
-          // contrato, que era justo la mitad de lo pedido.
-          if (nums < 4 || t.length > 420) continue;
-          cand.push({ x: Math.round(r.left + r.width * 0.34), y: Math.round(r.top + r.height / 2),
+          // una fila de cadena lleva strike, precios y griegas: muchos numeros
+          if ((t.match(/\d+[.,]?\d*/g) || []).length < 8) continue;
+          cand.push({ x: Math.round(r.left + r.width * 0.30), y: Math.round(r.top + r.height / 2),
                       t: t.slice(0, 46), h: Math.round(r.height), w: Math.round(r.width) });
         }
-        return { n: cand.length, muestra: cand.slice(0, 4), elegida: cand[Math.min(5, cand.length - 1)] || null };
+        return { n: cand.length, muestra: cand.slice(0, 3), elegida: cand[Math.min(4, cand.length - 1)] || null };
       });
-      if (diag.elegida) { await pulsar(page, diag.elegida.x, diag.elegida.y); await esperar(3000); }
+      // El clic abre la ficha del contrato: griegas, historial y diagnostico.
+      if (diag.elegida) { await pulsar(page, diag.elegida.x, diag.elegida.y); await esperar(4500); }
       else { await esperar(2000); }
       return diag;
     },
