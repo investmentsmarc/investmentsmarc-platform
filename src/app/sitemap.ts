@@ -19,6 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/herramientas/position-size-calculator",
     "/herramientas/risk-reward-calculator",
     "/herramientas/investment-calculator",
+    "/herramientas/robotaxi-calculator",
     "/faqs",
     "/links",
     "/whatsapp",

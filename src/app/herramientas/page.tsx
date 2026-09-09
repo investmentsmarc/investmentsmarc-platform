@@ -28,6 +28,14 @@ const toolCards = [
     icon: "INV",
     featured: true,
   },
+  {
+    href: "/herramientas/robotaxi-calculator",
+    title: "Robotaxi Fleet Calculator",
+    description:
+      "Flujo de caja real de un Tesla Robotaxi o Cybercab: enganche, crédito, tarifa por milla, comisión y reinversión en flota.",
+    icon: "RTX",
+    featured: true,
+  },
 ];
 
 export default function HerramientasPage() {

@@ -138,3 +138,45 @@ Hub de herramientas (`/herramientas/`) con 3 calculadoras interactivas portadas 
 - [ ] Validación inline sin submit (cálculo en tiempo real)
 - [ ] Responsive en 768px y 1024px
 - [ ] Hub de herramientas con 3 cards funcionales
+
+---
+
+## 7. Extensión — Robotaxi Fleet Calculator (sep-2026)
+
+| Ruta | Archivo | Componente |
+|------|---------|------------|
+| `/herramientas/robotaxi-calculator/` | `src/app/herramientas/robotaxi-calculator/page.tsx` | `<RobotaxiFleetCalc />` |
+
+- **Ubicación:** `src/components/calculators/RobotaxiFleetCalc.tsx` (Client, cálculo en tiempo real)
+- **Origen:** réplica del sistema de cálculo del video *"I Calculated Tesla Robotaxi Profits and
+  They're INSANE"* (youtu.be/KrMCXTtbzwA). Investigación y fuentes en
+  [docs/research/robotaxi-cybercab-2026.md](../research/robotaxi-cybercab-2026.md).
+- **Inputs:** escenario (conservador / base / agresivo), vehículo (Cybercab objetivo, Model Y
+  Standard, Model Y LR AWD, Model 3 Standard, o personalizado), plataforma (red Robotaxi Tesla ·
+  Uber autónomo hipotético · Uber Fleet renta a conductor), precio, cargos, enganche, APR, plazo,
+  FSD, millas pagadas/día, millas por viaje, tarifa base, tarifa por milla, días/mes, comisión,
+  millas vacías, kWh/milla, $/kWh, mantenimiento/milla, seguro, limpieza, depreciación, flota
+  inicial, horizonte, reinversión.
+- **Cálculo:**
+  ```
+  viajes/día         = millasPagadas / millasPorViaje
+  bruto/mes          = (viajes/día × base + millasPagadas × tarifaMilla) × días
+  comisión           = bruto × %plataforma
+  millasTotales      = millasPagadas × (1 + %vacías) × días
+  opex               = millasTotales × (kWh/mi × $/kWh + mant/mi) + seguro + limpieza + FSD
+  utilidadOperativa  = bruto − comisión − opex
+  cuota              = P·r / (1 − (1+r)^−n),  P = precio + cargos − enganche
+  flujoCaja          = utilidadOperativa − cuota
+  ROI enganche       = flujoCaja × 12 / enganche
+  ROI auto completo  = (utilidadOperativa × 12 − intereses año 1 − depreciación) / (precio + cargos)
+  equilibrio (mi/día)= (fijos + cuota) / (días × [(base/millasViaje + tarifaMilla)(1 − %) − (1 + %vacías)(kWh/mi·$/kWh + mant/mi)])
+  ```
+  Modo Uber Fleet: bruto = renta semanal × 52/12, sin comisión, sin energía (la paga el conductor),
+  sin FSD. Simulación de flota mensual: con reinversión, cada vez que el efectivo cubre un enganche
+  se compra otro vehículo con su propio crédito.
+- **Outputs:** flujo de caja mensual por vehículo, ROI sobre enganche, bruto, comisión, opex, cuota,
+  utilidad operativa, ROI sobre el auto completo, punto de equilibrio, payback del enganche, ingreso
+  vs costo por milla pagada, depreciación, chart SVG (efectivo acumulado + vehículos en flota),
+  callout de veredicto y panel de supuestos con etiqueta [Seguro]/[Probable]/[Suponiendo].
+- **Validación:** valores ≥ 0, precio > 0, enganche ≤ precio + cargos, flota 1–50, horizonte 12–120
+  meses, comisión < 100 %.

@@ -56,7 +56,8 @@ src/components/
 ├── about/      # AboutBio (justified text), FlowTitanCards (interactive terminal
 │               # tour — stats + 6 tabs + cross-fade screenshots), ValuesGrid
 │               # (watermark numbers + darken-on-hover)
-├── calculators/# PositionSizeCalc, RiskRewardCalc, InvestmentCalc
+├── calculators/# PositionSizeCalc, RiskRewardCalc, InvestmentCalc, RobotaxiFleetCalc
+│               # (réplica del sistema de cálculo robotaxi — docs/research/robotaxi-cybercab-2026.md)
 ├── blog/       # BlogCard, ArchiveGrid, PostHero (blog hidden from nav — the
 │               # UI is live news, not MDX posts — kept for future re-enable)
 └── forms/      # LeadForm, WebinarForm, ContactForm, Countdown
