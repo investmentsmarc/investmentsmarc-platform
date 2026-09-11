@@ -14,6 +14,8 @@ export function BlogCard({ post }: { post: BlogPost }) {
         <div className="mi-blog-card-body">
           <p className="mi-blog-card-cat">{post.category}</p>
           <p className="mi-blog-card-date">
+            Marcos Martínez
+            {" · "}
             {new Date(post.publishedAt).toLocaleDateString("es-ES", {
               day: "2-digit",
               month: "short",
