@@ -93,6 +93,16 @@ const homeSchema = [
     description:
       "Empresa de Marcos Martínez. Desarrolla FlowTitan y forma a una comunidad hispanohablante de inversores en el mercado de EE. UU.",
     telephone: "+1-832-953-4918",
+    // El mismo telefono que ya esta publicado arriba, pero tipado: `telephone`
+    // suelto es un dato; un `ContactPoint` dice ademas para que sirve y en que
+    // idioma atiende. No se inventa correo ni horario porque no hay ninguno
+    // publicado que citar.
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "customer support",
+      telephone: "+1-832-953-4918",
+      availableLanguage: ["es", "en"],
+    },
     address: {
       "@type": "PostalAddress",
       addressLocality: "Houston",

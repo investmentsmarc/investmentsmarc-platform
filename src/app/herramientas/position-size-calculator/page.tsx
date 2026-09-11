@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { PositionSizeCalc } from "@/components/calculators/PositionSizeCalc";
+import { paginaMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Position Size Calculator",
-  description: "Calcula el tamaño de tu posición según riesgo, capital y stop loss.",
-};
+export const metadata: Metadata = paginaMetadata({
+  ruta: "/herramientas/position-size-calculator",
+  titulo: "Position Size Calculator",
+  descripcion: "Calcula el tamaño de tu posición según riesgo, capital y stop loss.",
+});
 
 export default function PositionSizeCalculatorPage() {
   return (

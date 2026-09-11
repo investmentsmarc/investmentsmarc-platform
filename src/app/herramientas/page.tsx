@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-export const metadata: Metadata = {
-  title: "Herramientas",
-  description: "Hub de calculadoras y herramientas para traders e inversores.",
-};
+import { paginaMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = paginaMetadata({
+  ruta: "/herramientas",
+  titulo: "Herramientas",
+  descripcion: "Hub de calculadoras y herramientas para traders e inversores.",
+});
 
 const toolCards = [
   {
