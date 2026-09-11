@@ -2,18 +2,20 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { LINK_PAGE_ITEMS } from "@/lib/content";
+import { paginaMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Links",
-  description: "Link-in-bio con accesos clave al ecosistema de Investments Marc.",
-};
+export const metadata: Metadata = paginaMetadata({
+  ruta: "/links",
+  titulo: "Links",
+  descripcion: "Link-in-bio con accesos clave al ecosistema de Investments Marc.",
+});
 
 export default function LinksPage() {
   return (
     <section className="mi-section mi-links-page">
       <div className="mi-links-card">
         <div className="mi-links-avatar">IM</div>
-        <div className="mi-links-name">Marc Investments</div>
+        <h1 className="mi-links-name">Marc Investments</h1>
         <div className="mi-links-handle">@investmentsmarc</div>
         <p className="mi-links-bio">
           Trading institucional, Smart Money y análisis de mercado. Aprende a operar

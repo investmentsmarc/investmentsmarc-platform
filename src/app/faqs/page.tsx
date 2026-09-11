@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 
 import { FAQGrid } from "@/components/ui/FAQGrid";
 import { FAQ_ITEMS } from "@/lib/content";
+import { paginaMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "FAQs",
-  description: "Preguntas frecuentes sobre trading, herramientas y programas.",
-};
+export const metadata: Metadata = paginaMetadata({
+  ruta: "/faqs",
+  titulo: "FAQs",
+  descripcion: "Preguntas frecuentes sobre trading, herramientas y programas.",
+});
 
 export default function FaqsPage() {
   return (

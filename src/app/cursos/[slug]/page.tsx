@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { COURSE_SEEDS } from "@/lib/content";
+import { paginaMetadata } from "@/lib/seo";
 
 type Params = { slug: string };
 
@@ -22,10 +23,11 @@ export async function generateMetadata({
     return {};
   }
 
-  return {
-    title: course.title,
-    description: course.description,
-  };
+  return paginaMetadata({
+    ruta: `/cursos/${course.slug}`,
+    titulo: course.title,
+    descripcion: course.description,
+  });
 }
 
 export default async function CoursePage({

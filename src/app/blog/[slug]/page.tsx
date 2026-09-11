@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { BLOG_POSTS } from "@/lib/content";
+import { paginaMetadata } from "@/lib/seo";
 
 type Params = { slug: string };
 
@@ -22,10 +23,11 @@ export async function generateMetadata({
     return {};
   }
 
-  return {
-    title: post.title,
-    description: post.excerpt,
-  };
+  return paginaMetadata({
+    ruta: `/blog/${post.slug}`,
+    titulo: post.title,
+    descripcion: post.excerpt,
+  });
 }
 
 export default async function BlogPostPage({
