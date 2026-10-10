@@ -134,3 +134,20 @@ export interface NavItem {
   isExternal?: boolean;
   children?: NavItem[];
 }
+
+/** Un producto de la pagina /precios. */
+export interface PlanPrecio {
+  id: string;
+  nombre: string;
+  kicker: string;
+  /** En dolares. */
+  precio: number;
+  periodo: string;
+  resumen: string;
+  /** A quien le rinde mas el producto. Sin promesas de resultados. */
+  paraQuien?: string;
+  incluye: string[];
+  cta: { label: string; href: string };
+  nota: string;
+  destacado?: boolean;
+}

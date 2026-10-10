@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { COURSE_SEEDS, TESTIMONIALS } from "@/lib/content";
-import { WHATSAPP_URL } from "@/lib/site";
+import { BOOKING_URL, PRECIOS, formatUsd } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Método Marc Investments · Programa completo",
+  title: "Consultoría Marc Investments · 60 días con Marc",
   description:
-    "El programa privado de Marc Investments: seis módulos que van de la mentalidad al análisis del flujo institucional. Para quien quiere criterio propio, no señales que copiar.",
+    "La consultoría privada de Marc Investments: 60 días, 7 sesiones uno a uno con Marc y seis módulos que van de la mentalidad al análisis del flujo institucional. $3,000, pago único.",
   alternates: { canonical: "/programa" },
 };
 
@@ -22,27 +22,29 @@ const GRATIS = COURSE_SEEDS.find((c) => c.acceso === "gratis");
 const VOCES = ["t-ricardo", "t-mariela", "t-fernando"];
 const TESTIMONIOS = TESTIMONIALS.filter((t) => VOCES.includes(t.id)).slice(0, 3);
 
+// FlowTitan NO entra en la consultoria: es un producto aparte (ver /precios).
+// La Mina entra solo los primeros 30 dias. Confirmado por Marc el 2026-10-09.
 const INCLUYE = [
   {
     t: "Seis módulos en orden",
     d: "De la mentalidad al flujo institucional. Cada uno se apoya en el anterior; no es una biblioteca de vídeos sueltos donde eliges y te pierdes.",
   },
   {
-    t: "Sesiones en vivo con Marc",
+    t: "7 sesiones privadas uno a uno",
     d: "Donde se resuelve lo que un vídeo no puede: tu operación concreta, tu cuenta, tu error de ayer.",
   },
   {
-    t: "La comunidad privada",
-    d: "El sitio donde se comparte lo que se ve en el mercado cada día, con gente que está en el mismo proceso.",
+    t: "60 días de acompañamiento",
+    d: "El tiempo para recorrer los seis módulos con las sesiones repartidas, no de golpe.",
   },
   {
-    t: "Acceso a FlowTitan",
-    d: "La misma herramienta con la que Marc lee el flujo institucional: detección de posiciones de seis cifras, exposición a gamma y estructura de la cadena de opciones.",
+    t: "La Mina gratis 30 días",
+    d: "El primer mes en la comunidad privada: el live de los lunes y el Telegram donde me ves operar cada día.",
   },
 ];
 
 const NO_ES_PARA = [
-  "Quien busca señales para copiar sin entender por qué. Aquí se enseña a leer, no se dictan entradas.",
+  "Quien busca señales para copiar sin entender por qué. Aquí se enseña a leer el mercado, no a copiar operaciones.",
   "Quien espera rentabilidad garantizada. No existe, y quien la prometa te está mintiendo.",
   "Quien quiere resultados sin dedicarle horas. El material es denso a propósito.",
   "Quien va a operar con dinero que necesita el mes que viene.",
@@ -55,7 +57,7 @@ const FAQ = [
   },
   {
     q: "¿Cuánto cuesta?",
-    a: "El programa se organiza por plazas y el precio depende del formato que elijas. Escríbeme y te lo digo sin rodeos, junto con si creo que es para ti o no.",
+    a: `${formatUsd(PRECIOS.consultoria)}, pago único, por 60 días: 7 sesiones privadas uno a uno, los seis módulos y La Mina gratis el primer mes. FlowTitan no está incluido; se contrata aparte. Antes de pagar nada tenemos una llamada de 45 minutos.`,
   },
   {
     q: "¿Puedo probar antes?",
@@ -67,17 +69,13 @@ const FAQ = [
   },
 ];
 
-const CONTACTO = `${WHATSAPP_URL}?text=${encodeURIComponent(
-  "Hola Marc, vengo de la página del programa y quiero información.",
-)}`;
-
 export default function ProgramaPage() {
   return (
     <>
       {/* ==== HERO ==== */}
       <section className="mi-section mi-prog-hero">
         <div className="mi-container">
-          <span className="mi-badge">Programa completo</span>
+          <span className="mi-badge">Consultoría · 60 días</span>
           <h1 className="mi-section-title mi-prog-title">
             Aprende a leer el mercado.<br />
             <span className="mi-text-gradient">No a seguir a nadie.</span>
@@ -88,9 +86,13 @@ export default function ProgramaPage() {
             lista de acciones que comprar: tienes un criterio con el que decidir
             tú, y las herramientas para sostenerlo.
           </p>
+          <p className="mi-precios-precio">
+            <strong>{formatUsd(PRECIOS.consultoria)}</strong>
+            <span>USD · pago único · 60 días · 7 sesiones uno a uno</span>
+          </p>
           <div className="mi-prog-cta">
-            <a href={CONTACTO} target="_blank" rel="noreferrer noopener" className="mi-btn-gold">
-              Solicitar plaza →
+            <a href={BOOKING_URL} target="_blank" rel="noreferrer noopener" className="mi-btn-gold">
+              Agendar llamada →
             </a>
             {GRATIS ? (
               <Link href="/curso-gratis" className="mi-btn-outline">
@@ -99,7 +101,8 @@ export default function ProgramaPage() {
             ) : null}
           </div>
           <p className="mi-prog-tiny">
-            Antes de pagar nada, haz el primer módulo. Es gratuito y completo.
+            Primero llenas un formulario y tenemos una llamada de 45 minutos.
+            Antes de eso, si quieres, haz el primer módulo: es gratuito.
           </p>
         </div>
       </section>
@@ -159,7 +162,7 @@ export default function ProgramaPage() {
       <section className="mi-section">
         <div className="mi-container">
           <span className="mi-badge">Qué incluye</span>
-          <h2 className="mi-section-title">Lo que entra con la plaza</h2>
+          <h2 className="mi-section-title">Lo que entra con la consultoría</h2>
           <div className="mi-prog-incluye">
             {INCLUYE.map((x) => (
               <div key={x.t} className="mi-prog-item">
@@ -232,15 +235,15 @@ export default function ProgramaPage() {
           <h2 className="mi-section-title">Empieza por lo gratuito</h2>
           <p className="mi-page-copy">
             Haz el primer módulo, decide si mi forma de explicar te sirve, y
-            entonces hablamos. Si después quieres la plaza completa, escríbeme y
-            te digo el precio y si creo que es tu momento.
+            entonces hablamos. Si quieres la consultoría, agenda la llamada y te
+            digo si creo que es tu momento.
           </p>
           <div className="mi-prog-cta">
             <Link href="/curso-gratis" className="mi-btn-gold">
               Empezar el módulo gratuito →
             </Link>
-            <a href={CONTACTO} target="_blank" rel="noreferrer noopener" className="mi-btn-outline">
-              Preguntar por la plaza
+            <a href={BOOKING_URL} target="_blank" rel="noreferrer noopener" className="mi-btn-outline">
+              Agendar llamada
             </a>
           </div>
           <p className="mi-prog-legal">
