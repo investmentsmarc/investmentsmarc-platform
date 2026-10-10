@@ -5102,3 +5102,114 @@ html:not(.js-ready) .mi-reveal {
   .mi-prog-incluye { grid-template-columns: 1fr 1fr; }
   .mi-prog-voces { grid-template-columns: 1fr 1fr 1fr; }
 }
+
+/* =========================================================================
+   /precios — tres productos lado a lado
+   ========================================================================= */
+.mi-precios-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr;
+}
+.mi-precios-card {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 28px;
+  background: var(--mi-bg-secondary);
+  border: 1px solid var(--mi-border);
+  border-radius: 14px;
+}
+.mi-precios-card.is-destacado {
+  border-color: var(--mi-gold-dark);
+  box-shadow: 0 0 0 1px var(--mi-glow-gold), var(--mi-shadow-lg);
+}
+.mi-precios-card { position: relative; }
+.mi-precios-sello {
+  position: absolute;
+  top: -12px;
+  left: 28px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mi-bg-primary);
+  background: var(--mi-gold-gradient);
+}
+.mi-precios-paraquien {
+  margin: 12px 0 0;
+  padding: 12px 14px;
+  border-left: 2px solid var(--mi-gold);
+  background: var(--mi-glow-gold);
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--mi-text-primary);
+}
+.mi-precios-kicker {
+  margin: 0 0 6px;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mi-gold);
+}
+.mi-precios-nombre {
+  margin: 0;
+  font-family: var(--mi-font-display);
+  font-size: 1.5rem;
+}
+.mi-precios-precio {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0 0;
+}
+.mi-precios-precio strong {
+  font-family: var(--mi-font-display);
+  font-size: 2.6rem;
+  line-height: 1;
+  color: var(--mi-text-primary);
+}
+.mi-precios-precio span {
+  font-size: 0.9rem;
+  color: var(--mi-text-secondary);
+}
+.mi-precios-resumen {
+  margin: 14px 0 0;
+  color: var(--mi-text-secondary);
+  line-height: 1.6;
+}
+.mi-precios-incluye {
+  margin: 0;
+  padding: 18px 0 0;
+  list-style: none;
+  border-top: 1px solid var(--mi-border);
+  display: grid;
+  gap: 12px;
+}
+.mi-precios-incluye li {
+  position: relative;
+  padding-left: 22px;
+  line-height: 1.55;
+  color: var(--mi-text-primary);
+}
+.mi-precios-incluye li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.6em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--mi-gold);
+}
+.mi-precios-pie { margin-top: auto; }
+.mi-precios-pie .mi-prog-tiny { margin-top: 12px; }
+.mi-precios-pie a.mi-btn-gold,
+.mi-precios-pie a.mi-btn-outline { width: 100%; justify-content: center; }
+
+@media (min-width: 1024px) {
+  .mi-precios-grid { grid-template-columns: repeat(3, 1fr); }
+}

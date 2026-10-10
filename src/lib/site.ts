@@ -15,12 +15,31 @@ export const TELEGRAM_URL = "https://t.me/MarcInvestments";
 // alguna vez se acorta o se "limpia" esta URL quitandole el `?invite=`, deja
 // de servir para captar a nadie.
 export const COMUNIDAD_URL =
-  "https://investmentsmarc.app.clientclub.net/communities/groups/marc-investments/home?invite=6a9c794c5d4d3f596eec50bd";
+  "https://investmentsmarc.app.clientclub.net/communities/groups/marc-investments/home?invite=6ac970e94c8f8109c54f208b";
+
+// FlowTitan se contrata en su propio sitio: el pago (Stripe) vive alli.
+export const FLOWTITAN_URL = "https://flowtitan.investmentsmarc.com/";
+
+// La consultoria no se compra directo: el formulario lleva a una llamada de 45
+// minutos con Marc, y en ese formulario se elige si se quiere la consultoria.
+export const BOOKING_URL = "https://go.investmentsmarc.com/booking";
+
+// Precios publicos, en dolares. Una sola fuente para /precios y /programa:
+// si cambian, cambian aqui y en ningun otro sitio.
+export const PRECIOS = {
+  consultoria: 3000,
+  flowtitanMensual: 70,
+  comunidadMensual: 50,
+} as const;
+
+/** 3000 -> "$3,000". */
+export const formatUsd = (n: number) => `$${n.toLocaleString("en-US")}`;
 
 export const NAV_ITEMS: NavItem[] = [
   { label: "Nosotros", href: "/about-us" },
   { label: "Calculadora", href: "/herramientas/investment-calculator" },
   { label: "Cursos", href: "/cursos" },
+  { label: "Precios", href: "/precios" },
   { label: "Comunidad", href: COMUNIDAD_URL, isExternal: true },
   { label: "Testimonios", href: "/#testimonios" },
   { label: "FAQs", href: "/faqs" },
@@ -31,6 +50,7 @@ export const NAV_ITEMS: NavItem[] = [
 export const FOOTER_NAV: NavItem[] = [
   { label: "Curso Gratis", href: "/curso-gratis" },
   { label: "Programa", href: "/programa" },
+  { label: "Precios", href: "/precios" },
   { label: "Blog", href: "/blog" },
   { label: "Herramientas", href: "/herramientas" },
   { label: "FAQs", href: "/faqs" },

@@ -24,6 +24,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/whatsapp",
     "/cursos",
     "/programa",
+    "/precios",
     // "/dashboard" fuera a proposito: la pagina dice "en preparacion" y no tiene
     // contenido. Ofrecersela al buscador es mandar visitas a una pagina vacia.
   ];
