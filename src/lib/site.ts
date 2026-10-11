@@ -48,7 +48,6 @@ export const NAV_ITEMS: NavItem[] = [
 ];
 
 export const FOOTER_NAV: NavItem[] = [
-  { label: "Curso Gratis", href: "/curso-gratis" },
   { label: "Programa", href: "/programa" },
   { label: "Precios", href: "/precios" },
   { label: "Blog", href: "/blog" },

@@ -47,7 +47,7 @@ export default async function CoursePage({
           ← Volver al catalogo
         </Link>
         <span className="mi-badge">
-          {course.acceso === "gratis" ? "Ruta gratuita" : "Programa privado"}
+          Consultoría privada
         </span>
         <h1 className="mi-section-title">{course.title}</h1>
         <p className="mi-page-copy">{course.description}</p>
@@ -67,13 +67,8 @@ export default async function CoursePage({
         </div>
 
         <div className="mi-inline-actions">
-          {/* El gratuito tiene su propia captacion publica; los privados se
-              piden por contacto, que es la unica via que hoy existe de verdad. */}
-          <Link
-            href={course.acceso === "gratis" ? "/curso-gratis" : "/programa"}
-            className="mi-btn-gold"
-          >
-            {course.acceso === "gratis" ? "Acceder al curso gratis" : "Ver el programa completo"}
+          <Link href="/programa" className="mi-btn-gold">
+            Ver la consultoría completa
           </Link>
           <Link href="/contacto" className="mi-btn-outline">
             Hablar con el equipo

@@ -11,10 +11,6 @@ export const metadata: Metadata = {
   alternates: { canonical: "/programa" },
 };
 
-// El curso gratuito es la puerta de entrada real: es lo unico que alguien puede
-// empezar hoy sin hablar con nadie. Los otros cinco son el programa privado.
-const GRATIS = COURSE_SEEDS.find((c) => c.acceso === "gratis");
-
 // Tres de los diez, elegidos por perfil distinto: uno que venia de perder
 // siguiendo senales, uno sin base financiera, uno que ya operaba.
 // 🚨 Los ids se comprobaron contra TESTIMONIALS: "t-jorge" NO existe y habria
@@ -38,7 +34,7 @@ const INCLUYE = [
     d: "El tiempo para recorrer los seis módulos con las sesiones repartidas, no de golpe.",
   },
   {
-    t: "La Mina gratis 30 días",
+    t: "30 días de La Mina incluidos",
     d: "El primer mes en la comunidad privada: el live de los lunes y el Telegram donde me ves operar cada día.",
   },
 ];
@@ -57,11 +53,7 @@ const FAQ = [
   },
   {
     q: "¿Cuánto cuesta?",
-    a: `${formatUsd(PRECIOS.consultoria)}, pago único, por 60 días: 7 sesiones privadas uno a uno, los seis módulos y La Mina gratis el primer mes. FlowTitan no está incluido; se contrata aparte. Antes de pagar nada tenemos una llamada de 45 minutos.`,
-  },
-  {
-    q: "¿Puedo probar antes?",
-    a: "Sí, y es lo que recomiendo. El primer módulo, Mentalidad de Tiburón, es gratuito y completo: siete lecciones, unas dos horas y media, con un entregable al final. Si ese no te aporta, el resto tampoco.",
+    a: `${formatUsd(PRECIOS.consultoria)}, pago único, por 60 días: 7 sesiones privadas uno a uno, los seis módulos y el primer mes de La Mina incluido. FlowTitan no está incluido; se contrata aparte. Antes de pagar nada tenemos una llamada de 45 minutos.`,
   },
   {
     q: "¿Esto es asesoría de inversión?",
@@ -81,7 +73,8 @@ export default function ProgramaPage() {
             <span className="mi-text-gradient">No a seguir a nadie.</span>
           </h1>
           <p className="mi-prog-lead">
-            El Método Marc Investments son seis módulos que van de la mentalidad
+            Te llevo de cero a inversionista profesional en 60 días: siete
+            sesiones uno a uno conmigo y seis módulos que van de la mentalidad
             operativa al análisis del flujo institucional. Al final no tienes una
             lista de acciones que comprar: tienes un criterio con el que decidir
             tú, y las herramientas para sostenerlo.
@@ -94,15 +87,13 @@ export default function ProgramaPage() {
             <a href={BOOKING_URL} target="_blank" rel="noreferrer noopener" className="mi-btn-gold">
               Agendar llamada →
             </a>
-            {GRATIS ? (
-              <Link href="/curso-gratis" className="mi-btn-outline">
-                Empezar por el módulo gratuito
-              </Link>
-            ) : null}
+            <Link href="/precios" className="mi-btn-outline">
+              Todos los precios
+            </Link>
           </div>
           <p className="mi-prog-tiny">
             Primero llenas un formulario y tenemos una llamada de 45 minutos.
-            Antes de eso, si quieres, haz el primer módulo: es gratuito.
+            Ahí decides si entras.
           </p>
         </div>
       </section>
@@ -112,7 +103,7 @@ export default function ProgramaPage() {
         <div className="mi-container mi-prog-narrow">
           <h2 className="mi-section-title">El problema no es que te falte información</h2>
           <p className="mi-page-copy">
-            Hay más análisis gratis del que puedes leer en una vida. Y aun así la
+            Hay más análisis en internet del que puedes leer en una vida. Y aun así la
             mayoría entra tarde, sale con miedo y repite. No es falta de datos: es
             que nadie te enseñó a distinguir cuáles importan.
           </p>
@@ -145,9 +136,6 @@ export default function ProgramaPage() {
                 <div className="mi-prog-modulo-body">
                   <h3 className="mi-prog-modulo-title">
                     {c.title}
-                    {c.acceso === "gratis" ? (
-                      <span className="mi-prog-free">Gratis</span>
-                    ) : null}
                   </h3>
                   <p className="mi-prog-modulo-kicker">{c.kicker}</p>
                   <p className="mi-prog-modulo-desc">{c.description}</p>
@@ -232,19 +220,19 @@ export default function ProgramaPage() {
       {/* ==== CIERRE ==== */}
       <section className="mi-section mi-prog-cierre">
         <div className="mi-container mi-prog-narrow">
-          <h2 className="mi-section-title">Empieza por lo gratuito</h2>
+          <h2 className="mi-section-title">De cero a inversionista profesional</h2>
           <p className="mi-page-copy">
-            Haz el primer módulo, decide si mi forma de explicar te sirve, y
-            entonces hablamos. Si quieres la consultoría, agenda la llamada y te
-            digo si creo que es tu momento.
+            Sesenta días para construir el criterio que te permita invertir como
+            un profesional y empezar a construir patrimonio para ti y tu familia.
+            Agenda la llamada y te digo si creo que es tu momento.
           </p>
           <div className="mi-prog-cta">
-            <Link href="/curso-gratis" className="mi-btn-gold">
-              Empezar el módulo gratuito →
-            </Link>
-            <a href={BOOKING_URL} target="_blank" rel="noreferrer noopener" className="mi-btn-outline">
-              Agendar llamada
+            <a href={BOOKING_URL} target="_blank" rel="noreferrer noopener" className="mi-btn-gold">
+              Agendar llamada →
             </a>
+            <Link href="/precios" className="mi-btn-outline">
+              Todos los precios
+            </Link>
           </div>
           <p className="mi-prog-legal">
             Marc Investments LLC imparte formación financiera. Nada de lo aquí

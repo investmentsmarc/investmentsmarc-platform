@@ -48,7 +48,7 @@ export default function TestimoniosPage() {
         </ul>
 
         <div className="mi-tstm-footer">
-          <Link href="/curso-gratis" className="mi-btn-gold mi-home-section-cta">
+          <Link href="/precios" className="mi-btn-gold mi-home-section-cta">
             Empieza tu transformación
           </Link>
         </div>

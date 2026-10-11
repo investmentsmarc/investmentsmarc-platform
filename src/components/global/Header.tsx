@@ -75,8 +75,8 @@ export function Header() {
         </nav>
 
         <div className="mi-header-actions">
-          <Link href="/curso-gratis" className="mi-btn-gold mi-header-cta">
-            Curso Gratis
+          <Link href="/precios#flowtitan" className="mi-btn-gold mi-header-cta">
+            FlowTitan
           </Link>
 
           <button
@@ -128,11 +128,11 @@ export function Header() {
           })}
 
           <Link
-            href="/curso-gratis"
+            href="/precios#flowtitan"
             className="mi-btn-gold mi-mobile-cta"
             onClick={() => setIsOpen(false)}
           >
-            Empezar Gratis
+            Conoce FlowTitan
           </Link>
         </div>
       </div>

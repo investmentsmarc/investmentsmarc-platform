@@ -58,12 +58,12 @@ const PLANES: PlanPrecio[] = [
     precio: PRECIOS.consultoria,
     periodo: "pago único",
     resumen:
-      "Trabajo uno a uno contigo durante 60 días para que aprendas a invertir de manera responsable, con criterio propio.",
+      "De cero a inversionista profesional en 60 días, uno a uno conmigo: el criterio para invertir con responsabilidad y construir patrimonio para ti y tu familia.",
     incluye: [
       "7 sesiones privadas uno a uno conmigo.",
       "6 módulos de aprendizaje, de la mentalidad al análisis institucional.",
       "60 días de acompañamiento.",
-      "La Mina gratis durante los primeros 30 días.",
+      "Los primeros 30 días de La Mina incluidos.",
     ],
     cta: { label: "Agendar llamada →", href: BOOKING_URL },
     nota: "Primero llenas un formulario y tenemos una llamada de 45 minutos. Ahí decides si entras.",
@@ -81,7 +81,7 @@ const FAQ = [
   },
   {
     q: "¿Cómo funciona la consultoría?",
-    a: "Llenas el formulario de reserva y tenemos una llamada de 45 minutos. En el formulario eliges si te interesa la consultoría. Cuesta $3,000 por 60 días, con 7 sesiones privadas uno a uno, 6 módulos de aprendizaje y La Mina gratis los primeros 30 días. FlowTitan no está incluido: se contrata aparte.",
+    a: "Llenas el formulario de reserva y tenemos una llamada de 45 minutos. En el formulario eliges si te interesa la consultoría. Cuesta $3,000 por 60 días, con 7 sesiones privadas uno a uno, 6 módulos de aprendizaje y los primeros 30 días de La Mina incluidos. FlowTitan no está incluido: se contrata aparte.",
   },
   {
     q: "¿Esto es asesoría de inversión?",

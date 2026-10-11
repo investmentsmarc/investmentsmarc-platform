@@ -16,7 +16,7 @@ export function Footer() {
     { label: "FAQs", href: "/faqs" },
   ];
   const educationLinks: Array<{ label: string; href: string; isExternal?: boolean }> = [
-    { label: "Curso Gratis", href: "/curso-gratis" },
+    { label: "Precios", href: "/precios" },
     { label: "Plataforma de Cursos", href: "/cursos" },
     { label: "Comunidad", href: COMUNIDAD_URL, isExternal: true },
     { label: "FlowTitan PRO", href: "https://flowtitan.investmentsmarc.com", isExternal: true },
