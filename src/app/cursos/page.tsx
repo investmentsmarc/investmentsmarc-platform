@@ -67,23 +67,14 @@ export default function CursosPage() {
                     href={`/cursos/${course.slug}`}
                     className="mi-btn-gold mi-courses-card-cta"
                   >
-                    {course.acceso === "gratis" ? "Empezar gratis" : "Ver el programa"}
+                    Ver el programa
                     <span className="mi-courses-card-arrow" aria-hidden="true">
                       →
                     </span>
                   </Link>
-                  {/* Los privados no llevan precio porque no hay uno publico
-                      que citar: el catalogo vive dentro del programa. Inventar
-                      una cifra aqui seria anunciar algo que nadie puede pagar. */}
-                  {course.acceso === "gratis" ? (
-                    <span className="mi-courses-card-tag mi-courses-card-tag-free">
-                      Ruta de entrada · Gratis
-                    </span>
-                  ) : (
-                    <span className="mi-courses-card-tag">
-                      Programa privado
-                    </span>
-                  )}
+                  <span className="mi-courses-card-tag">
+                    Consultoría privada
+                  </span>
                 </div>
               </div>
             </li>

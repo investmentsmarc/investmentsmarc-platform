@@ -25,7 +25,7 @@ export function HeroSection() {
 
             <p className="mi-hero-trading-lede">
               Hacer trading sin aprender es como navegar sin brújula: puedes moverte, pero difícilmente
-              llegarás lejos. Descubre <b>FlowTitan</b> — la metodología que sigue el rastro del dinero
+              llegarás lejos. Descubre <b>FlowTitan</b> — la plataforma que sigue el rastro del dinero
               institucional en tiempo real.
             </p>
 
@@ -38,17 +38,12 @@ export function HeroSection() {
             />
 
             <div className="mi-hero-trading-actions">
-              <Link href="/curso-gratis" className="mi-btn-gold mi-hero-trading-primary">
-                Ver curso gratuito →
+              <Link href="/precios#flowtitan" className="mi-btn-gold mi-hero-trading-primary">
+                Conoce FlowTitan →
               </Link>
-              <a
-                href="https://flowtitan.investmentsmarc.com"
-                target="_blank"
-                rel="noreferrer noopener"
-                className="mi-btn-ghost mi-hero-trading-secondary"
-              >
-                FlowTitan PRO
-              </a>
+              <Link href="/precios" className="mi-btn-ghost mi-hero-trading-secondary">
+                La Mina y consultoría
+              </Link>
             </div>
           </div>
 

@@ -159,7 +159,7 @@ export function CanalComunidad() {
 
           {/* === RIGHT: benefits + CTA === */}
           <aside className="mi-canal-pitch mi-reveal mi-reveal-right">
-            <span className="mi-canal-kicker">Gratis · Sin spam</span>
+            <span className="mi-canal-kicker">Sin spam</span>
             <h3 className="mi-canal-pitch-title">
               Solo <span className="mi-text-gradient">señal institucional</span>.
               Cero ruido.

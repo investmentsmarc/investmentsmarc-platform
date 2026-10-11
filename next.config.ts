@@ -54,9 +54,17 @@ const nextConfig: NextConfig = {
         destination: "/legal/terminos",
         permanent: true,
       },
+      // El curso gratis se retiro el 2026-10-10 por decision de Marc: el sitio
+      // solo vende FlowTitan, La Mina y la consultoria. Los enlaces viejos
+      // (bio de Instagram, correos) caen en precios en vez de en un 404.
       {
         source: "/curso",
-        destination: "/curso-gratis",
+        destination: "/precios",
+        permanent: true,
+      },
+      {
+        source: "/curso-gratis",
+        destination: "/precios",
         permanent: true,
       },
       {

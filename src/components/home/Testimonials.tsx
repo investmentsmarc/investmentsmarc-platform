@@ -193,8 +193,8 @@ export function Testimonials() {
           <Link href="/testimonios" className="mi-btn-ghost mi-tstm-more">
             Leer los 10 testimonios completos
           </Link>
-          <Link href="/curso-gratis" className="mi-btn-gold mi-home-section-cta">
-            Empieza gratis
+          <Link href="/precios" className="mi-btn-gold mi-home-section-cta">
+            Empieza hoy
           </Link>
         </div>
       </div>

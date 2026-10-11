@@ -12,7 +12,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/about-us",
     "/blog",
     "/contacto",
-    "/curso-gratis",
     "/webinar",
     "/calculadora",
     "/herramientas",

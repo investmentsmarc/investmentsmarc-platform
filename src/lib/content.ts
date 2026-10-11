@@ -258,12 +258,6 @@ export const FAQ_ITEMS: FaqItem[] = [
       "Es un marco de lectura que pone foco en estructura, liquidez y desplazamiento para entender cómo actúa el capital institucional.",
   },
   {
-    id: "faq-4",
-    question: "¿Las herramientas son gratuitas?",
-    answer:
-      "Sí. El hub de herramientas está pensado como capa pública para ayudar a mejorar la toma de decisiones antes de operar.",
-  },
-  {
     id: "faq-5",
     question: "¿También hay cursos de pago?",
     answer:
@@ -380,9 +374,9 @@ export const LINK_PAGE_ITEMS: LinkCardItem[] = [
     highlighted: true,
   },
   {
-    label: "Curso Gratis: Smart Money Basics",
-    href: "/curso-gratis",
-    description: "Empieza con una base clara y accionable.",
+    label: "Precios: FlowTitan, La Mina y consultoría",
+    href: "/precios",
+    description: "Lo que cuesta cada producto y lo que incluye.",
     highlighted: true,
   },
   {
@@ -441,12 +435,12 @@ export const WEBINAR_BENEFITS = [
 // muro de sesion —medido el 2026-09-05, un visitante sin cuenta que abre
 // /courses acaba en /login— asi que enlazar ahi directamente manda a todo
 // interesado frio a un formulario de contrasena. Hasta que exista una pagina
-// publica de venta, el gratuito entra por su propia captacion y los privados
-// pasan por contacto.
+// publica de venta, todos pasan por la consultoria (/programa). El modulo 1 fue
+// gratuito hasta el 2026-10-10; Marc retiro todo lo gratuito del sitio.
 //
 // Las descripciones de los cinco privados son de posicionamiento, escritas aqui:
 // no llevan cifras de lecciones ni horas porque esas no se midieron. La del
-// gratuito si: sus datos salen de su ficha real.
+// modulo 1 si: sus datos salen de su ficha real.
 export const COURSE_SEEDS = [
   {
     id: "mentalidad-tiburon",
@@ -458,7 +452,7 @@ export const COURSE_SEEDS = [
     description:
       "Siete lecciones, unas 2,5 horas, y un entregable: tu Carta de Reglas del Tiburón. Identificas tu arquetipo dentro de las cuatro criaturas del océano financiero, construyes tu identidad operativa, neutralizas las tres emociones que destruyen cuentas —miedo, codicia y esperanza— y dominas el protocolo del no-entrada: las cinco condiciones en las que no se opera.",
     price: 0,
-    acceso: "gratis" as const,
+    acceso: "privado" as const,
     currency: "USD" as const,
     coverImage: "",
     tags: ["mentalidad", "fundamentos", "beginner"],
