@@ -4,7 +4,6 @@ import { BLOG_POSTS, TESTIMONIALS } from "@/lib/content";
 
 export const WHATSAPP_NUMBER = "18329534918";
 export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
-export const TELEGRAM_URL = "https://t.me/MarcInvestments";
 
 // La comunidad de miembros, donde viven los cursos y la conversacion. Lleva un
 // token de invitacion a proposito: es lo que la hace publica.
@@ -70,7 +69,6 @@ export const SOCIAL_LINKS: NavItem[] = [
   { label: "TikTok", href: "https://www.tiktok.com/@marc_investments", isExternal: true },
   { label: "Facebook", href: "https://www.facebook.com/people/Marc-Investments/61574292711011/", isExternal: true },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/marc-mtnez/", isExternal: true },
-  { label: "Telegram", href: TELEGRAM_URL, isExternal: true },
   { label: "WhatsApp", href: `${WHATSAPP_URL}?text=Hola%20Marc%2C%20quiero%20mas%20informacion`, isExternal: true },
 ];
 

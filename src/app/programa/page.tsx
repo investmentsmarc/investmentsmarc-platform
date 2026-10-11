@@ -35,7 +35,7 @@ const INCLUYE = [
   },
   {
     t: "30 días de La Mina incluidos",
-    d: "El primer mes en la comunidad privada: el live de los lunes y el Telegram donde me ves operar cada día.",
+    d: "El primer mes en la comunidad privada: el live de los lunes y el canal privado donde me ves operar cada día.",
   },
 ];
 
