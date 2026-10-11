@@ -25,7 +25,7 @@ const PLANES: PlanPrecio[] = [
       "Donde estoy con los miembros todas las semanas: analizando el mercado, operando en vivo y respondiendo.",
     incluye: [
       "Live todos los lunes a las 6:00 PM, hora central de EE.UU., donde analizo el mercado con todos los miembros.",
-      "Telegram privado de la comunidad: me ves operar en vivo cada día y explico mis criterios de entrada, dónde nos estamos posicionando y dónde está la ventaja según FlowTitan.",
+      "Canal privado de la comunidad: me ves operar en vivo cada día y explico mis criterios de entrada, dónde nos estamos posicionando y dónde está la ventaja según FlowTitan.",
       "Los vídeos de formación de FlowTitan, para aprender a usar la plataforma paso a paso.",
     ],
     cta: { label: "Unirme a La Mina →", href: COMUNIDAD_URL },

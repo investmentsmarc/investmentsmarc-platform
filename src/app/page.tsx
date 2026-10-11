@@ -7,7 +7,7 @@ import { FlowTitanSection } from "@/components/home/FlowTitanSection";
 import { HeroSection } from "@/components/home/HeroSection";
 import { LatestArticles } from "@/components/home/LatestArticles";
 import { NewsSkeleton } from "@/components/home/NewsSkeleton";
-import { CanalComunidad } from "@/components/home/CanalComunidad";
+import { LaMinaSection } from "@/components/home/LaMinaSection";
 
 const Testimonials = dynamic(
   () =>
@@ -46,7 +46,8 @@ const ID_FLOWTITAN = "https://flowtitan.investmentsmarc.com/#software";
 // El reparto de abajo espeja el que el sitio del producto desplego el 2026-09-04
 // y que su propio test fija (`presenciaBuscadores.test.ts`); una lista identica
 // en los dos nodos, ademas, le quita al buscador la unica pista para separarlos.
-// Telegram va en los dos: es el canal de la casa y lo lleva Marc.
+// Telegram se retiro el 2026-10-10: es el canal privado de La Mina y no un
+// perfil publico de la marca, asi que no se declara al buscador.
 //
 // Los perfiles se verificaron el 2026-09-04 contra un usuario INVENTADO: un
 // nombre que no existe devuelve HTTP 200 en Instagram, TikTok y Telegram, asi que
@@ -56,14 +57,12 @@ const ID_FLOWTITAN = "https://flowtitan.investmentsmarc.com/#software";
 const PERFILES_EMPRESA = [
   "https://www.youtube.com/@marcinvestments",
   "https://www.facebook.com/people/Marc-Investments/61574292711011/",
-  "https://t.me/MarcInvestments",
 ];
 
 const PERFILES_MARC = [
   "https://www.instagram.com/marc_investments/",
   "https://www.tiktok.com/@marc_investments",
   "https://www.linkedin.com/in/marc-mtnez",
-  "https://t.me/MarcInvestments",
 ];
 
 const homeSchema = [
@@ -139,7 +138,7 @@ export default function HomePage() {
       <JsonLd data={homeSchema} />
       <HeroSection />
       <FlowTitanSection />
-      <CanalComunidad />
+      <LaMinaSection />
       <Suspense fallback={<NewsSkeleton />}>
         <LatestArticles />
       </Suspense>
