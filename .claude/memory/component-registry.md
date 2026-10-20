@@ -49,6 +49,7 @@ description: Catálogo actualizable de componentes implementados, su ubicación 
 | PositionSizeCalc | `PositionSizeCalc.tsx` | 🔲 Pendiente | Fase 1 — Client, porta `calcPS()` de WP L467 |
 | RiskRewardCalc | `RiskRewardCalc.tsx` | 🔲 Pendiente | Fase 1 — Client, porta `calcRR()` de WP L530 |
 | InvestmentCalc | `InvestmentCalc.tsx` | 🔲 Pendiente | Fase 1 — Client, ETFs SPY/QQQ/VOO + Canvas chart |
+| RobotaxiFleetCalc | `RobotaxiFleetCalc.tsx` | ✅ Construido | Client — réplica del sistema de cálculo robotaxi (enganche → crédito → $/milla → comisión → flujo de caja → reinversión). Supuestos con fuente en `docs/research/robotaxi-cybercab-2026.md` |
 
 ### Blog (src/components/blog/)
 | Componente | Archivo | Estado | Notas |

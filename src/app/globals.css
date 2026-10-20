@@ -1426,6 +1426,11 @@ textarea:focus-visible {
   gap: 24px;
 }
 
+/* Con cuatro herramientas, 2×2 evita que la última quede sola en su fila. */
+.mi-tools-grid-featured {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .mi-tool-card {
   position: relative;
   display: flex;
@@ -2132,6 +2137,225 @@ textarea:focus-visible {
 
   .mi-invest-chart-svg {
     height: 220px;
+  }
+}
+
+/* --- Robotaxi Fleet Calculator ------------------------------------------- */
+
+.mi-robotaxi-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 22px 0 12px;
+}
+
+.mi-robotaxi-section:first-child {
+  margin-top: 0;
+}
+
+.mi-robotaxi-section span {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.mi-robotaxi-chips {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.mi-robotaxi-chip {
+  display: flex;
+  min-height: 64px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 10px 8px;
+  border-radius: 12px;
+  border: 1px solid var(--mi-border);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--mi-text-primary);
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s var(--mi-ease-out);
+}
+
+.mi-robotaxi-chip strong {
+  font-size: 0.86rem;
+  line-height: 1.1;
+}
+
+.mi-robotaxi-chip span {
+  color: var(--mi-text-tertiary);
+  font-size: 0.68rem;
+  line-height: 1.2;
+}
+
+.mi-robotaxi-chip:hover,
+.mi-robotaxi-chip.is-active {
+  border-color: rgba(224, 188, 102, 0.42);
+  background: rgba(224, 188, 102, 0.08);
+}
+
+.mi-robotaxi-chip.is-active strong {
+  color: var(--mi-gold-light);
+}
+
+.mi-robotaxi-chip:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.mi-robotaxi-chip:disabled:hover {
+  border-color: var(--mi-border);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.mi-robotaxi-vehicles {
+  margin-bottom: 0;
+}
+
+.mi-robotaxi-value-negative,
+.mi-robotaxi-note-negative {
+  color: #ff8d8d;
+}
+
+.mi-robotaxi-chart-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.mi-robotaxi-chart-summary {
+  color: var(--mi-text-secondary);
+  font-size: 0.82rem;
+}
+
+.mi-robotaxi-zero-line {
+  stroke: rgba(255, 255, 255, 0.28);
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+}
+
+.mi-robotaxi-cars-line {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.55);
+  stroke-width: 1.5;
+  stroke-dasharray: 3 3;
+}
+
+.mi-robotaxi-x-axis {
+  grid-template-columns: repeat(auto-fit, minmax(48px, 1fr));
+}
+
+.mi-robotaxi-callout {
+  padding: 18px 20px;
+  border-radius: 14px;
+  border: 1px solid rgba(224, 188, 102, 0.24);
+  border-left: 3px solid var(--mi-gold);
+  background: rgba(224, 188, 102, 0.06);
+}
+
+.mi-robotaxi-callout.is-negative {
+  border-color: rgba(255, 141, 141, 0.28);
+  border-left-color: #ff8d8d;
+  background: rgba(255, 141, 141, 0.06);
+}
+
+.mi-robotaxi-callout p {
+  margin: 0;
+  color: var(--mi-text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.mi-robotaxi-sources {
+  padding: 16px 20px;
+  border-radius: 14px;
+  border: 1px solid var(--mi-border);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.mi-robotaxi-sources summary {
+  cursor: pointer;
+  color: var(--mi-gold-light);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.mi-robotaxi-sources ul {
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.mi-robotaxi-sources li {
+  color: var(--mi-text-secondary);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+.mi-robotaxi-sources li strong {
+  color: var(--mi-text-primary);
+}
+
+.mi-robotaxi-sources p {
+  margin: 14px 0 0;
+  color: var(--mi-text-tertiary);
+  font-size: 0.8rem;
+}
+
+.mi-robotaxi-sources code {
+  color: var(--mi-gold-light);
+  font-size: 0.78rem;
+}
+
+.mi-robotaxi-tag {
+  display: inline-block;
+  margin-right: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+.mi-robotaxi-tag-seguro {
+  background: rgba(117, 224, 167, 0.14);
+  color: #75e0a7;
+}
+
+.mi-robotaxi-tag-probable {
+  background: rgba(224, 188, 102, 0.14);
+  color: var(--mi-gold-light);
+}
+
+.mi-robotaxi-tag-suponiendo {
+  background: rgba(255, 141, 141, 0.14);
+  color: #ff8d8d;
+}
+
+@media (max-width: 768px) {
+  .mi-robotaxi-chips {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .mi-robotaxi-chips {
+    grid-template-columns: 1fr;
   }
 }
 
