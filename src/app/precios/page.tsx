@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { BOOKING_URL, COMUNIDAD_URL, FLOWTITAN_URL, PRECIOS, formatUsd } from "@/lib/site";
+import { BOOKING_URL, PRECIOS, formatUsd } from "@/lib/site";
 import type { PlanPrecio } from "@/types";
 
 export const metadata: Metadata = {
@@ -14,6 +14,15 @@ export const metadata: Metadata = {
 // FlowTitan va en el centro y destacado: es el producto estrella y es aparte de
 // todo lo demas. Cada plan se contrata por separado; que ninguno parezca
 // requisito de otro es la razon de que esta pagina exista.
+//
+// Los CTA de esta pagina van DIRECTO a contratar, no a las portadas: por eso
+// no usan COMUNIDAD_URL ni FLOWTITAN_URL de @/lib/site (esas constantes
+// apuntan a ClientClub y a la portada de FlowTitan, y se comparten con el
+// nav, el footer y la home). La Mina se contrata en la app nueva: el
+// registro lleva directo al pago. FlowTitan se contrata en su /register,
+// que es donde empieza la prueba de 3 dias.
+const LA_MINA_REGISTRO_URL = "https://lamina.investmentsmarc.com/registro?next=pago";
+const FLOWTITAN_REGISTER_URL = "https://flowtitan.investmentsmarc.com/register";
 const PLANES: PlanPrecio[] = [
   {
     id: "la-mina",
@@ -28,8 +37,8 @@ const PLANES: PlanPrecio[] = [
       "Canal privado de la comunidad: me ves operar en vivo cada día y explico mis criterios de entrada, dónde nos estamos posicionando y dónde está la ventaja según FlowTitan.",
       "Los vídeos de formación de FlowTitan, para aprender a usar la plataforma paso a paso.",
     ],
-    cta: { label: "Unirme a La Mina →", href: COMUNIDAD_URL },
-    nota: "Pago mensual. El enlace te lleva directo al pago.",
+    cta: { label: "Unirme a La Mina →", href: LA_MINA_REGISTRO_URL },
+    nota: "Pago mensual. El registro te lleva directo al pago.",
   },
   {
     id: "flowtitan",
@@ -47,7 +56,7 @@ const PLANES: PlanPrecio[] = [
       "Flujo inusual de opciones y tape scanner.",
       "Reportes de confluencia, watchlist y alertas.",
     ],
-    cta: { label: "Contratar FlowTitan →", href: FLOWTITAN_URL },
+    cta: { label: "Contratar FlowTitan →", href: FLOWTITAN_REGISTER_URL },
     nota: "Pago mensual. Producto independiente: no necesitas nada más para contratarlo.",
     destacado: true,
   },
