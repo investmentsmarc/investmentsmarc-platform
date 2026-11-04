@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 
 import { WHATSAPP_OPTIONS } from "@/lib/content";
 import { WHATSAPP_URL } from "@/lib/site";
+import { paginaMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "WhatsApp",
-  description: "Elige la forma de contacto por WhatsApp que mejor encaja con tu necesidad.",
-};
+export const metadata: Metadata = paginaMetadata({
+  ruta: "/whatsapp",
+  titulo: "WhatsApp",
+  descripcion: "Elige la forma de contacto por WhatsApp que mejor encaja con tu necesidad.",
+});
 
 export default function WhatsAppPage() {
   return (

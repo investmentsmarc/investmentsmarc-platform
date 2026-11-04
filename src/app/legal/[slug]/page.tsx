@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { LEGAL_CONTENT } from "@/lib/content";
+import { paginaMetadata } from "@/lib/seo";
 
 type LegalSlug = keyof typeof LEGAL_CONTENT;
 
@@ -24,10 +25,11 @@ export async function generateMetadata({
     return {};
   }
 
-  return {
-    title: LEGAL_CONTENT[slug].title,
-    description: LEGAL_CONTENT[slug].intro,
-  };
+  return paginaMetadata({
+    ruta: `/legal/${slug}`,
+    titulo: LEGAL_CONTENT[slug].title,
+    descripcion: LEGAL_CONTENT[slug].intro,
+  });
 }
 
 export default async function LegalPage({

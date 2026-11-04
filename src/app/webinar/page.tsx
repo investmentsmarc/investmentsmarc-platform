@@ -3,11 +3,13 @@ import type { Metadata } from "next";
 import { Countdown } from "@/components/forms/Countdown";
 import { WebinarForm } from "@/components/forms/WebinarForm";
 import { WEBINAR_BENEFITS } from "@/lib/content";
+import { paginaMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Webinar",
-  description: "Reserva tu lugar para la sesión en vivo sobre Smart Money y ejecución.",
-};
+export const metadata: Metadata = paginaMetadata({
+  ruta: "/webinar",
+  titulo: "Webinar",
+  descripcion: "Reserva tu lugar para la sesión en vivo sobre Smart Money y ejecución.",
+});
 
 export default function WebinarPage() {
   return (

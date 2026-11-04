@@ -2,12 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { COURSE_SEEDS } from "@/lib/content";
+import { paginaMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Academia · Ruta del Inversor",
-  description:
+export const metadata: Metadata = paginaMetadata({
+  ruta: "/cursos",
+  titulo: "Academia · Ruta del Inversor",
+  descripcion:
     "Cinco cursos. Un trader completo. De la mentalidad al flujo institucional — la ruta completa de la Academia Marc Investments.",
-};
+});
 
 export default function CursosPage() {
   return (

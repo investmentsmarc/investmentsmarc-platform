@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 
 import { BlogCard } from "@/components/blog/BlogCard";
 import { BLOG_POSTS } from "@/lib/content";
+import { paginaMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Blog",
-  description: "Analisis de mercado y trading institucional.",
-};
+export const metadata: Metadata = paginaMetadata({
+  ruta: "/blog",
+  titulo: "Blog",
+  descripcion: "Analisis de mercado y trading institucional.",
+});
 
 export default function BlogPage() {
   return (
